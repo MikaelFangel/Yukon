@@ -1,2 +1,2 @@
-# Klondike
-C implementation of klondike
+# Yukon Solitaire
+C implementation of Yukon Solitaire
