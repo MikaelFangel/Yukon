@@ -1,0 +1,26 @@
+@startuml
+
+start
+if (filename is valid) then (true)
+    :Message "OK";
+    if(filename is emtpy) then (true)
+        :read from headerFile;
+    endif
+    repeat
+    :read line;
+    if(card is in headerfile) then (false)
+        :Message "ERROR: On line (X)";
+    endif
+    :add card to column;
+    :column++;
+    if(column >= 7) then (true)
+        :column = 1;
+    endif;
+    repeat while (more cards?) is (yes)
+
+else (false)
+    :Message "ERROR: File does not exist";
+endif
+stop
+
+@enduml
