@@ -3,4 +3,4 @@ project(Yukon C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_executable(Yukon view.c)
+add_executable(Yukon view.h main.c)
