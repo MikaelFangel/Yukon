@@ -3,4 +3,6 @@ project(Yukon C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_executable(Yukon view.h main.c deck.h)
+set(Sources main.c)
+set(Headers deck.h view.h)
+add_executable(Yukon ${Sources} ${Headers})
