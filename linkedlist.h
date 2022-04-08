@@ -1,0 +1,54 @@
+#ifndef YUKON_LINKEDLIST_H
+#define YUKON_LINKEDLIST_H
+
+#include <malloc.h>
+
+typedef struct {
+    void *key;
+    void *next;
+    void *prev;
+} Node;
+
+typedef struct {
+    Node *head;
+    Node *tail;
+    int size;
+} Linked_list;
+
+Linked_list *createLinkedList() {
+    Linked_list *newLinkedList;
+    newLinkedList = (Linked_list *) malloc(sizeof(Linked_list));
+
+    newLinkedList->size = 0;
+    newLinkedList->head = NULL;
+    newLinkedList->tail = NULL;
+
+    return newLinkedList;
+}
+
+void addNode(Linked_list *list, void *key) {
+    Node *newNode;
+    newNode = (Node *) malloc(sizeof(Node));
+
+    if (list->size == 0) {
+        newNode->key = key;
+        newNode->next = NULL;
+        newNode->prev = NULL;
+
+        list->head = newNode;
+        list->tail = newNode;
+    } else {
+        newNode->key = key;
+        newNode->prev = list->tail;
+        newNode->next = NULL;
+        list->tail = newNode;
+    }
+
+    list->size++;
+}
+
+void removeNode(Linked_list *list, void *key) {
+
+}
+
+#endif //YUKON_LINKEDLIST_H
