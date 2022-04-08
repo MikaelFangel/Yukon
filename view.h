@@ -1,6 +1,6 @@
-//
-// Created by mikael on 04/04/2022.
-//
+#ifndef VIEW_H
+#define VIEW_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -47,3 +47,5 @@ int clearView() {
     system("clear");
     return 0;
 }
+
+#endif

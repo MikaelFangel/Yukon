@@ -1,6 +1,6 @@
-//
-// Created by mikael on 04/04/2022.
-//
+#ifndef DECK_H
+#define DECK_H
+
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -42,3 +42,5 @@ int fillSuits(const char *fileName) {
 
     }
 }
+
+#endif
