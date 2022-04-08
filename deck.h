@@ -5,20 +5,19 @@
 #include <stdbool.h>
 
 #define SUIT_SIZE 13
-
-struct card {
+ typedef struct {
     char suit;
     char value;
     bool faceDown;
     bool existsInGame;
-};
+} Card;
 
-struct card clubs[SUIT_SIZE];
-struct card diamonds[SUIT_SIZE];
-struct card hearts[SUIT_SIZE];
-struct card spades[SUIT_SIZE];
+Card clubs[SUIT_SIZE];
+Card diamonds[SUIT_SIZE];
+Card hearts[SUIT_SIZE];
+Card spades[SUIT_SIZE];
 
-struct card *deck[4] = {clubs, diamonds, hearts, spades};
+Card *deck[4] = {clubs, diamonds, hearts, spades};
 
 int fillSuits(const char *fileName);
 
