@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include "../linkedlist.h"
+#include "../src/linkedlist.h"
 
 void linkedListAdd();
 
