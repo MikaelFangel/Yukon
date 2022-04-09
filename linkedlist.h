@@ -47,8 +47,17 @@ void addNode(Linked_list *list, void *key) {
     list->size++;
 }
 
-void removeNode(Linked_list *list, void *key) {
+void removeNode(Linked_list *list) {
+    if(list->size == 0) {
+        return;
+    } else {
+        Node tempNode = *(Node *) list->tail->prev;
+        tempNode.next = NULL;
+        free(list->tail);
 
+        list->tail = &tempNode;
+        list->size--;
+    }
 }
 
 #endif //YUKON_LINKEDLIST_H
