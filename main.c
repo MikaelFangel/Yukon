@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include "view.h"
 #include "deck.h"
+#include "linkedlist.h"
 
 int main(void) {
     char input[256];
