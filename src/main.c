@@ -6,12 +6,23 @@
 
 int main(void) {
     char input[256];
-    char filename[256];
+    char filepath[256];
     bool gameRunning = true;
 
     while(gameRunning) {
         generateView(true);
-        scanf("%s %s", input, filename);
+        scanf("%s %s", input, filepath);
+
+        FILE *fptr;
+        // One absolute filepaths
+        fptr = fopen(filepath, "r");
+
+        if (fptr != NULL) {
+            fillSuits(fptr);
+            fclose(fptr);
+        } else {
+            fillSuits(NULL);
+        }
 
         gameRunning = false;
     }
