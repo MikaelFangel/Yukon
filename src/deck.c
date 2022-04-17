@@ -25,9 +25,10 @@ int fillSuits(FILE *fptr) {
             deck[i][11].value = 'Q';
             deck[i][12].value = 'K';
         }
+        return 0;
 
     } else {
-        char line[3];
+        char line[4];
         Linked_list *cardDeck = createLinkedList();
         // While file not empty, read a line, create a card, and add it to linked list.
         while (fgets(line, sizeof line, fptr) != NULL) {
@@ -37,5 +38,6 @@ int fillSuits(FILE *fptr) {
             newCard->existsInGame = true;
             addNode(cardDeck,newCard);
         }
+        return 0;
     }
 }
