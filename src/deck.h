@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include "linkedlist.h"
 
 #define SUIT_SIZE 13
  typedef struct {
