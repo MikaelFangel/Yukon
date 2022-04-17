@@ -34,6 +34,7 @@ int fillSuits(FILE *fptr) {
             Card *newCard = (Card *) malloc(sizeof(Card));
             newCard->value = line[0];
             newCard->suit = line[1];
+            newCard->existsInGame = true;
             addNode(cardDeck,newCard);
         }
     }
