@@ -19,6 +19,6 @@ extern Card spades[SUIT_SIZE];
 
 extern Card *deck[4];
 
-int fillSuits(const char *fileName);
+int fillSuits(FILE *fptr);
 
 #endif
