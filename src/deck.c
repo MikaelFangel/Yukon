@@ -1,4 +1,5 @@
 #include "deck.h"
+#include "linkedlist.h"
 
 Card clubs[SUIT_SIZE];
 Card diamonds[SUIT_SIZE];
@@ -8,9 +9,9 @@ Card spades[SUIT_SIZE];
 Card *deck[4] = {clubs, diamonds, hearts, spades};
 
 // TODO Implement with linked list
-int fillSuits(const char *fileName) {
+int fillSuits(FILE *fptr) {
 
-    if (fileName == NULL) {
+    if (fptr == NULL) {
 
         for (int i = 0; i < 4; i++) {
             deck[i][0].value = 'A';
@@ -25,5 +26,15 @@ int fillSuits(const char *fileName) {
             deck[i][12].value = 'K';
         }
 
+    } else {
+        char line[3];
+        Linked_list *cardDeck = createLinkedList();
+        // While file not empty, read a line, create a card, and add it to linked list.
+        while (fgets(line, sizeof line, fptr) != NULL) {
+            Card *newCard = (Card *) malloc(sizeof(Card));
+            newCard->value = line[0];
+            newCard->suit = line[1];
+            addNode(cardDeck,newCard);
+        }
     }
 }
