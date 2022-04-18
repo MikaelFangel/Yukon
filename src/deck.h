@@ -20,6 +20,8 @@ extern Card spades[SUIT_SIZE];
 
 extern Card *deck[4];
 
-int fillSuits(FILE *fptr);
+int fillSuits();
+int createDeck(char filepath[]);
+int validateDeck(Linked_list *list);
 
 #endif
