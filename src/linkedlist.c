@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "linkedlist.h"
 
 Linked_list *createLinkedList() {
@@ -43,4 +44,12 @@ void removeNode(Linked_list *list) {
         list->tail = &tempNode;
         list->size--;
     }
+}
+
+void toString(Linked_list *list) {
+    /*void *node = head;
+    while (node != NULL) {
+        printf("%s", *node.);
+        node = node.next;
+    }*/
 }
