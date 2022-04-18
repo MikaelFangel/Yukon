@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "view.h"
 #include "deck.h"
-#include "linkedlist.h"
+#include <string.h>
 
 int main(void) {
     char input[256];
@@ -13,27 +13,32 @@ int main(void) {
         generateView(true);
         scanf("%s %s", input, filepath);
 
-        FILE *fptr;
-        // One absolute filepaths
-        fptr = fopen(filepath, "r");
-
-        if (fptr != NULL) {
-            fillSuits(fptr);
-            fclose(fptr);
-        } else {
-            fillSuits(NULL);
-        }
+        if (strcmp("LD", input) == 0) {
+            // If filepath is not empty
+            if (strcmp(filepath, "") != 0) {
+                createDeck(filepath);
+                printCommandConsole("LD", "");
+                } else {
+                    printCommandConsole("LD", "The file does not exist");
+                }
+            } else {
+                printCommandConsole("LD", "OK");
+            }
 
         gameRunning = false;
+
+        }
+
+    return 0;
+
     }
 
-    fillSuits(NULL);
+
+    /*fillSuits(NULL);
 
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 13; ++j) {
             printf("%c ", deck[i][j].value);
         }
-    }
+    }*/
 
-    return 0;
-}
