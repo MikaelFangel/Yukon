@@ -41,7 +41,7 @@ int checkCard(Linked_list *list, Card deck_card) {
             match = true;
             ++counter;
             // If match, check the next card in deck
-            break;
+            continue;
         } else {
             node = node->next;
         }
