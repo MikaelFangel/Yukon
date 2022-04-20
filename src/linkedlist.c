@@ -26,6 +26,7 @@ void addNode(Linked_list *list, void *key) {
     } else {
         newNode->key = key;
         newNode->prev = list->tail;
+        list->tail->next = newNode;
         newNode->next = NULL;
         list->tail = newNode;
     }
@@ -59,10 +60,23 @@ void deleteLinkedList(Linked_list *list) {
     free(list);
 }
 
+void *findKey(Linked_list *list, void *key) {
+    Node *node = list->head;
+    while (node != NULL && node->key != key) {
+        node = node->next;
+    }
+
+    return node;
+}
+
+void moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_list *to, void *keyTo) {
+
+}
+
 void LinkedListToString(Linked_list *list) {
     Node *node = list->head;
     while (node != NULL) {
-        printf("%c\n", *(char*) node->key);
+        printf("%c\n", *(char *) node->key);
         node = node->next;
     }
 }

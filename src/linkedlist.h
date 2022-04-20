@@ -16,6 +16,7 @@ typedef struct {
 } Linked_list;
 
 Linked_list *createLinkedList();
+void *findKey(Linked_list *list, void *key);
 
 void addNode(Linked_list *list, void *key);
 void removeNode(Linked_list *list);
