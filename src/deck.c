@@ -117,6 +117,7 @@ int createDeck(char filepath[]) {
         Card *newCard = (Card *) malloc(sizeof(Card));
         newCard->value = line[0];
         newCard->suit = line[1];
+        newCard->existsInGame = true;
         addNode(cardDeck, newCard);
         checkCard(newCard);
     }
