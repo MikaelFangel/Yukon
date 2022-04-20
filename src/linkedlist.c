@@ -34,7 +34,7 @@ void addNode(Linked_list *list, void *key) {
 }
 
 void removeNode(Linked_list *list) {
-    if(list->size == 0) {
+    if (list->size == 0) {
         return;
     } else {
         Node tempNode = *(Node *) list->tail->prev;
@@ -44,6 +44,19 @@ void removeNode(Linked_list *list) {
         list->tail = &tempNode;
         list->size--;
     }
+}
+
+void deleteLinkedList(Linked_list *list) {
+    if (list->size > 0) {
+        Node *node = list->head;
+        while (node != NULL) {
+            Node *tempNode = node;
+            node = node->next;
+            free(tempNode);
+        }
+    }
+
+    free(list);
 }
 
 void toString(Linked_list *list) {
