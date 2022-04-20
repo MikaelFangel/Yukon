@@ -19,5 +19,6 @@ Linked_list *createLinkedList();
 
 void addNode(Linked_list *list, void *key);
 void removeNode(Linked_list *list);
+void deleteLinkedList(Linked_list *list);
 
 #endif //YUKON_LINKEDLIST_H
