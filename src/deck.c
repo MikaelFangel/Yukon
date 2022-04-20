@@ -15,18 +15,12 @@ int fillSuits(Linked_list *list) {
 
         for (int j = 1; j < 10; ++j) {
             deck[i][j].value = (j + 1) + '0';
-            if (checkCard(list, deck[i][j]) == -1) {return -1;}
         }
 
         deck[i][9].value = 'T';
         deck[i][10].value = 'J';
         deck[i][11].value = 'Q';
         deck[i][12].value = 'K';
-        if (checkCard(list, deck[i][0]) == -1) {return -1;}
-        if (checkCard(list, deck[i][9]) == -1) {return -1;}
-        if (checkCard(list, deck[i][10]) == -1) {return -1;}
-        if (checkCard(list, deck[i][11]) == -1) {return -1;}
-        if (checkCard(list, deck[i][12]) == -1) {return -1;}
     }
     return 0;
 }
