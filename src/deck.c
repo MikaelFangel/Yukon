@@ -98,8 +98,11 @@ int checkCard(Card *deck_card) {
             break;
     }
 
-    if (deck[suit_value][value].suit == deck_card->suit && deck[suit_value][value].value == deck_card->value) {
+    Card *card_to_test = &deck[suit_value][value];
+
+    if ( card_to_test->suit == deck_card->suit &&  card_to_test->value == deck_card->value) {
         if (!deck_card->existsInGame) {
+            deck_card->existsInGame = true;
             return 0;
         } else {
             //Duplicate cards
@@ -124,7 +127,7 @@ int createDeck(char filepath[]) {
         Card *newCard = (Card *) malloc(sizeof(Card));
         newCard->value = line[0];
         newCard->suit = line[1];
-        newCard->existsInGame = true;
+
         ++counter;
         addNode(cardDeck, newCard);
         checkCard(newCard);
