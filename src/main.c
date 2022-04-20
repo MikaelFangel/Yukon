@@ -8,10 +8,14 @@ int main(void) {
     char input[256];
     char filepath[256];
     bool gameRunning = true;
+    generateEmptyView(true);
 
     while (gameRunning) {
-        generateView(true);
         scanf("%s %s", input, filepath);
+
+        if (strcmp("SW", input) == 0) {
+            generateView(NULL);
+        }
 
         if (strcmp("LD", input) == 0) {
             // If filepath is not empty
@@ -22,8 +26,6 @@ int main(void) {
             } else {
                 printCommandConsole("LD", "The file does not exist");
             }
-        } else {
-            printCommandConsole("LD", "OK");
         }
 
         gameRunning = false;
