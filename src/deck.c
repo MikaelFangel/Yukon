@@ -32,22 +32,28 @@ int fillSuits(Linked_list *list) {
 }
 int checkCard(Linked_list *list, Card deck_card) {
     int counter = 0;
-    bool match = false;
     Node *node = list->head;
-    // For each card in the deck, go trough the linked list, and check if we can find a match
+    // Given a card, go trough the linked list, and check if we can find a match
     while (node != NULL) {
         Card *card = (Card *) node;
+        // Check linked list node up against the deck
         if (card->suit == deck_card.suit && card->value == deck_card.value) {
-            match = true;
-            ++counter;
-            // If match, check the next card in deck
-            continue;
+            if (!card->existsInGame) {
+                ++counter;
+                card->existsInGame = true;
+                // If match, then stop looping
+                break;
+            } else {
+                //Duplicate cards
+                return -2;
+            }
         } else {
+            // No match - check next node
             node = node->next;
         }
     }
     // If no match in linked list, then the card does not exist
-    if (!match) {
+    if (node == NULL) {
         return -1;
     }
     return 0;
@@ -57,7 +63,7 @@ int createDeck(char filepath[]) {
     fptr = fopen(filepath, "r");
     if (fptr == NULL) {
         // Not sure if this works... should exit the method
-        exit(0);
+        return -1;
     }
     char line[4];
     Linked_list *cardDeck = createLinkedList();
@@ -66,7 +72,6 @@ int createDeck(char filepath[]) {
         Card *newCard = (Card *) malloc(sizeof(Card));
         newCard->value = line[0];
         newCard->suit = line[1];
-        newCard->existsInGame = true;
         addNode(cardDeck, newCard);
     }
     fclose(fptr);
