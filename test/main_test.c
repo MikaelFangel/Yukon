@@ -5,8 +5,11 @@
 
 void linkedListAdd();
 
+void findKeyTest();
+
 int main(void) {
     linkedListAdd();
+    findKeyTest();
 
     return 0;
 }
@@ -14,7 +17,7 @@ int main(void) {
 void linkedListAdd() {
     bool status = true;
 
-    Linked_list * list = createLinkedList();
+    Linked_list *list = createLinkedList();
     addNode(list, "1");
     addNode(list, "2");
     addNode(list, "3");
@@ -26,22 +29,49 @@ void linkedListAdd() {
     addNode(list, "9");
     addNode(list, "10");
 
-    if(strcmp(list->head->key, "1") != 0) {
+    if (strcmp(list->head->key, "1") != 0) {
         puts("linkedListAdd Error! Wrong node at head");
         status = false;
     }
-    if(strcmp(list->tail->key, "10") != 0) {
+    if (strcmp(list->tail->key, "10") != 0) {
         puts("linkedListAdd Error! Wrong node at tail");
         status = false;
     }
-    if(list->size != 10) {
+    if (list->size != 10) {
         puts("linkedListAdd Error! Wrong size of list");
         status = false;
     }
 
-    if(status == true) {
+    if (status == true) {
         puts("linkedListAdd: Test Passed!");
     }
 
     deleteLinkedList(list);
+}
+
+void findKeyTest() {
+    char key = '7';
+    char notFound = '9';
+
+    Linked_list *list = createLinkedList();
+    addNode(list, "1");
+    addNode(list, "2");
+    addNode(list, "3");
+    addNode(list, "4");
+    addNode(list, "5");
+    addNode(list, "6");
+    addNode(list, &key);
+    addNode(list, "8");
+    addNode(list, "9");
+    addNode(list, "10");
+
+    Node *result = findKey(list, &key);
+    // void *result2 = findKey(list, &notFound);
+
+    printf("%c", *(char*) result->key);
+
+    if (result->key != NULL && *(char*) result->key == '7')
+        puts("findKeyTest: Test Passed!");
+    else
+        puts("findKeyTest Error!");
 }
