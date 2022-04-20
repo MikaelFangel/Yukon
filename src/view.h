@@ -4,10 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdarg.h>
+#include "linkedlist.h"
 
-int generateView(bool isEmpty);
+int generateEmptyView(bool emptyConsole);
+int generateView(Node * head);
 int generateColumns();
-int clearView();
+void clearView();
 int printCommandConsole(char lastCommand[], char message[]);
 
 #endif
