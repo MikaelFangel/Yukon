@@ -9,7 +9,7 @@ Card spades[SUIT_SIZE];
 Card *deck[4] = {clubs, diamonds, hearts, spades};
 
 // TODO Implement with linked list
-int fillSuits(Linked_list *list) {
+int fillSuits() {
     for (int i = 0; i < 4; i++) {
         deck[i][0].value = 'A';
 
@@ -24,40 +24,91 @@ int fillSuits(Linked_list *list) {
     }
     return 0;
 }
-int checkCard(Linked_list *list, Card deck_card) {
+int checkCard(Card *deck_card) {
     int counter = 0;
-    Node *node = list->head;
-    // Given a card, go trough the linked list, and check if we can find a match
-    while (node != NULL) {
-        Card *card = (Card *) node;
-        // Check linked list node up against the deck
-        if (card->suit == deck_card.suit && card->value == deck_card.value) {
-            if (!card->existsInGame) {
-                ++counter;
-                card->existsInGame = true;
-                // If match, then stop looping
-                break;
-            } else {
-                //Duplicate cards
-                return -2;
-            }
+    int suit_value;
+    int value;
+    switch (deck_card->suit) {
+        case 'C' :
+            suit_value = 1;
+            break;
+        case 'D' :
+            suit_value = 2;
+            break;
+        case 'H' :
+            suit_value = 3;
+            break;
+        case 'S' :
+            suit_value = 4;
+            break;
+        default:
+            // Error handling?
+            break;
+    }
+    switch (deck_card->value) {
+        case 'A':
+            value = 1;
+            break;
+        case '2':
+            value = 2;
+            break;
+        case '3':
+            value = 3;
+            break;
+        case '4':
+            value = 4;
+            break;
+        case '5':
+            value = 5;
+            break;
+        case '6':
+            value = 6;
+            break;
+        case '7':
+            value = 7;
+            break;
+        case '8':
+            value = 8;
+            break;
+        case '9':
+            value = 9;
+            break;
+        case 'T':
+            value = 10;
+            break;
+        case 'J':
+            value = 11;
+            break;
+        case 'Q':
+            value = 12;
+            break;
+        case 'K':
+            value = 13;
+            break;
+        default:
+            //Error handling?
+            break;
+    }
+
+    if (deck[suit_value][value].suit == deck_card->suit && deck[suit_value][value].value == deck_card->value) {
+        if (!deck_card->existsInGame) {
+            ++counter;
+            deck_card->existsInGame = true;
+            return 0;
         } else {
-            // No match - check next node
-            node = node->next;
+            //Duplicate cards
+            return 1;
         }
     }
-    // If no match in linked list, then the card does not exist
-    if (node == NULL) {
-        return -1;
-    }
-    return 0;
+    // Card cannot be found
+    return 2;
 }
 int createDeck(char filepath[]) {
     FILE *fptr;
     fptr = fopen(filepath, "r");
     if (fptr == NULL) {
         // Not sure if this works... should exit the method
-        return -1;
+        return 1;
     }
     char line[4];
     Linked_list *cardDeck = createLinkedList();
@@ -67,10 +118,8 @@ int createDeck(char filepath[]) {
         newCard->value = line[0];
         newCard->suit = line[1];
         addNode(cardDeck, newCard);
+        checkCard(newCard);
     }
     fclose(fptr);
-    if (fillSuits(cardDeck) != 0) {
-        // Do something. All cards does not exist.
-    }
     return 0;
 }
