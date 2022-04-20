@@ -25,21 +25,20 @@ int fillSuits() {
     return 0;
 }
 int checkCard(Card *deck_card) {
-    int counter = 0;
     int suit_value;
     int value;
     switch (deck_card->suit) {
         case 'C' :
-            suit_value = 1;
+            suit_value = 0;
             break;
         case 'D' :
-            suit_value = 2;
+            suit_value = 1;
             break;
         case 'H' :
-            suit_value = 3;
+            suit_value = 2;
             break;
         case 'S' :
-            suit_value = 4;
+            suit_value = 3;
             break;
         default:
             // Error handling?
@@ -47,43 +46,43 @@ int checkCard(Card *deck_card) {
     }
     switch (deck_card->value) {
         case 'A':
-            value = 1;
+            value = 0;
             break;
         case '2':
-            value = 2;
+            value = 1;
             break;
         case '3':
-            value = 3;
+            value = 2;
             break;
         case '4':
-            value = 4;
+            value = 3;
             break;
         case '5':
-            value = 5;
+            value = 4;
             break;
         case '6':
-            value = 6;
+            value = 5;
             break;
         case '7':
-            value = 7;
+            value = 6;
             break;
         case '8':
-            value = 8;
+            value = 7;
             break;
         case '9':
-            value = 9;
+            value = 8;
             break;
         case 'T':
-            value = 10;
+            value = 9;
             break;
         case 'J':
-            value = 11;
+            value = 10;
             break;
         case 'Q':
-            value = 12;
+            value = 11;
             break;
         case 'K':
-            value = 13;
+            value = 12;
             break;
         default:
             //Error handling?
@@ -92,8 +91,6 @@ int checkCard(Card *deck_card) {
 
     if (deck[suit_value][value].suit == deck_card->suit && deck[suit_value][value].value == deck_card->value) {
         if (!deck_card->existsInGame) {
-            ++counter;
-            deck_card->existsInGame = true;
             return 0;
         } else {
             //Duplicate cards
@@ -107,20 +104,28 @@ int createDeck(char filepath[]) {
     FILE *fptr;
     fptr = fopen(filepath, "r");
     if (fptr == NULL) {
-        // Not sure if this works... should exit the method
+        // No file found
         return 1;
     }
     char line[4];
     Linked_list *cardDeck = createLinkedList();
+    int counter = 0;
     // While file not empty, read a line, create a card, and add it to linked list.
     while (fgets(line, sizeof line, fptr) != NULL) {
         Card *newCard = (Card *) malloc(sizeof(Card));
         newCard->value = line[0];
         newCard->suit = line[1];
         newCard->existsInGame = true;
+        ++counter;
         addNode(cardDeck, newCard);
         checkCard(newCard);
     }
     fclose(fptr);
-    return 0;
+    if (counter == 52) {
+        return 0;
+    } else {
+        // Not enough cards
+        return 2;
+    }
+
 }
