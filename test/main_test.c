@@ -27,19 +27,21 @@ void linkedListAdd() {
     addNode(list, "10");
 
     if(strcmp(list->head->key, "1") != 0) {
-        printf("linkedListAdd Error! Wrong node at head");
+        puts("linkedListAdd Error! Wrong node at head");
         status = false;
     }
     if(strcmp(list->tail->key, "10") != 0) {
-        printf("linkedListAdd Error! Wrong node at tail");
+        puts("linkedListAdd Error! Wrong node at tail");
         status = false;
     }
     if(list->size != 10) {
-        printf("linkedListAdd Error! Wrong size of list");
+        puts("linkedListAdd Error! Wrong size of list");
         status = false;
     }
 
     if(status == true) {
         puts("linkedListAdd: Test Passed!");
     }
+
+    deleteLinkedList(list);
 }
