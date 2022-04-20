@@ -59,10 +59,10 @@ void deleteLinkedList(Linked_list *list) {
     free(list);
 }
 
-void toString(Linked_list *list) {
-    /*void *node = head;
+void LinkedListToString(Linked_list *list) {
+    Node *node = list->head;
     while (node != NULL) {
-        printf("%s", *node.);
-        node = node.next;
-    }*/
+        printf("%c\n", *(char*) node->key);
+        node = node->next;
+    }
 }
