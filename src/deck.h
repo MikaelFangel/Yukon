@@ -22,6 +22,6 @@ extern Card *deck[4];
 
 int fillSuits();
 int createDeck(char filepath[]);
-int checkCard(Linked_list *list, Card card);
+int checkCard(Card *deck_card);
 
 #endif

@@ -16,6 +16,7 @@ int main(void) {
         if (strcmp("LD", input) == 0) {
             // If filepath is not empty
             if (strcmp(filepath, "") != 0) {
+                fillSuits();
                 createDeck(filepath);
                 printCommandConsole("LD", "");
                 } else {
