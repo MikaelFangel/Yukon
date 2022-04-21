@@ -7,7 +7,7 @@
 #include <stdarg.h>
 #include "linkedlist.h"
 
-int generateEmptyView(bool emptyConsole);
+int generateEmptyView(char lastCommand[], char message[]);
 int generateView(Node * head);
 int generateColumns();
 void clearView();

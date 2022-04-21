@@ -8,7 +8,7 @@ int main(void) {
     char input[256];
     char filepath[256];
     bool gameRunning = true;
-    generateEmptyView(true);
+    generateEmptyView("", "");
 
     while (gameRunning) {
         scanf("%s %s", input, filepath);
