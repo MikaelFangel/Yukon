@@ -1,7 +1,7 @@
 #include "view.h"
 #include "deck.h"
 
-int generateEmptyView(bool emptyConsole) {
+int generateEmptyView(char lastCommand[], char message[]) {
     clearView();
     generateColumns();
     int Fnum = 1;
@@ -10,7 +10,6 @@ int generateEmptyView(bool emptyConsole) {
         for (int j = 0; j < 8; ++j) {
             printf("\t");
         }
-
 
         if (i % 2 == 1) {
             printf("\t[]\tF%d\n", Fnum);
@@ -21,8 +20,7 @@ int generateEmptyView(bool emptyConsole) {
         }
     }
 
-    if (emptyConsole == true)
-        printCommandConsole("", "");
+    printCommandConsole(lastCommand, message);
     return 0;
 }
 
@@ -31,9 +29,7 @@ int generateView(Node *head) {
 
     // Creates an empty view
     if (current_node == NULL) {
-        generateEmptyView(false);
-        printCommandConsole("SW", "ERROR! No deck of cards is loaded");
-//        printf("ERROR: No deck of cards is loaded");
+        generateEmptyView("SW", "ERROR! No deck of cards is loaded");
         return 1;
     }
 
@@ -45,6 +41,9 @@ int generateView(Node *head) {
 
     for (int i = 1; i <= 8; i++) {
         for (int j = 0; j < 7; ++j) {
+            if (card->faceDown == true)
+                card->faceDown = false;
+
             value = card->value;
             suit = card->suit;
 
