@@ -38,23 +38,21 @@ void removeNode(Linked_list *list) {
     if (list->size == 0) {
         return;
     } else {
-        Node tempNode = *(Node *) list->tail->prev;
-        tempNode.next = NULL;
-        free(list->tail);
+        Node *node = list->tail;
+        if(node->prev != NULL) {
+            Node *prevNode = node->prev;
+            prevNode->next = NULL;
+            list->tail = prevNode;
+        }
 
-        list->tail = &tempNode;
+        free(node);
         list->size--;
     }
 }
 
 void deleteLinkedList(Linked_list *list) {
-    if (list->size > 0) {
-        Node *node = list->head;
-        while (node != NULL) {
-            Node *tempNode = node;
-            node = node->next;
-            free(tempNode);
-        }
+    while(list->size > 0) {
+        removeNode(list);
     }
 
     free(list);

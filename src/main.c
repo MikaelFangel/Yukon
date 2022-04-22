@@ -5,18 +5,23 @@
 #include <string.h>
 
 int main(void) {
+//    Source: https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000763330-Debugger-not-working-on-Windows-CLion-
+#if defined(_WIN32) || defined(_WIN64)
+    setbuf(stdout, 0);
+#endif
+
     char input[256];
     char filepath[256];
     bool gameRunning = true;
-    generateEmptyView("", "");
+    //generateEmptyView("", "");
 
-    Linked_list *list = loadDeck("C:\\Users\\silja\\OneDrive\\Dokumenter\\Yukon\\Resources\\deck.txt");
+    Linked_list *list = loadDeck("/home/mikael/Programming/CLionProjects/Yukon/Resources/deck.txt");
 
     while (gameRunning) {
         scanf("%s %s", input, filepath);
 
         if (strcmp("SW", input) == 0) {
-            generateView(list->head);
+            generateView(list);
         }
 
         if (strcmp("LD", input) == 0) {
@@ -33,7 +38,6 @@ int main(void) {
         }
 
         gameRunning = false;
-
     }
 
     return 0;
