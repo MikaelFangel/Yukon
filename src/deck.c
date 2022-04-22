@@ -112,7 +112,7 @@ int checkCard(Card *deck_card) {
     // Card cannot be found
     return 2;
 }
-int createDeck(char filepath[]) {
+Linked_list LoadDeck(char filepath[]) {
     FILE *fptr;
     fptr = fopen(filepath, "r");
     if (fptr == NULL) {

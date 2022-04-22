@@ -21,7 +21,7 @@ extern Card spades[SUIT_SIZE];
 extern Card *deck[4];
 
 int fillSuits();
-int createDeck(char filepath[]);
+Linked_list LoadDeck(char filepath[]);
 int checkCard(Card *deck_card);
 
 #endif
