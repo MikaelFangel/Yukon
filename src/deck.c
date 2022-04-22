@@ -10,7 +10,7 @@ Card *deck[4] = {clubs, diamonds, hearts, spades};
 
 // TODO Implement with linked list
 int fillSuits() {
-    char suits[4] = {'C', 'D', 'H','S'};
+    char suits[4] = {'C', 'D', 'H', 'S'};
 
     for (int i = 0; i < 4; i++) {
         deck[i][0].value = 'A';
@@ -33,6 +33,7 @@ int fillSuits() {
 
     return 0;
 }
+
 int checkCard(Card *deck_card) {
     int suit_value;
     int value;
@@ -100,7 +101,7 @@ int checkCard(Card *deck_card) {
 
     Card *card_to_test = &deck[suit_value][value];
 
-    if ( card_to_test->suit == deck_card->suit &&  card_to_test->value == deck_card->value) {
+    if (card_to_test->suit == deck_card->suit && card_to_test->value == deck_card->value) {
         if (!deck_card->existsInGame) {
             deck_card->existsInGame = true;
             return 0;
@@ -112,7 +113,8 @@ int checkCard(Card *deck_card) {
     // Card cannot be found
     return 2;
 }
-Linked_list LoadDeck(char filepath[]) {
+
+Linked_list *loadDeck(char filepath[]) {
     FILE *fptr;
     fptr = fopen(filepath, "r");
     if (fptr == NULL) {
@@ -130,6 +132,6 @@ Linked_list LoadDeck(char filepath[]) {
         checkCard(newCard);
     }
     fclose(fptr);
-    return *cardDeck;
+    return cardDeck;
 }
 

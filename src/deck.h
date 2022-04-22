@@ -6,7 +6,7 @@
 #include "linkedlist.h"
 
 #define SUIT_SIZE 13
- typedef struct {
+typedef struct {
     char suit;
     char value;
     bool faceDown;
@@ -21,7 +21,9 @@ extern Card spades[SUIT_SIZE];
 extern Card *deck[4];
 
 int fillSuits();
-Linked_list LoadDeck(char filepath[]);
+
+Linked_list *loadDeck(char filepath[]);
+
 int checkCard(Card *deck_card);
 
 #endif
