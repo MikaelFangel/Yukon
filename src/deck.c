@@ -116,28 +116,20 @@ Linked_list LoadDeck(char filepath[]) {
     FILE *fptr;
     fptr = fopen(filepath, "r");
     if (fptr == NULL) {
-        // No file found
-        return 1;
+        // No file found - error handling?
+
     }
     char line[4];
     Linked_list *cardDeck = createLinkedList();
-    int counter = 0;
     // While file not empty, read a line, create a card, and add it to linked list.
     while (fgets(line, sizeof line, fptr) != NULL) {
         Card *newCard = (Card *) malloc(sizeof(Card));
         newCard->value = line[0];
         newCard->suit = line[1];
-
-        ++counter;
         addNode(cardDeck, newCard);
         checkCard(newCard);
     }
     fclose(fptr);
-    if (counter == 52) {
-        return 0;
-    } else {
-        // Not enough cards
-        return 2;
-    }
-
+    return *cardDeck;
 }
+
