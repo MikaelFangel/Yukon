@@ -40,6 +40,8 @@ void removeNode(Linked_list *list) {
     } else {
         Node tempNode = *(Node *) list->tail->prev;
         tempNode.next = NULL;
+        if(list->tail->key != NULL)
+            free(list->tail->key);
         free(list->tail);
 
         list->tail = &tempNode;
@@ -53,6 +55,8 @@ void deleteLinkedList(Linked_list *list) {
         while (node != NULL) {
             Node *tempNode = node;
             node = node->next;
+            if(tempNode->key != NULL)
+                free(tempNode->key);
             free(tempNode);
         }
     }
