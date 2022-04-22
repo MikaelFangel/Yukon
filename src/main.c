@@ -21,7 +21,9 @@ int main(void) {
             // If filepath is not empty
             if (strcmp(filepath, "") != 0) {
                 fillSuits();
-                createDeck(filepath);
+                Linked_list test = LoadDeck(filepath);
+                DeckToString(&test);
+                //LinkedListToString(&test);
                 printCommandConsole("LD", "");
             } else {
                 printCommandConsole("LD", "The file does not exist");
