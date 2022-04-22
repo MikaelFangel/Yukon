@@ -38,7 +38,6 @@ int main(void) {
         }
 
         gameRunning = false;
-
     }
 
     return 0;

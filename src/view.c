@@ -97,6 +97,7 @@ int printCommandConsole(char lastCommand[], char message[]) {
     printf("Message: %s \n", message);
     printf("INPUT > ");
 
+    fflush(stdout);
     return 0;
 }
 
