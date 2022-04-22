@@ -68,7 +68,7 @@ void findKeyTest() {
     Node *result = findKey(list, &key);
     // void *result2 = findKey(list, &notFound);
 
-    printf("%c", *(char*) result->key);
+    //printf("%c", *(char*) result->key);
 
     if (result->key != NULL && *(char*) result->key == '7')
         puts("findKeyTest: Test Passed!");

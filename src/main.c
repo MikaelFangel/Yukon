@@ -4,6 +4,22 @@
 #include "deck.h"
 #include <string.h>
 
+void LinkedListToStringTest(Linked_list *list) {
+    Node *node = list->head;
+    int i = 0;
+    while (node != NULL) {
+        Card *card = (Card*) node->key;
+        printf("%c", card->value);
+        printf("%c \t", card->suit);
+        if (i % 7 == 0) {
+            printf("\n");
+            i = 0;
+        }
+        i++;
+        node = node->next;
+    }
+}
+
 int main(void) {
 //    Source: https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000763330-Debugger-not-working-on-Windows-CLion-
 #if defined(_WIN32) || defined(_WIN64)
@@ -13,9 +29,10 @@ int main(void) {
     char input[256];
     char filepath[256];
     bool gameRunning = true;
-    generateEmptyView("", "");
+    //generateEmptyView("", "");
 
-    Linked_list *list = loadDeck("C:\\Users\\silja\\OneDrive\\Dokumenter\\Yukon\\Resources\\deck.txt");
+    Linked_list *list = loadDeck("/home/mikael/Programming/CLionProjects/Yukon/Resources/deck.txt");
+    LinkedListToStringTest(list);
 
     while (gameRunning) {
         scanf("%s %s", input, filepath);
