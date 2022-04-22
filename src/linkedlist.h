@@ -3,11 +3,13 @@
 
 #include <stdlib.h>
 
-typedef struct {
+struct Node {
     void *key;
-    void *next;
-    void *prev;
-} Node;
+    struct Node *next;
+    struct Node *prev;
+};
+
+typedef struct Node Node;
 
 typedef struct {
     Node *head;
@@ -16,11 +18,15 @@ typedef struct {
 } Linked_list;
 
 Linked_list *createLinkedList();
+
 void *findKey(Linked_list *list, void *key);
 
 void addNode(Linked_list *list, void *key);
+
 void removeNode(Linked_list *list);
+
 void deleteLinkedList(Linked_list *list);
+
 void LinkedListToString(Linked_list *list);
 
 #endif //YUKON_LINKEDLIST_H
