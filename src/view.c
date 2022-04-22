@@ -14,8 +14,7 @@ int generateEmptyView(char lastCommand[], char message[]) {
         if (i % 2 == 1) {
             printf("\t[]\tF%d\n", Fnum);
             Fnum++;
-        }
-        else {
+        } else {
             printf("\n");
         }
     }
@@ -24,8 +23,8 @@ int generateEmptyView(char lastCommand[], char message[]) {
     return 0;
 }
 
-int generateView(Node *head) {
-    Node *current_node = head;
+int generateView(Linked_list *deck_list) {
+    Node *current_node = deck_list->head;
 
     // Creates an empty view
     if (current_node == NULL) {
@@ -35,44 +34,52 @@ int generateView(Node *head) {
 
     clearView();
     generateColumns();
-    Card *card = current_node->key;
+
+    int Fnum = 1;
+    Card *card = (Card *) current_node->key;;
     char value;
     char suit;
 
     for (int i = 1; i <= 8; i++) {
         for (int j = 0; j < 7; ++j) {
-            if (card != NULL) {
-
-                if (card->faceDown == true)
-                    card->faceDown = false;
-
-                value = card->value;
-                suit = card->suit;
-
-                printf("%c%c\t", value, suit);
-                card = current_node->next;
+            if (card == NULL || current_node == NULL) {
+                for (int i = 1; i <= 8; i++) {
+                printf("\t");
+                }
+                break;
             }
+
+            if (card->faceDown == true)
+                card->faceDown = false;
+
+            value = card->value;
+            suit = card->suit;
+
+            printf("%c%c\t", value, suit);
+            current_node = current_node->next;
+            if (current_node != NULL)
+                card = (Card *) current_node->key;
         }
 
         if (i % 2 == 1) {
-            printf("\t[]\tF%d\n", i);
-            current_node = current_node->next;
-        }
-        else {
+            printf("\t[]\tF%d\n", Fnum);
+            Fnum++;
+        } else {
             printf("\n");
         }
     }
 
-    for (int j = 0; j < 7; ++j) {
-        value = card->value;
-        suit = card->suit;
+    // for (int j = 0; j < 7; ++j) {
+    //     value = card->value;
+    //     suit = card->suit;
+    //
+    //     printf("%c%c\t", value, suit);
+    //     card = current_node->next;
+    //
+    //     if (card == NULL) break;
+    // }
 
-        printf("%c%c\t", value, suit);
-        card = current_node->next;
-
-        if (card == NULL) break;
-    }
-
+    printf("\n");
     printCommandConsole("SW", "OK");
     return 0;
 }
@@ -90,6 +97,7 @@ int printCommandConsole(char lastCommand[], char message[]) {
     printf("Message: %s \n", message);
     printf("INPUT > ");
 
+    fflush(stdout);
     return 0;
 }
 
@@ -98,11 +106,12 @@ int printCommandConsole(char lastCommand[], char message[]) {
  */
 void clearView() {
     printf("\n\n\n");
-    #if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
-        system("clear");
-    #endif
 
-    #if defined(_WIN32) || defined(_WIN64)
-        system("cls");
-    #endif
+#if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
+    system("clear");
+#endif
+
+#if defined(_WIN32) || defined(_WIN64)
+    system("cls");
+#endif
 }
