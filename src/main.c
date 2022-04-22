@@ -10,18 +10,20 @@ int main(void) {
     bool gameRunning = true;
     generateEmptyView("", "");
 
+    Linked_list *list = loadDeck("C:\\Users\\silja\\OneDrive\\Dokumenter\\Yukon\\Resources\\deck.txt");
+
     while (gameRunning) {
         scanf("%s %s", input, filepath);
 
         if (strcmp("SW", input) == 0) {
-            generateView(NULL);
+            generateView(list->head);
         }
 
         if (strcmp("LD", input) == 0) {
             // If filepath is not empty
             if (strcmp(filepath, "") != 0) {
                 fillSuits();
-                createDeck(filepath);
+                loadDeck(filepath);
                 printCommandConsole("LD", "");
             } else {
                 printCommandConsole("LD", "The file does not exist");

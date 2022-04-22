@@ -41,16 +41,17 @@ int generateView(Node *head) {
 
     for (int i = 1; i <= 8; i++) {
         for (int j = 0; j < 7; ++j) {
-            if (card == NULL) break;
+            if (card != NULL) {
 
-            if (card->faceDown == true)
-                card->faceDown = false;
+                if (card->faceDown == true)
+                    card->faceDown = false;
 
-            value = card->value;
-            suit = card->suit;
+                value = card->value;
+                suit = card->suit;
 
-            printf("%c%c\t", value, suit);
-            card = current_node->next;
+                printf("%c%c\t", value, suit);
+                card = current_node->next;
+            }
         }
 
         if (i % 2 == 1) {
