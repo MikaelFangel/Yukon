@@ -41,6 +41,8 @@ int generateView(Node *head) {
 
     for (int i = 1; i <= 8; i++) {
         for (int j = 0; j < 7; ++j) {
+            if (card == NULL) break;
+
             if (card->faceDown == true)
                 card->faceDown = false;
 
@@ -94,6 +96,7 @@ int printCommandConsole(char lastCommand[], char message[]) {
  * clears console depending on OS
  */
 void clearView() {
+    printf("\n\n\n");
     #if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
         system("clear");
     #endif
