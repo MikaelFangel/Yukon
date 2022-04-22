@@ -13,9 +13,9 @@ int main(void) {
     char input[256];
     char filepath[256];
     bool gameRunning = true;
-    generateEmptyView("", "");
+    //generateEmptyView("", "");
 
-    Linked_list *list = loadDeck("C:\\Users\\silja\\OneDrive\\Dokumenter\\Yukon\\Resources\\deck.txt");
+    Linked_list *list = loadDeck("/home/mikael/Programming/CLionProjects/Yukon/Resources/deck.txt");
 
     while (gameRunning) {
         scanf("%s %s", input, filepath);
