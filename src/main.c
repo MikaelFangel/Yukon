@@ -14,49 +14,56 @@ int main(void) {
     char filepath[256];
     char buf[256];
     Linked_list *deck;
-    bool gameRunning = true;
     bool deckLoaded = false;
+    bool startupPhase = true;
+    bool gameRunning = true;
     generateEmptyView("", "");
 
     while (!deckLoaded) {
         fgets(buf, 256, stdin);
+        // filepath = ../Resources/deck.txt
         int numOfInputs = sscanf(buf, "%s %s", input, filepath);
 
         if (strcmp("LD", input) == 0) {
             // If filepath is not empty
             if (numOfInputs == 2) {
-                FILE *file;
-                if ((file = fopen(filepath,"r"))!=NULL) {
+                FILE *file = fopen(filepath, "r");
+                if (file != NULL) {
                     fillSuits();
-                    deck = loadDeck(filepath);
+                    deck = loadDeck(file);
                     // DeckToString(&deck);
                     // LinkedListToString(&test);
                     generateEmptyView("LD", "OK");
                     deckLoaded = true;
-                }
-                else {
+                    fclose(file);
+                } else {
                     generateEmptyView("LD", "The file does not exist");
                 }
-            }
-            else if (numOfInputs == 1) {
-            //    TODO: Load an unsorted deck!
-            }
-            else {
+            } else if (numOfInputs == 1) {
+                //    TODO: Load an unsorted deck!
+            } else {
                 generateEmptyView("", "Unexpected input. Try again.");
             }
-        }
-        else {
+        } else {
             generateEmptyView("", "Error! The only valid command is LD");
         }
     }
 
-    // Linked_list *deck = loadDeck("../Resources/deck.txt");
-    while (gameRunning) {
-        scanf("%s %s", input, filepath);
+    // Startup Phase
+    while (startupPhase) {
+        fgets(buf, 256, stdin);
+        // filepath = ../Resources/deck.txt
+        int numOfInputs = sscanf(buf, "%s %s", input, filepath);
 
         if (strcmp("SW", input) == 0) {
             showDeck(deck, true);
         }
+
+        startupPhase = false;
+    }
+
+    // Play Phase
+    while (gameRunning) {
 
         gameRunning = false;
     }

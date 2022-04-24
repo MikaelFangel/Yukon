@@ -114,13 +114,7 @@ int checkCard(Card *deck_card) {
     return 2;
 }
 
-Linked_list *loadDeck(char filepath[]) {
-    FILE *fptr;
-    fptr = fopen(filepath, "r");
-    if (fptr == NULL) {
-        // No file found - error handling?
-
-    }
+Linked_list *loadDeck(FILE *fptr) {
     char line[4];
     Linked_list *cardDeck = createLinkedList();
     // While file not empty, read a line, create a card, and add it to linked list.
@@ -131,7 +125,6 @@ Linked_list *loadDeck(char filepath[]) {
         addNode(cardDeck, newCard);
         checkCard(newCard);
     }
-    fclose(fptr);
     return cardDeck;
 }
 

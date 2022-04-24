@@ -22,7 +22,7 @@ extern Card *deck[4];
 
 int fillSuits();
 
-Linked_list *loadDeck(char filepath[]);
+Linked_list *loadDeck(FILE *);
 
 int checkCard(Card *deck_card);
 
