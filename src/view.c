@@ -1,7 +1,13 @@
 #include "view.h"
 #include "deck.h"
 
-int generateEmptyView(char lastCommand[], char message[]) {
+/**
+ * Generates the start view or empty views with error messages
+ * @param lastCommand For start view, type ""
+ * @param message For start view, type ""
+ * @return
+ */
+void generateEmptyView(char lastCommand[], char message[]) {
     clearView();
     generateColumns();
     int Fnum = 1;
@@ -20,10 +26,14 @@ int generateEmptyView(char lastCommand[], char message[]) {
     }
 
     printCommandConsole(lastCommand, message);
-    return 0;
 }
 
-int generateView(Linked_list *deck_list) {
+/**
+ * View after calling SW and LD
+ * @param deck_list the deck given as a Linked List
+ * @param faceUp true of SW, false if LD
+ */
+void showDeck(Linked_list *deck_list, bool faceUp) {
     Node *current_node = deck_list->head;
 
     // Creates an empty view
@@ -49,11 +59,20 @@ int generateView(Linked_list *deck_list) {
                 break;
             }
 
-            if (card->faceDown == true)
-                card->faceDown = false;
+            if (faceUp){
+                // if (card->faceUp == true)
+                //     card->faceUp = false;
 
-            value = card->value;
-            suit = card->suit;
+                value = card->value;
+                suit = card->suit;
+            }
+            else {
+                // if (card->faceUp == false)
+                //     card->faceUp = true;
+
+                value = '[';
+                suit = ']';
+            }
 
             printf("%c%c\t", value, suit);
             current_node = current_node->next;
@@ -80,8 +99,10 @@ int generateView(Linked_list *deck_list) {
     // }
 
     printf("\n");
-    printCommandConsole("SW", "OK");
-    return 0;
+    if (faceUp)
+        printCommandConsole("SW", "OK");
+    else
+        printCommandConsole("LD", "OK");
 }
 
 int generateColumns() {
