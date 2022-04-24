@@ -12,29 +12,50 @@ int main(void) {
 
     char input[256];
     char filepath[256];
+    char buf[256];
+    Linked_list *deck;
     bool gameRunning = true;
+    bool deckLoaded = false;
     generateEmptyView("", "");
 
-    Linked_list *list = loadDeck("../Resources/deck.txt");
+    while (!deckLoaded) {
+        fgets(buf, 256, stdin);
+        int numOfInputs = sscanf(buf, "%s %s", input, filepath);
 
+        if (strcmp("LD", input) == 0) {
+            // If filepath is not empty
+            if (numOfInputs == 2) {
+                FILE *file;
+                if ((file = fopen(filepath,"r"))!=NULL) {
+                    fillSuits();
+                    deck = loadDeck(filepath);
+                    // DeckToString(&deck);
+                    // LinkedListToString(&test);
+                    generateEmptyView("LD", "OK");
+                    deckLoaded = true;
+                }
+                else {
+                    generateEmptyView("LD", "The file does not exist");
+                }
+            }
+            else if (numOfInputs == 1) {
+            //    TODO: Load an unsorted deck!
+            }
+            else {
+                generateEmptyView("", "Unexpected input. Try again.");
+            }
+        }
+        else {
+            generateEmptyView("", "Error! The only valid command is LD");
+        }
+    }
+
+    // Linked_list *deck = loadDeck("../Resources/deck.txt");
     while (gameRunning) {
         scanf("%s %s", input, filepath);
 
         if (strcmp("SW", input) == 0) {
-            generateView(list);
-        }
-
-        if (strcmp("LD", input) == 0) {
-            // If filepath is not empty
-            if (strcmp(filepath, "") != 0) {
-                fillSuits();
-                // Linked_list test = loadDeck(filepath);
-                // DeckToString(&test);
-                //LinkedListToString(&test);
-                printCommandConsole("LD", "");
-            } else {
-                printCommandConsole("LD", "The file does not exist");
-            }
+            showDeck(deck, true);
         }
 
         gameRunning = false;
