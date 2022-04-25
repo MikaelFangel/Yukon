@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include "view.h"
 #include "deck.h"
+#include "commands.h"
 #include <string.h>
 
 int main(void) {
@@ -10,24 +11,23 @@ int main(void) {
     setbuf(stdout, 0);
 #endif
 
-    char input[256];
-    char filepath[] = {"../resources/"};
-    char filename[256];
-    char buf[256];
+    char input[256], filename[256], filepath[256], buf[256];
     Linked_list *LoadedDeck;
     bool deckLoaded = false;
-    bool startupPhase = true;
-    bool gameRunning = true;
+    bool startupPhase = true, gameRunning = true;
     generateEmptyView("", "");
 
     while (!deckLoaded) {
-        fgets(buf, 256, stdin);
-        int numOfInputs = sscanf(buf, "%s %s", input, filename);
+        fgets(buf, sizeof (buf), stdin);
+        char *inputs;
+        inputs = strtok(buf, " ");
 
-        if (strcasecmp("LD", input) == 0) {
+        if (strcasecmp("LD", inputs) == 0 || strcasecmp("LD\n", inputs) == 0) {
             // If filepath is not empty
-            if (numOfInputs == 2) {
-                strcat(filepath, filename);
+            inputs = strtok(NULL, "\n");
+            if (inputs != NULL) {
+                strncpy(filepath, "../resources/", 256);
+                strcat(filepath, inputs);
                 strcat(filepath, ".txt");
 
                 FILE *file = fopen(filepath, "r");
@@ -42,10 +42,10 @@ int main(void) {
                 } else {
                     generateEmptyView("LD", "The file does not exist");
                 }
-            } else if (numOfInputs == 1) {
-                //    TODO: Load an unsorted LoadedDeck!
             } else {
-                generateEmptyView("", "Unexpected input. Try again.");
+                //    TODO: Load an unsorted LoadedDeck!
+                puts("LD was pressed");
+                QQ(0,0);
             }
         } else {
             generateEmptyView("", "Error! The only valid command is LD");
@@ -54,7 +54,7 @@ int main(void) {
 
     // Startup Phase
     while (startupPhase) {
-        fgets(buf, 256, stdin);
+        fgets(buf, sizeof (buf), stdin);
         // filepath = ../resources/default.txt
         int numOfInputs = sscanf(buf, "%s %s", input, filepath);
 
