@@ -8,7 +8,7 @@
 #include "linkedlist.h"
 
 void generateEmptyView(char lastCommand[], char message[]);
-void showDeck(Linked_list *deck_list, bool faceUp);
+int showDeck(Linked_list *deck_list, bool faceUp);
 int generateColumns();
 void clearView();
 int printCommandConsole(char lastCommand[], char message[]);

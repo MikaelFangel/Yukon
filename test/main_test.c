@@ -1,15 +1,21 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "../src/commands.h"
 #include "../src/linkedlist.h"
 
 void linkedListAdd();
 
 void findKeyTest();
 
+void QQTest();
+
 int main(void) {
     linkedListAdd();
     findKeyTest();
+
+    // Need to be last because it ends the game.
+    QQTest();
 
     return 0;
 }
@@ -74,4 +80,19 @@ void findKeyTest() {
         puts("findKeyTest: Test Passed!");
     else
         puts("findKeyTest Error!");
+}
+
+void QQTest() {
+    Linked_list *list1 = createLinkedList();
+    Linked_list *list2 = createLinkedList();
+    Linked_list *list3 = createLinkedList();
+
+    addNode(list1, "1");
+    addNode(list2, "2");
+    addNode(list2, "3");
+    addNode(list3, "4");
+
+    Linked_list *columns[3] = {list1, list2, list3};
+
+    QQ(columns, 3);
 }

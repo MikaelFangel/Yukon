@@ -33,7 +33,7 @@ void generateEmptyView(char lastCommand[], char message[]) {
  * @param deck_list the deck given as a Linked List
  * @param faceUp true of SW, false if LD
  */
-void showDeck(Linked_list *deck_list, bool faceUp) {
+int showDeck(Linked_list *deck_list, bool faceUp) {
     Node *current_node = deck_list->head;
 
     // Creates an empty view
