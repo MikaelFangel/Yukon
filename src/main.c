@@ -11,7 +11,8 @@ int main(void) {
 #endif
 
     char input[256];
-    char filepath[256];
+    char filepath[] = {"../resources/"};
+    char filename[256];
     char buf[256];
     Linked_list *LoadedDeck;
     bool deckLoaded = false;
@@ -21,12 +22,14 @@ int main(void) {
 
     while (!deckLoaded) {
         fgets(buf, 256, stdin);
-        // filepath = ../Resources/deck.txt
-        int numOfInputs = sscanf(buf, "%s %s", input, filepath);
+        int numOfInputs = sscanf(buf, "%s %s", input, filename);
 
-        if (strcmp("LD", input) == 0) {
+        if (strcasecmp("LD", input) == 0) {
             // If filepath is not empty
             if (numOfInputs == 2) {
+                strcat(filepath, filename);
+                strcat(filepath, ".txt");
+
                 FILE *file = fopen(filepath, "r");
                 if (file != NULL) {
                     fillSuits();
@@ -52,10 +55,10 @@ int main(void) {
     // Startup Phase
     while (startupPhase) {
         fgets(buf, 256, stdin);
-        // filepath = ../Resources/deck.txt
+        // filepath = ../resources/default.txt
         int numOfInputs = sscanf(buf, "%s %s", input, filepath);
 
-        if (strcmp("SW", input) == 0) {
+        if (strcasecmp("SW", input) == 0) {
             showDeck(LoadedDeck, true);
         }
 
