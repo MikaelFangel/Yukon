@@ -13,7 +13,7 @@ int main(void) {
     char input[256];
     char filepath[256];
     char buf[256];
-    Linked_list *deck;
+    Linked_list *LoadedDeck;
     bool deckLoaded = false;
     bool startupPhase = true;
     bool gameRunning = true;
@@ -30,8 +30,8 @@ int main(void) {
                 FILE *file = fopen(filepath, "r");
                 if (file != NULL) {
                     fillSuits();
-                    deck = loadDeck(file);
-                    // DeckToString(&deck);
+                    LoadedDeck = loadDeck(file);
+                    // DeckToString(&LoadedDeck);
                     // LinkedListToString(&test);
                     generateEmptyView("LD", "OK");
                     deckLoaded = true;
@@ -40,7 +40,7 @@ int main(void) {
                     generateEmptyView("LD", "The file does not exist");
                 }
             } else if (numOfInputs == 1) {
-                //    TODO: Load an unsorted deck!
+                //    TODO: Load an unsorted LoadedDeck!
             } else {
                 generateEmptyView("", "Unexpected input. Try again.");
             }
@@ -56,7 +56,7 @@ int main(void) {
         int numOfInputs = sscanf(buf, "%s %s", input, filepath);
 
         if (strcmp("SW", input) == 0) {
-            showDeck(deck, true);
+            showDeck(LoadedDeck, true);
         }
 
         startupPhase = false;

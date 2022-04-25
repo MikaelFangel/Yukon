@@ -1,9 +1,14 @@
-//
-// Created by Mads Sørensen on 22/04/2022.
-//
-
 #include "commands.h"
 
 int LD() {
+    return 0;
+}
 
+void QQ(Linked_list *lists[], int numberOfLists) {
+    for (int i = 0; i < numberOfLists; i++) {
+        deleteLinkedList(lists[i]);
+    }
+
+    puts("Ending Yukon...");
+    exit(0);
 }
