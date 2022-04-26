@@ -60,6 +60,10 @@ int main(void) {
             showDeck(LoadedDeck, true);
         }
 
+        if(strcasecmp("SD", input) == 0) {
+            saveDeck(LoadedDeck);
+        }
+
         startupPhase = false;
     }
 
