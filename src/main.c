@@ -34,8 +34,6 @@ int main(void) {
                 if (file != NULL) {
                     fillSuits();
                     LoadedDeck = loadDeck(file);
-                    // DeckToString(&LoadedDeck);
-                    // LinkedListToString(&test);
                     generateEmptyView("LD", "OK");
                     deckLoaded = true;
                     fclose(file);
