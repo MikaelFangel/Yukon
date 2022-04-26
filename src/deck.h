@@ -24,6 +24,8 @@ int fillSuits();
 
 Linked_list *loadDeck(FILE *);
 
+int saveDeck(Linked_list *list);
+
 int checkCard(Card *deck_card);
 
 #endif
