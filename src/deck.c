@@ -123,7 +123,10 @@ Linked_list *loadDeck(FILE *fptr) {
         newCard->value = line[0];
         newCard->suit = line[1];
         addNode(cardDeck, newCard);
-        checkCard(newCard);
+        if (checkCard(newCard) != 0) {
+            // Card does not exist
+            return NULL;
+        }
     }
     return cardDeck;
 }
