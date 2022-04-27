@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include "view.h"
 #include "deck.h"
@@ -11,7 +12,7 @@ int main(void) {
     setbuf(stdout, 0);
 #endif
 
-    char input[256], filename[256], filepath[256], buf[256];
+    char command[256], filename[256], arg[256], buf[256];
     Linked_list *LoadedDeck;
     bool deckLoaded = false;
     bool startupPhase = true, gameRunning = true;
@@ -23,14 +24,14 @@ int main(void) {
         inputs = strtok(buf, " ");
 
         if (strcasecmp("LD", inputs) == 0 || strcasecmp("LD\n", inputs) == 0) {
-            // If filepath is not empty
+            // If arg is not empty
             inputs = strtok(NULL, "\n");
             if (inputs != NULL) {
-                strncpy(filepath, "../resources/", 256);
-                strcat(filepath, inputs);
-                strcat(filepath, ".txt");
+                strncpy(arg, "../resources/", 256);
+                strcat(arg, inputs);
+                strcat(arg, ".txt");
 
-                FILE *file = fopen(filepath, "r");
+                FILE *file = fopen(arg, "r");
                 if (file != NULL) {
                     fillSuits();
                     LoadedDeck = loadDeck(file);
@@ -43,7 +44,7 @@ int main(void) {
                     generateEmptyView("LD", "The file does not exist");
                 }
             } else {
-                //    TODO: Load an unsorted LoadedDeck!
+                // TODO: Load an unsorted LoadedDeck!
                 puts("LD was pressed");
                 QQ(0,0);
             }
@@ -53,39 +54,57 @@ int main(void) {
     }
 
     /** Startup Phase */
-    while (startupPhase) {
+    while (true) {
         fgets(buf, sizeof (buf), stdin);
-        // filepath = ../resources/default.txt
-        int numOfInputs = sscanf(buf, "%s %s", input, filepath);
+        // arg = ../resources/default.txt
+        int numOfInputs = sscanf(buf, "%s %s", command, arg);
 
-        if (strcasecmp("SW", input) == 0) {
+        if (strcasecmp("SW", command) == 0) {
             showDeck(LoadedDeck, true);
         }
-        else if (strcasecmp("QQ", input) == 0) {
-            startupPhase = false;
+        else if (strcasecmp("SI", command) == 0) {
+            int split;
+            if (numOfInputs == 1) {
+                split = rand() % (LoadedDeck->size - 1) + 1;
+            }
+            else {
+                split = atoi(arg);
+                if (split == 0) {
+                    generateEmptyView("SI", "ERROR! You can't split on something that ain't a number.");
+                }
+                else if (split >= LoadedDeck->size) {
+                    generateEmptyView("SI", "ERROR! You can't split on a number bigger than"
+                                            " the number of cards in the deck.");
+                }
+            }
+            LoadedDeck = SI(LoadedDeck, split);
+            showDeck(LoadedDeck, true);
+        }
+        else if (strcasecmp("QQ", command) == 0) {
             QQ(0,0);
+            break;
         }
         /** Play Phase*/
-        else if (strcasecmp("P", input) == 0) {
+        else if (strcasecmp("P", command) == 0) {
             gameRunning = true;
             // TODO: Implement view
             generateEmptyView("P","OK");
             // TODO: Implement Game Moves
             while (gameRunning) {
                 fgets(buf, sizeof (buf), stdin);
-                numOfInputs = sscanf(buf, "%s %s", input, filepath);
-                if (strcasecmp("Q", input) == 0) {
+                numOfInputs = sscanf(buf, "%s %s", command, arg);
+                if (strcasecmp("Q", command) == 0) {
                     gameRunning = false;
                 // TODO: View??
                     generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
                 }
                 else {
-                    generateEmptyView("", "Error! Invalid input");
+                    generateEmptyView("", "Error! Invalid command");
                 }
             }
         }
         else {
-            generateEmptyView("", "Error! Invalid input");
+            generateEmptyView("", "Error! Invalid command");
         }
     }
 
