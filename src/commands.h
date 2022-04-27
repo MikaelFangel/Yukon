@@ -2,6 +2,8 @@
 #define YUKON_COMMANDS_H
 
 #include "linkedlist.h"
+#include "deck.h"
+#include "view.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,7 +15,7 @@ int SR();
 
 int SD();
 
-int SI();
+Linked_list * SI(Linked_list*, int);
 
 void QQ(Linked_list *lists[], int numberOfLists);
 
