@@ -61,19 +61,35 @@ int main(void) {
         if (strcasecmp("SW", input) == 0) {
             showDeck(LoadedDeck, true);
         }
-
-        startupPhase = false;
-    }
-
-    // Play Phase
-    // TODO: Implement
-    while (gameRunning) {
-
-        gameRunning = false;
+        else if (strcasecmp("QQ", input) == 0) {
+            startupPhase = false;
+            QQ(0,0);
+        }
+        /** Play Phase*/
+        else if (strcasecmp("P", input) == 0) {
+            gameRunning = true;
+            // TODO: Implement view
+            generateEmptyView("P","OK");
+            // TODO: Implement Game Moves
+            while (gameRunning) {
+                fgets(buf, sizeof (buf), stdin);
+                numOfInputs = sscanf(buf, "%s %s", input, filepath);
+                if (strcasecmp("Q", input) == 0) {
+                    gameRunning = false;
+                // TODO: View??
+                    generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
+                }
+                else {
+                    generateEmptyView("", "Error! Invalid input");
+                }
+            }
+        }
+        else {
+            generateEmptyView("", "Error! Invalid input");
+        }
     }
 
     return 0;
-
 }
 
 
