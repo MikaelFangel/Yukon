@@ -52,7 +52,7 @@ int main(void) {
         }
     }
 
-    // Startup Phase
+    /** Startup Phase */
     while (startupPhase) {
         fgets(buf, sizeof (buf), stdin);
         // filepath = ../resources/default.txt
