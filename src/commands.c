@@ -32,6 +32,41 @@ Linked_list *SI(Linked_list *firstPile, int split) {
     return shuffledPile;
 }
 
+Linked_list *SR(Linked_list *unshuffledPile) {
+    Linked_list *shuffledPile = createLinkedList();
+
+    // Source: https://www.geeksforgeeks.org/rand-and-srand-in-ccpp/
+    srand(time(0));
+
+    Node *node = unshuffledPile->head;
+    while (node->next != NULL) {
+        int placement;
+        if(shuffledPile->size > 0) {
+            placement = rand() % shuffledPile->size + 1;
+        } else {
+            placement = 0;
+        }
+
+        Node *shuffNode = shuffledPile->head;
+        for(int i = 0; i < placement - 1; i++) {
+
+            // Guard to avoid null point
+            // TODO Find cause
+            if(shuffNode->next == NULL) {
+                break;
+            }
+
+            shuffNode = shuffNode->next;
+        }
+        int before = rand() % 2;
+        insertNode(shuffledPile, node, shuffNode, before);
+
+        node = node->next;
+    }
+
+    return shuffledPile;
+}
+
 void QQ(Linked_list *lists[], int numberOfLists) {
     for (int i = 0; i < numberOfLists; i++) {
         deleteLinkedList(lists[i]);

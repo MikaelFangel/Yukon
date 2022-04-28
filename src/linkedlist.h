@@ -2,6 +2,7 @@
 #define YUKON_LINKEDLIST_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct Node {
     void *key;
@@ -22,6 +23,8 @@ Linked_list *createLinkedList();
 void *findKey(Linked_list *list, void *key);
 
 void addNode(Linked_list *list, void *key);
+
+void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool insertBefore);
 
 void removeNode(Linked_list *list);
 

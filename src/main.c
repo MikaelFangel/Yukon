@@ -53,6 +53,8 @@ int main(void) {
         }
     }
 
+    SR(LoadedDeck);
+
     /** Startup Phase */
     while (true) {
         fgets(buf, sizeof (buf), stdin);
