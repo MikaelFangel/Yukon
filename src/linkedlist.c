@@ -38,8 +38,8 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
     Node *nodeCopy;
     nodeCopy = (Node *) malloc(sizeof(Node));
 
+    nodeCopy->key = nodeToInsert->key;
     if (list->size == 0) {
-        nodeCopy->key = nodeToInsert->key;
         nodeCopy->next = NULL;
         nodeCopy->prev = NULL;
 
@@ -48,14 +48,17 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
     } else {
         if (insertBefore) {
             if (previousNode->next != NULL && previousNode->prev != NULL) {
-                nodeCopy->key = nodeToInsert->key;
                 nodeCopy->next = previousNode;
                 nodeCopy->prev = previousNode->prev;
 
                 previousNode->next->prev = nodeCopy;
                 previousNode->prev = nodeCopy;
+            } else if (previousNode->next == NULL) {
+                nodeCopy->next = previousNode;
+                nodeCopy->prev = previousNode->prev;
+
+                previousNode->prev = nodeCopy;
             } else {
-                nodeCopy->key = nodeToInsert->key;
                 nodeCopy->next = previousNode;
                 nodeCopy->prev = NULL;
                 previousNode->prev = nodeCopy;
@@ -64,14 +67,17 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
             }
         } else {
             if (previousNode->next != NULL && previousNode->prev != NULL) {
-                nodeCopy->key = nodeToInsert->key;
                 nodeCopy->next = previousNode->next;
                 nodeCopy->prev = previousNode;
 
                 previousNode->next = nodeCopy;
                 previousNode->prev->next = nodeCopy;
+            } else if (previousNode->prev == NULL){
+                nodeCopy->next = previousNode->next;
+                nodeCopy->prev = previousNode;
+
+               previousNode->next = nodeCopy;
             } else {
-                nodeCopy->key = nodeToInsert->key;
                 nodeCopy->next = NULL;
                 nodeCopy->prev = previousNode;
                 previousNode->next = nodeCopy;

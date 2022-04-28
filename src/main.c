@@ -54,17 +54,6 @@ int main(void) {
     }
     printf("\n");
 
-    Linked_list *shuffed = SR(LoadedDeck);
-
-    Node *node = shuffed->head;
-    while (node != NULL) {
-        Card *key = node->key;
-        printf("%c%c\n", key->suit, key->value);
-        node = node->next;
-    }
-
-    exit(0);
-
     /** Startup Phase */
     while (true) {
         fgets(buf, sizeof(buf), stdin);
