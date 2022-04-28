@@ -53,36 +53,38 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
 
                 previousNode->next->prev = nodeCopy;
                 previousNode->prev = nodeCopy;
-            } else if (previousNode->next == NULL) {
-                nodeCopy->next = previousNode;
-                nodeCopy->prev = previousNode->prev;
-
-                previousNode->prev = nodeCopy;
-            } else {
+            } else if (previousNode->prev == NULL) {
                 nodeCopy->next = previousNode;
                 nodeCopy->prev = NULL;
                 previousNode->prev = nodeCopy;
 
                 list->head = nodeCopy;
+            } else if (previousNode->next == NULL) {
+                nodeCopy->next = previousNode;
+                nodeCopy->prev = previousNode->prev;
+
+                previousNode->prev->next = nodeCopy;
+                previousNode->prev = nodeCopy;
             }
         } else {
             if (previousNode->next != NULL && previousNode->prev != NULL) {
                 nodeCopy->next = previousNode->next;
                 nodeCopy->prev = previousNode;
 
-                previousNode->next = nodeCopy;
                 previousNode->prev->next = nodeCopy;
-            } else if (previousNode->prev == NULL){
-                nodeCopy->next = previousNode->next;
-                nodeCopy->prev = previousNode;
-
-               previousNode->next = nodeCopy;
-            } else {
+                previousNode->next = nodeCopy;
+            } else if (previousNode->next == NULL) {
                 nodeCopy->next = NULL;
                 nodeCopy->prev = previousNode;
                 previousNode->next = nodeCopy;
 
                 list->tail = nodeCopy;
+            } else if (previousNode->prev == NULL) {
+                nodeCopy->next = previousNode->next;
+                nodeCopy->prev = previousNode;
+
+                previousNode->next->prev = nodeCopy;
+                previousNode->next = nodeCopy;
             }
         }
     }
