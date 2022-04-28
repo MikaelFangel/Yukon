@@ -39,7 +39,7 @@ Linked_list *SR(Linked_list *unshuffledPile) {
     srand(time(0));
 
     Node *node = unshuffledPile->head;
-    while (node->next != NULL) {
+    while (node != NULL) {
         int placement;
         if(shuffledPile->size > 0) {
             placement = rand() % shuffledPile->size + 1;
@@ -48,10 +48,7 @@ Linked_list *SR(Linked_list *unshuffledPile) {
         }
 
         Node *shuffNode = shuffledPile->head;
-        for(int i = 0; i < placement - 1; i++) {
-
-            // Guard to avoid null point
-            // TODO Find cause
+        for(int i = 0; i < placement; i++) {
             if(shuffNode->next == NULL) {
                 break;
             }
