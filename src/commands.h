@@ -6,16 +6,17 @@
 #include "view.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 int LD();
 
 int SW();
 
-int SR();
+Linked_list *SR(Linked_list *unshuffledPile);
 
 int SD();
 
-Linked_list * SI(Linked_list*, int);
+Linked_list *SI(Linked_list *, int);
 
 void QQ(Linked_list *lists[], int numberOfLists);
 
