@@ -38,24 +38,27 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
     Node *nodeCopy;
     nodeCopy = (Node *) malloc(sizeof(Node));
 
-
     if (list->size == 0) {
-        nodeCopy->key  = nodeToInsert->key;
+        nodeCopy->key = nodeToInsert->key;
         nodeCopy->next = NULL;
         nodeCopy->prev = NULL;
 
         list->tail = nodeCopy;
         list->head = nodeCopy;
     } else {
-        if(insertBefore) {
+        if (insertBefore) {
             if (previousNode->next != NULL && previousNode->prev != NULL) {
                 nodeCopy->key = nodeToInsert->key;
                 nodeCopy->next = previousNode;
                 nodeCopy->prev = previousNode->prev;
+
+                previousNode->next->prev = nodeCopy;
+                previousNode->prev = nodeCopy;
             } else {
                 nodeCopy->key = nodeToInsert->key;
                 nodeCopy->next = previousNode;
                 nodeCopy->prev = NULL;
+                previousNode->prev = nodeCopy;
 
                 list->head = nodeCopy;
             }
@@ -64,10 +67,14 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
                 nodeCopy->key = nodeToInsert->key;
                 nodeCopy->next = previousNode->next;
                 nodeCopy->prev = previousNode;
+
+                previousNode->next = nodeCopy;
+                previousNode->prev->next = nodeCopy;
             } else {
                 nodeCopy->key = nodeToInsert->key;
                 nodeCopy->next = NULL;
                 nodeCopy->prev = previousNode;
+                previousNode->next = nodeCopy;
 
                 list->tail = nodeCopy;
             }

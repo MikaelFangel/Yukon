@@ -19,7 +19,7 @@ int main(void) {
     generateEmptyView("", "");
 
     while (!deckLoaded) {
-        fgets(buf, sizeof (buf), stdin);
+        fgets(buf, sizeof(buf), stdin);
         char *inputs;
         inputs = strtok(buf, " ");
 
@@ -46,64 +46,70 @@ int main(void) {
             } else {
                 // TODO: Load an unsorted LoadedDeck!
                 puts("LD was pressed");
-                QQ(0,0);
+                QQ(0, 0);
             }
         } else {
             generateEmptyView("", "Error! The only valid command is LD");
         }
     }
+    printf("\n");
+
+    Linked_list *shuffed = SR(LoadedDeck);
+
+    Node *node = shuffed->head;
+    while (node != NULL) {
+        Card *key = node->key;
+        printf("%c%c\n", key->suit, key->value);
+        node = node->next;
+    }
+
+    exit(0);
 
     /** Startup Phase */
     while (true) {
-        fgets(buf, sizeof (buf), stdin);
+        fgets(buf, sizeof(buf), stdin);
         // arg = ../resources/default.txt
         int numOfInputs = sscanf(buf, "%s %s", command, arg);
 
         if (strcasecmp("SW", command) == 0) {
             showDeck(LoadedDeck, true);
-        }
-        else if (strcasecmp("SI", command) == 0) {
+        } else if (strcasecmp("SI", command) == 0) {
             int split;
             if (numOfInputs == 1) {
                 split = rand() % (LoadedDeck->size - 1) + 1;
-            }
-            else {
+            } else {
                 split = atoi(arg);
                 if (split == 0) {
                     generateEmptyView("SI", "ERROR! You can't split on something that ain't a number.");
-                }
-                else if (split >= LoadedDeck->size) {
+                } else if (split >= LoadedDeck->size) {
                     generateEmptyView("SI", "ERROR! You can't split on a number bigger than"
                                             " the number of cards in the deck.");
                 }
             }
             LoadedDeck = SI(LoadedDeck, split);
             showDeck(LoadedDeck, true);
-        }
-        else if (strcasecmp("QQ", command) == 0) {
-            QQ(0,0);
+        } else if (strcasecmp("QQ", command) == 0) {
+            QQ(0, 0);
             break;
         }
-        /** Play Phase*/
+            /** Play Phase*/
         else if (strcasecmp("P", command) == 0) {
             gameRunning = true;
             // TODO: Implement view
-            generateEmptyView("P","OK");
+            generateEmptyView("P", "OK");
             // TODO: Implement Game Moves
             while (gameRunning) {
-                fgets(buf, sizeof (buf), stdin);
+                fgets(buf, sizeof(buf), stdin);
                 numOfInputs = sscanf(buf, "%s %s", command, arg);
                 if (strcasecmp("Q", command) == 0) {
                     gameRunning = false;
-                // TODO: View??
+                    // TODO: View??
                     generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
-                }
-                else {
+                } else {
                     generateEmptyView("", "Error! Invalid command");
                 }
             }
-        }
-        else {
+        } else {
             generateEmptyView("", "Error! Invalid command");
         }
     }
