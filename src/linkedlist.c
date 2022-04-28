@@ -51,7 +51,7 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
                 nodeCopy->next = previousNode;
                 nodeCopy->prev = previousNode->prev;
 
-                previousNode->next->prev = nodeCopy;
+                previousNode->prev->next = nodeCopy;
                 previousNode->prev = nodeCopy;
             } else if (previousNode->prev == NULL) {
                 nodeCopy->next = previousNode;
@@ -71,7 +71,7 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
                 nodeCopy->next = previousNode->next;
                 nodeCopy->prev = previousNode;
 
-                previousNode->prev->next = nodeCopy;
+                previousNode->next->prev = nodeCopy;
                 previousNode->next = nodeCopy;
             } else if (previousNode->next == NULL) {
                 nodeCopy->next = NULL;
