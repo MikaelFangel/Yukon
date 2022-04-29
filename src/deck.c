@@ -146,12 +146,7 @@ void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck) {
         nodeBeingMoved->next = NULL;
 
         toDeck->head = nodeBeingMoved;
-        // toDeck->head->next = NULL;
-        // toDeck->head->prev = NULL;
-
         toDeck->tail = nodeBeingMoved;
-        // toDeck->tail->next = NULL;
-        // toDeck->tail->prev = NULL;
     }
     else {
         nodeBeingMoved->next = toDeck->head;
