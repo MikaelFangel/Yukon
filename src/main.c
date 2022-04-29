@@ -63,7 +63,7 @@ int main(void) {
             }
             loadedDeck = SI(loadedDeck, split);
         } else if (strcasecmp("QQ", command) == 0) {
-            QQ(0, 0);
+            puts("Ending Yukon...");
             break;
         }
             /** Play Phase*/
