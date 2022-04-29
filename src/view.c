@@ -60,17 +60,13 @@ int showDeck(Linked_list *deck_list, bool faceUp) {
                 break;
             }
 
+            // It doesn't matter if the attribute faceDown on the card is true or false,
+            // because the game hasn't started yet :)
             if (faceUp){
-                // if (card->faceUp == true)
-                //     card->faceUp = false;
-
                 value = card->value;
                 suit = card->suit;
             }
             else {
-                // if (card->faceUp == false)
-                //     card->faceUp = true;
-
                 value = '[';
                 suit = ']';
             }
@@ -106,6 +102,7 @@ int showDeck(Linked_list *deck_list, bool faceUp) {
         printCommandConsole("LD", "OK");
 }
 
+// Only used within this module
 int generateColumns() {
     for (int i = 1; i <= 7; ++i) {
         printf("C%d\t", i);
@@ -114,6 +111,7 @@ int generateColumns() {
     return 0;
 }
 
+// Only used within this module
 int printCommandConsole(char lastCommand[], char message[]) {
     printf("LAST Command: %s \n", lastCommand);
     printf("Message: %s \n", message);
@@ -123,9 +121,7 @@ int printCommandConsole(char lastCommand[], char message[]) {
     return 0;
 }
 
-/**
- * clears console depending on OS
- */
+/** Clears console depending on OS */
 void clearView() {
     printf("\n\n\n");
 
