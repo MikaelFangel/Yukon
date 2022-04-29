@@ -1,15 +1,36 @@
 #include "commands.h"
 
-int LD(FILE *file) {
-    /*if (file != NULL) {
-        fillSuits();
-        LoadedDeck = loadDeck(file);
-        generateEmptyView("LD", "OK");
-        deckLoaded = true;
-        fclose(file);
+Linked_list *LD(char arg[], int numOfInputs) {
+    char filepath[256];
+    Linked_list *loadedDeck;
+
+    /** If filepath is not empty */
+    if (numOfInputs == 2) {
+        strncpy(filepath, "../resources/", 256);
+        strcat(filepath, arg);
+        strcat(filepath, ".txt");
+
+        FILE *file = fopen(filepath, "r");
+
+        /** If file exists */
+        if (file != NULL) {
+            loadedDeck = loadDeck(file);
+            showDeck(loadedDeck, false);
+            fclose(file);
+        } else {
+            generateEmptyView("LD", "The file does not exist");
+            return NULL;
+        }
+
+        /** If no filepath is given, load unshuffled deck */
     } else {
-        generateEmptyView("LD", "The file does not exist");
-    }*/
+        FILE *defaultDeck = fopen("../resources/default.txt", "r");
+        loadedDeck = loadDeck(defaultDeck);
+        showDeck(loadedDeck, false);
+        fclose(defaultDeck);
+    }
+
+    return loadedDeck;
 }
 
 int SD(Linked_list *list, char filepath[]) {
@@ -56,15 +77,15 @@ Linked_list *SR(Linked_list *unshuffledPile) {
     Node *node = unshuffledPile->head;
     while (node != NULL) {
         int placement;
-        if(shuffledPile->size > 0) {
+        if (shuffledPile->size > 0) {
             placement = rand() % shuffledPile->size + 1;
         } else {
             placement = 0;
         }
 
         Node *shuffNode = shuffledPile->head;
-        for(int i = 0; i < placement; i++) {
-            if(shuffNode->next == NULL) {
+        for (int i = 0; i < placement; i++) {
+            if (shuffNode->next == NULL) {
                 break;
             }
 
