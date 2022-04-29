@@ -25,7 +25,6 @@ int main(void) {
 
         if (strcasecmp("LD", inputs) == 0 || strcasecmp("LD\n", inputs) == 0) {
             /** If arg is not empty */
-
             inputs = strtok(NULL, "\n");
             if (inputs != NULL) {
                 strncpy(arg, "../resources/", 256);
@@ -33,6 +32,7 @@ int main(void) {
                 strcat(arg, ".txt");
 
                 FILE *file = fopen(arg, "r");
+
                 /** If file exists */
                 if (file != NULL) {
                     LoadedDeck = loadDeck(file);
@@ -42,6 +42,7 @@ int main(void) {
                 } else {
                     generateEmptyView("LD", "The file does not exist");
                 }
+
             /** If no filename is given, load unshuffled deck */
             } else {
                 FILE *defaultDeck = fopen("../resources/default.txt", "r");
@@ -63,7 +64,8 @@ int main(void) {
 
         if (strcasecmp("SW", command) == 0) {
             showDeck(LoadedDeck, true);
-        } else if (strcasecmp("SI", command) == 0) {
+        }
+        else if (strcasecmp("SI", command) == 0) {
             int split;
             if (numOfInputs == 1) {
                 split = rand() % (LoadedDeck->size - 1) + 1;
@@ -77,7 +79,6 @@ int main(void) {
                 }
             }
             LoadedDeck = SI(LoadedDeck, split);
-            showDeck(LoadedDeck, true);
         } else if (strcasecmp("QQ", command) == 0) {
             QQ(0, 0);
             break;
@@ -103,16 +104,6 @@ int main(void) {
             generateEmptyView("", "Error! Invalid command");
         }
     }
-
     return 0;
 }
-
-
-/*fillSuits(NULL);
-
-for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 13; ++j) {
-        printf("%c ", deck[i][j].value);
-    }
-}*/
 
