@@ -14,7 +14,7 @@ int SW();
 
 Linked_list *SR(Linked_list *unshuffledPile);
 
-int SD();
+int SD(Linked_list *list, char filepath[]);
 
 Linked_list *SI(Linked_list *, int);
 
