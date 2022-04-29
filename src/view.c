@@ -34,7 +34,7 @@ void generateEmptyView(char lastCommand[], char message[]) {
  * @param deck_list the deck given as a Linked List
  * @param faceUp true of SW, false if LD
  */
-int showDeck(Linked_list *deck_list, bool faceUp) {
+int showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
     Node *current_node = deck_list->tail;
 
     // Creates an empty view
@@ -55,18 +55,17 @@ int showDeck(Linked_list *deck_list, bool faceUp) {
         for (int j = 0; j < 7; ++j) {
             if (card == NULL || current_node == NULL) {
                 for (int i = 1; i <= 8; i++) {
-                printf("\t");
+                    printf("\t");
                 }
                 break;
             }
 
             // It doesn't matter if the attribute faceDown on the card is true or false,
             // because the game hasn't started yet :)
-            if (faceUp){
+            if (strcasecmp("SW", command) == 0) {
                 value = card->value;
                 suit = card->suit;
-            }
-            else {
+            } else {
                 value = '[';
                 suit = ']';
             }
@@ -96,10 +95,7 @@ int showDeck(Linked_list *deck_list, bool faceUp) {
     // }
 
     printf("\n");
-    if (faceUp)
-        printCommandConsole("SW", "OK");
-    else
-        printCommandConsole("LD", "OK");
+    printCommandConsole(command, statusMessage);
 }
 
 // Only used within this module

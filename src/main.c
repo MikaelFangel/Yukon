@@ -38,7 +38,7 @@ int main(void) {
         int numOfInputs = sscanf(buf, "%s %s", command, arg);
 
         if (strcasecmp("SW", command) == 0) {
-            showDeck(loadedDeck, true);
+            showDeck(loadedDeck, "SW", "OK");
         } else if (strcasecmp("SD", command) == 0) {
 
             /*strncpy(arg, "../resources/", 256);
@@ -53,6 +53,7 @@ int main(void) {
             if (numOfInputs == 1) {
                 split = rand() % (loadedDeck->size - 1) + 1;
                 loadedDeck = SI(loadedDeck, split);
+                showDeck(loadedDeck, "SI", "OK");
             } else {
                 split = atoi(arg);
                 if (split == 0) {
@@ -62,10 +63,12 @@ int main(void) {
                                             " the number of cards in the deck.");
                 } else {
                     loadedDeck = SI(loadedDeck, split);
+                    showDeck(loadedDeck, "SI", "OK");
                 }
             }
         } else if (strcasecmp("SR", command) == 0) {
-            SR(loadedDeck);
+            loadedDeck = SR(loadedDeck);
+            showDeck(loadedDeck, "SR", "OK");
         } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
             break;

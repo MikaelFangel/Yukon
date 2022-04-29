@@ -15,7 +15,7 @@ Linked_list *LD(char arg[], int numOfInputs) {
         /** If file exists */
         if (file != NULL) {
             loadedDeck = loadDeck(file);
-            showDeck(loadedDeck, false);
+            showDeck(loadedDeck, "LD", "OK");
             fclose(file);
         } else {
             generateEmptyView("LD", "The file does not exist");
@@ -26,7 +26,7 @@ Linked_list *LD(char arg[], int numOfInputs) {
     } else {
         FILE *defaultDeck = fopen("../resources/default.txt", "r");
         loadedDeck = loadDeck(defaultDeck);
-        showDeck(loadedDeck, false);
+        showDeck(loadedDeck, "LD", "No name specified unshuffled deck loaded");
         fclose(defaultDeck);
     }
 
@@ -96,5 +96,5 @@ Linked_list *SR(Linked_list *unshuffledPile) {
 
         node = node->next;
     }
-    return 0;
+    return shuffledPile;
 }
