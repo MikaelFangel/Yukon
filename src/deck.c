@@ -115,6 +115,7 @@ int checkCard(Card *deck_card) {
 }
 
 Linked_list *loadDeck(FILE *fptr) {
+    fillSuits();
     char line[4];
     Linked_list *cardDeck = createLinkedList();
     // While file not empty, read a line, create a card, and add it to linked list.
@@ -127,6 +128,7 @@ Linked_list *loadDeck(FILE *fptr) {
     }
     return cardDeck;
 }
+
 int saveDeck(Linked_list *list) {
     FILE *fptr;
     fptr = fopen("/Users/mads/CLionProjects/Yukon/Resources/test.txt", "w");

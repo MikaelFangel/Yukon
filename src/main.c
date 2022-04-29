@@ -24,7 +24,8 @@ int main(void) {
         inputs = strtok(buf, " ");
 
         if (strcasecmp("LD", inputs) == 0 || strcasecmp("LD\n", inputs) == 0) {
-            // If arg is not empty
+            /** If arg is not empty */
+
             inputs = strtok(NULL, "\n");
             if (inputs != NULL) {
                 strncpy(arg, "../resources/", 256);
@@ -32,27 +33,25 @@ int main(void) {
                 strcat(arg, ".txt");
 
                 FILE *file = fopen(arg, "r");
+                /** If file exists */
                 if (file != NULL) {
-                    fillSuits();
                     LoadedDeck = loadDeck(file);
-                    // DeckToString(&LoadedDeck);
-                    // LinkedListToString(&test);
                     generateEmptyView("LD", "OK");
                     deckLoaded = true;
                     fclose(file);
                 } else {
                     generateEmptyView("LD", "The file does not exist");
                 }
+            /** If no filename is given, load unshuffled deck */
             } else {
-                // TODO: Load an unsorted LoadedDeck!
-                puts("LD was pressed");
-                QQ(0, 0);
+                FILE *defaultDeck = fopen("../resources/default.txt", "r");
+                LoadedDeck = loadDeck(defaultDeck);
+                showDeck(LoadedDeck, false);
             }
         } else {
             generateEmptyView("", "Error! The only valid command is LD");
         }
     }
-    printf("\n");
 
     /** Startup Phase */
     while (true) {
