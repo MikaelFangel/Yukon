@@ -32,16 +32,16 @@ void generateEmptyView(char lastCommand[], char message[]) {
  * View after calling SW and LD
  * The tail of the list is the top of the deck!
  * @param deck_list the deck given as a Linked List
- * @param faceUp true of SW, false if LD
+ * @param faceUp true of SW, false if LD, SI or SR
  */
 int showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
-    Node *current_node = deck_list->tail;
-
     // Creates an empty view
-    if (current_node == NULL) {
+    if (deck_list == NULL) {
         generateEmptyView("SW", "ERROR! No deck of cards is loaded");
         return 1;
     }
+
+    Node *current_node = deck_list->tail;
 
     clearView();
     generateColumns();
@@ -54,10 +54,8 @@ int showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
     for (int i = 1; i <= 8; i++) {
         for (int j = 0; j < 7; ++j) {
             if (card == NULL || current_node == NULL) {
-                for (int i = 1; i <= 8; i++) {
-                    printf("\t");
-                }
-                break;
+                printf("\t");
+                continue;
             }
 
             // It doesn't matter if the attribute faceDown on the card is true or false,
