@@ -58,28 +58,15 @@ int checkCard(Card *deck_card) {
             value = 0;
             break;
         case '2':
-            value = 1;
-            break;
         case '3':
-            value = 2;
-            break;
         case '4':
-            value = 3;
-            break;
         case '5':
-            value = 4;
-            break;
         case '6':
-            value = 5;
-            break;
         case '7':
-            value = 6;
-            break;
         case '8':
-            value = 7;
-            break;
         case '9':
-            value = 8;
+            // Calculates the corresponding number of its ASCII value
+            value = deck_card->value - 49;
             break;
         case 'T':
             value = 9;
@@ -104,8 +91,7 @@ int checkCard(Card *deck_card) {
         if (!deck_card->existsInGame) {
             deck_card->existsInGame = true;
             return 0;
-        }
-        else {
+        } else {
             //Duplicate cards
             return 1;
         }
