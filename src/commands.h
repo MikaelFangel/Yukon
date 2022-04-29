@@ -15,7 +15,7 @@ int SW();
 
 Linked_list *SR(Linked_list *unshuffledPile);
 
-int SD(Linked_list *list, char arg[]);
+void SD(Linked_list *list, char arg[]);
 
 Linked_list *SI(Linked_list *, int);
 

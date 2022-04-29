@@ -34,11 +34,11 @@ void generateEmptyView(char lastCommand[], char message[]) {
  * @param deck_list the deck given as a Linked List
  * @param faceUp true of SW, false if LD, SI or SR
  */
-int showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
+void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
     // Creates an empty view
     if (deck_list == NULL) {
         generateEmptyView("SW", "ERROR! No deck of cards is loaded");
-        return 1;
+        return;
     }
 
     Node *current_node = deck_list->tail;
@@ -97,22 +97,20 @@ int showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
 }
 
 // Only used within this module
-int generateColumns() {
+void generateColumns() {
     for (int i = 1; i <= 7; ++i) {
         printf("C%d\t", i);
     }
     printf("\n\n");
-    return 0;
 }
 
 // Only used within this module
-int printCommandConsole(char lastCommand[], char message[]) {
+void printCommandConsole(char lastCommand[], char message[]) {
     printf("LAST Command: %s \n", lastCommand);
     printf("Message: %s \n", message);
     printf("INPUT > ");
 
     fflush(stdout);
-    return 0;
 }
 
 /** Clears console depending on OS */

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+/** Structs start here */
 struct Node {
     void *key;
     struct Node *next;
@@ -19,6 +20,7 @@ typedef struct {
     int size;
 } Linked_list;
 
+/** Methods start here */
 Linked_list *createLinkedList();
 
 void *findKey(Linked_list *list, void *key);
