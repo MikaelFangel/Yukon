@@ -7,7 +7,7 @@
 #include <string.h>
 
 int main(void) {
-//    Source: https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000763330-Debugger-not-working-on-Windows-CLion-
+// Source: https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000763330-Debugger-not-working-on-Windows-CLion-
 #if defined(_WIN32) || defined(_WIN64)
     setbuf(stdout, 0);
 #endif
@@ -46,17 +46,7 @@ int main(void) {
         else if (strcasecmp("SW", command) == 0) {
             showDeck(loadedDeck, "SW", "OK");
         }
-
-        else if (strcasecmp("SD", command) == 0) {
-
-            if (numOfInputs == 1) {
-                SD(loadedDeck, "cards");
-            } else {
-                SD(loadedDeck, arg);
-            }
-            showDeck(loadedDeck, "SD", "Deck has been saved.");
-
-        } else if (strcasecmp("SI", command) == 0) {
+        else if (strcasecmp("SI", command) == 0) {
             int split;
             if (numOfInputs == 1) {
                 split = rand() % (loadedDeck->size - 1) + 1;
@@ -77,16 +67,25 @@ int main(void) {
         } else if (strcasecmp("SR", command) == 0) {
             loadedDeck = SR(loadedDeck);
             showDeck(loadedDeck, "SR", "OK");
+        } else if (strcasecmp("SD", command) == 0) {
+
+            if (numOfInputs == 1) {
+                SD(loadedDeck, "cards");
+            } else {
+                SD(loadedDeck, arg);
+            }
+            showDeck(loadedDeck, "SD", "Deck has been saved.");
+
         } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
             break;
         }
-            /** Play Phase*/
+
+        /** Play Phase*/
         else if (strcasecmp("P", command) == 0) {
             gameRunning = true;
             // TODO: Implement view
             generateEmptyView("P", "OK");
-            // TODO: Implement Game Moves
             while (gameRunning) {
                 fgets(buf, sizeof(buf), stdin);
                 numOfInputs = sscanf(buf, "%s %s", command, arg);
@@ -94,7 +93,10 @@ int main(void) {
                     gameRunning = false;
                     // TODO: View??
                     generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
-                } else {
+                }
+
+                // TODO: Implement Game Moves
+                else {
                     generateEmptyView("", "Error! Invalid command");
                 }
             }
