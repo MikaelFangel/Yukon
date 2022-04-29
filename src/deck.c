@@ -104,7 +104,8 @@ int checkCard(Card *deck_card) {
         if (!deck_card->existsInGame) {
             deck_card->existsInGame = true;
             return 0;
-        } else {
+        }
+        else {
             //Duplicate cards
             return 1;
         }
@@ -112,6 +113,7 @@ int checkCard(Card *deck_card) {
     // Card cannot be found
     return 2;
 }
+
 /**
  * Load a deck from a file. File must be a list of cards represented with 2 characters
  * eg. Ace of Hearts - "AH" with newline after each card. Returns the deck in a linked list
@@ -146,7 +148,7 @@ int saveDeck(Linked_list *list, FILE *fptr) {
     Node *node = list->head;
     // While linked list not null, write a card to the file.
     while (node != NULL) {
-        Card *card = (Card*) node->key;
+        Card *card = (Card *) node->key;
         line[0] = card->value;
         line[1] = card->suit;
         fwrite(line, 1, sizeof line, fptr);
