@@ -30,11 +30,12 @@ void generateEmptyView(char lastCommand[], char message[]) {
 
 /**
  * View after calling SW and LD
+ * The tail of the list is the top of the deck!
  * @param deck_list the deck given as a Linked List
  * @param faceUp true of SW, false if LD
  */
 int showDeck(Linked_list *deck_list, bool faceUp) {
-    Node *current_node = deck_list->head;
+    Node *current_node = deck_list->tail;
 
     // Creates an empty view
     if (current_node == NULL) {
@@ -75,7 +76,7 @@ int showDeck(Linked_list *deck_list, bool faceUp) {
             }
 
             printf("%c%c\t", value, suit);
-            current_node = current_node->next;
+            current_node = current_node->prev;
             if (current_node != NULL)
                 card = (Card *) current_node->key;
         }

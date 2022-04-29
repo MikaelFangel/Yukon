@@ -123,10 +123,7 @@ Linked_list *loadDeck(FILE *fptr) {
         newCard->value = line[0];
         newCard->suit = line[1];
         addNode(cardDeck, newCard);
-        if (checkCard(newCard) != 0) {
-            // Card does not exist
-            return NULL;
-        }
+        checkCard(newCard);
     }
     return cardDeck;
 }
@@ -146,4 +143,41 @@ int saveDeck(Linked_list *list) {
     }
     fclose(fptr);
     return 0;
+}
+
+/**
+ * Adds a card from the top of one deck to the bottom of another deck.
+ * The tail is the top of the deck!
+ * Used in the SI command
+ * @param toDeck
+ * @param nodeBeingMoved
+ */
+void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck) {
+    Node *nodeBeingMoved = fromDeck->tail;
+    fromDeck->tail = nodeBeingMoved->prev;
+    if (fromDeck->tail != NULL)
+        fromDeck->tail->next = NULL;
+
+    if (toDeck->size == 0) {
+        nodeBeingMoved->prev = NULL;
+        nodeBeingMoved->next = NULL;
+
+        toDeck->head = nodeBeingMoved;
+        // toDeck->head->next = NULL;
+        // toDeck->head->prev = NULL;
+
+        toDeck->tail = nodeBeingMoved;
+        // toDeck->tail->next = NULL;
+        // toDeck->tail->prev = NULL;
+    }
+    else {
+        nodeBeingMoved->next = toDeck->head;
+        nodeBeingMoved->prev = NULL;
+
+        toDeck->head->prev = nodeBeingMoved;
+        toDeck->head = nodeBeingMoved;
+    }
+
+    fromDeck->size--;
+    toDeck->size++;
 }
