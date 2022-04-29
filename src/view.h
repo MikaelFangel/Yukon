@@ -5,10 +5,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdarg.h>
+#include <string.h>
 #include "linkedlist.h"
 
 void generateEmptyView(char lastCommand[], char message[]);
-int showDeck(Linked_list *deck_list, bool faceUp);
+int showDeck(Linked_list *deck_list, char command[], char statusMessage[]);
 int generateColumns();
 void clearView();
 int printCommandConsole(char lastCommand[], char message[]);
