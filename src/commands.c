@@ -52,7 +52,6 @@ int SD(Linked_list *list, char arg[]) {
  * @return A shuffled deck
  */
 Linked_list *SI(Linked_list *firstPile, int split) {
-    // Node *tmp = firstPile->tail->key;
     Linked_list *secondPile = createLinkedList();
 
     for (int i = 0; i < split; ++i) {
@@ -66,6 +65,7 @@ Linked_list *SI(Linked_list *firstPile, int split) {
         if (secondPile->size > 0)
             moveToAnotherDeck(secondPile, shuffledPile);
     }
+
     free(firstPile);
     free(secondPile);
 
