@@ -62,8 +62,16 @@ int main(void) {
 
         if (strcasecmp("SW", command) == 0) {
             showDeck(LoadedDeck, true);
-        }
-        else if (strcasecmp("SI", command) == 0) {
+        } else if (strcasecmp("SD", command) == 0) {
+
+            /*strncpy(arg, "../resources/", 256);
+            strcat(arg, inputs);
+            strcat(arg, ".txt");*/
+
+
+            //SD(LoadedDeck, filepath);
+
+        } else if (strcasecmp("SI", command) == 0) {
             int split;
             if (numOfInputs == 1) {
                 split = rand() % (LoadedDeck->size - 1) + 1;
