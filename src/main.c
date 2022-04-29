@@ -39,14 +39,16 @@ int main(void) {
 
         if (strcasecmp("SW", command) == 0) {
             showDeck(loadedDeck, "SW", "OK");
-        } else if (strcasecmp("SD", command) == 0) {
+        }
 
-            /*strncpy(arg, "../resources/", 256);
-            strcat(arg, inputs);
-            strcat(arg, ".txt");*/
+        else if (strcasecmp("SD", command) == 0) {
 
-
-            //SD(loadedDeck, filepath);
+            if (numOfInputs == 1) {
+                SD(loadedDeck, "cards");
+            } else {
+                SD(loadedDeck, arg);
+            }
+            showDeck(loadedDeck, "SD", "Deck has been saved.");
 
         } else if (strcasecmp("SI", command) == 0) {
             int split;
