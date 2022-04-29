@@ -36,7 +36,7 @@ int main(void) {
                 /** If file exists */
                 if (file != NULL) {
                     LoadedDeck = loadDeck(file);
-                    generateEmptyView("LD", "OK");
+                    showDeck(LoadedDeck, false);
                     deckLoaded = true;
                     fclose(file);
                 } else {
@@ -47,6 +47,8 @@ int main(void) {
                 FILE *defaultDeck = fopen("../resources/default.txt", "r");
                 LoadedDeck = loadDeck(defaultDeck);
                 showDeck(LoadedDeck, false);
+                deckLoaded = true;
+                fclose(defaultDeck);
             }
         } else {
             generateEmptyView("", "Error! The only valid command is LD");
