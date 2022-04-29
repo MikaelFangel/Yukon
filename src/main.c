@@ -62,7 +62,11 @@ int main(void) {
                 }
             }
             loadedDeck = SI(loadedDeck, split);
-        } else if (strcasecmp("QQ", command) == 0) {
+        }
+        else if (strcasecmp("SR", command) == 0) {
+            SR(loadedDeck);
+        }
+        else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
             break;
         }
