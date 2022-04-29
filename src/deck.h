@@ -20,11 +20,11 @@ extern Card spades[SUIT_SIZE];
 
 extern Card *deck[4];
 
-int fillSuits();
+void fillSuits();
 
 Linked_list *loadDeck(FILE *);
 
-int saveDeck(Linked_list *list, FILE *fptr);
+void saveDeck(Linked_list *list, FILE *fptr);
 
 int checkCard(Card *deck_card);
 

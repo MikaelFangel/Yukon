@@ -7,7 +7,7 @@ Card spades[SUIT_SIZE];
 
 Card *deck[4] = {clubs, diamonds, hearts, spades};
 
-int fillSuits() {
+void fillSuits() {
     char suits[4] = {'C', 'D', 'H', 'S'};
 
     for (int i = 0; i < 4; i++) {
@@ -29,7 +29,6 @@ int fillSuits() {
         deck[i][12].suit = suits[i];
     }
 
-    return 0;
 }
 
 int checkCard(Card *deck_card) {
@@ -125,9 +124,8 @@ Linked_list *loadDeck(FILE *fptr) {
  * Save a deck to a file
  * Used in SD command
  * @param list
- * @return
  */
-int saveDeck(Linked_list *list, FILE *fptr) {
+void saveDeck(Linked_list *list, FILE *fptr) {
     char line[3];
     line[2] = '\n';
     Node *node = list->head;
@@ -139,7 +137,6 @@ int saveDeck(Linked_list *list, FILE *fptr) {
         fwrite(line, 1, sizeof line, fptr);
         node = node->next;
     }
-    return 0;
 }
 
 /**
