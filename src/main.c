@@ -29,7 +29,7 @@ int main(void) {
                 strcat(filepath, arg);
                 strcat(filepath, ".txt");
 
-                FILE *file = fopen(arg, "r");
+                FILE *file = fopen(filepath, "r");
 
                 /** If file exists */
                 if (file != NULL) {
