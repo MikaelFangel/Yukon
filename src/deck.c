@@ -129,9 +129,13 @@ Linked_list *loadDeck(FILE *fptr) {
     return cardDeck;
 }
 
-int saveDeck(Linked_list *list) {
-    FILE *fptr;
-    fptr = fopen("/Users/mads/CLionProjects/Yukon/Resources/test.txt", "w");
+/**
+ * Save a deck to a file
+ * Used in SD command
+ * @param list
+ * @return
+ */
+int saveDeck(Linked_list *list, FILE *fptr) {
     char line[3];
     line[2] = '\n';
     Node *node = list->head;
@@ -143,7 +147,6 @@ int saveDeck(Linked_list *list) {
         fwrite(line, 1, sizeof line, fptr);
         node = node->next;
     }
-    fclose(fptr);
     return 0;
 }
 
