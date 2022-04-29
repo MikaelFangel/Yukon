@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "linkedlist.h"
 
 Linked_list *createLinkedList() {

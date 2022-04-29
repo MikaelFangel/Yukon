@@ -1,5 +1,5 @@
 #include "view.h"
-#include "deck.h"
+
 
 /**
  * Generates the start view or empty views with error messages
