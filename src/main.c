@@ -37,7 +37,13 @@ int main(void) {
         // arg = ../resources/default.txt
         int numOfInputs = sscanf(buf, "%s %s", command, arg);
 
-        if (strcasecmp("SW", command) == 0) {
+        if (strcasecmp("LD", command) == 0) {
+            Linked_list *tmpDeck = LD(arg, numOfInputs);
+            if (loadedDeck != NULL)
+                loadedDeck = tmpDeck;
+            free(tmpDeck);
+        }
+        else if (strcasecmp("SW", command) == 0) {
             showDeck(loadedDeck, "SW", "OK");
         }
 
