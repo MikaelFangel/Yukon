@@ -33,7 +33,11 @@ Linked_list *LD(char arg[], int numOfInputs) {
     return loadedDeck;
 }
 
-int SD(Linked_list *list, char filepath[]) {
+int SD(Linked_list *list, char arg[]) {
+    char filepath[256];
+    strncpy(filepath, "../resources/", 256);
+    strcat(filepath, arg);
+    strcat(filepath, ".txt");
     FILE *fptr = fopen(filepath, "w");
     saveDeck(list, fptr);
     fclose(fptr);
