@@ -23,32 +23,9 @@ int main(void) {
         int numOfInputs = sscanf(buf, "%s %s", command, arg);
 
         if (strcasecmp("LD", command) == 0) {
-            /** If filepath is not empty */
-            if (numOfInputs == 2) {
-                strncpy(filepath, "../resources/", 256);
-                strcat(filepath, arg);
-                strcat(filepath, ".txt");
-
-                FILE *file = fopen(filepath, "r");
-
-                /** If file exists */
-                if (file != NULL) {
-                    loadedDeck = loadDeck(file);
-                    showDeck(loadedDeck, false);
-                    deckLoaded = true;
-                    fclose(file);
-                } else {
-                    generateEmptyView("LD", "The file does not exist");
-                }
-
-                /** If no filepath is given, load unshuffled deck */
-            } else {
-                FILE *defaultDeck = fopen("../resources/default.txt", "r");
-                loadedDeck = loadDeck(defaultDeck);
-                showDeck(loadedDeck, false);
-                deckLoaded = true;
-                fclose(defaultDeck);
-            }
+            loadedDeck = LD(arg, numOfInputs);
+            if (loadedDeck != NULL)
+                deckLoaded = false;
         } else {
             generateEmptyView("", "Error! The only valid command is LD");
         }
