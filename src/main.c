@@ -20,15 +20,13 @@ int main(void) {
 
     while (!deckLoaded) {
         fgets(buf, sizeof(buf), stdin);
-        char *inputs;
-        inputs = strtok(buf, " ");
+       int numOfInputs = sscanf(buf, "%s %s", command, filename);
 
-        if (strcasecmp("LD", inputs) == 0 || strcasecmp("LD\n", inputs) == 0) {
+        if (strcasecmp("LD", command) == 0) {
             /** If arg is not empty */
-            inputs = strtok(NULL, "\n");
-            if (inputs != NULL) {
+            if (numOfInputs == 2) {
                 strncpy(arg, "../resources/", 256);
-                strcat(arg, inputs);
+                strcat(arg, filename);
                 strcat(arg, ".txt");
 
                 FILE *file = fopen(arg, "r");
