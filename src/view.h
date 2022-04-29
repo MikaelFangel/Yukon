@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <string.h>
+#include "deck.h"
 #include "linkedlist.h"
 
 void generateEmptyView(char lastCommand[], char message[]);

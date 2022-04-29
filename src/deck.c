@@ -1,5 +1,4 @@
 #include "deck.h"
-#include "linkedlist.h"
 
 Card clubs[SUIT_SIZE];
 Card diamonds[SUIT_SIZE];
