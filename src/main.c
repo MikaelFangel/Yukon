@@ -25,7 +25,7 @@ int main(void) {
         if (strcasecmp("LD", command) == 0) {
             loadedDeck = LD(arg, numOfInputs);
             if (loadedDeck != NULL)
-                deckLoaded = false;
+                deckLoaded = true;
         } else {
             generateEmptyView("", "Error! The only valid command is LD");
         }
