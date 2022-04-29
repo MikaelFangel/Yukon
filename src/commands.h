@@ -2,18 +2,21 @@
 #define YUKON_COMMANDS_H
 
 #include "linkedlist.h"
+#include "deck.h"
+#include "view.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 int LD();
 
 int SW();
 
-int SR();
+Linked_list *SR(Linked_list *unshuffledPile);
 
 int SD();
 
-int SI();
+Linked_list *SI(Linked_list *, int);
 
 void QQ(Linked_list *lists[], int numberOfLists);
 
