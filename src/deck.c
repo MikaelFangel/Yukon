@@ -8,7 +8,6 @@ Card spades[SUIT_SIZE];
 
 Card *deck[4] = {clubs, diamonds, hearts, spades};
 
-// TODO Implement with linked list
 int fillSuits() {
     char suits[4] = {'C', 'D', 'H', 'S'};
 
@@ -113,7 +112,13 @@ int checkCard(Card *deck_card) {
     // Card cannot be found
     return 2;
 }
-
+/**
+ * Load a deck from a file. File must be a list of cards represented with 2 characters
+ * eg. Ace of Hearts - "AH" with newline after each card. Returns the deck in a linked list
+ * Used in LD command
+ * @param fptr
+ * @return cardDeck
+ */
 Linked_list *loadDeck(FILE *fptr) {
     fillSuits();
     char line[4];
