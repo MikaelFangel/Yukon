@@ -13,7 +13,7 @@ int main(void) {
 #endif
 
     char command[256], filepath[256], arg[256], buf[256];
-    Linked_list *loadedDeck;
+    Linked_list* loadedDeck;
     bool deckLoaded = false;
     bool startupPhase = true, gameRunning = true;
     generateEmptyView("", "");
@@ -52,21 +52,21 @@ int main(void) {
             int split;
             if (numOfInputs == 1) {
                 split = rand() % (loadedDeck->size - 1) + 1;
+                loadedDeck = SI(loadedDeck, split);
             } else {
                 split = atoi(arg);
                 if (split == 0) {
-                    generateEmptyView("SI", "ERROR! You can't split on something that ain't a number.");
+                    generateEmptyView("SI", "ERROR! You can't split on zero or something that ain't a number.");
                 } else if (split >= loadedDeck->size) {
                     generateEmptyView("SI", "ERROR! You can't split on a number bigger than"
                                             " the number of cards in the deck.");
+                } else {
+                    loadedDeck = SI(loadedDeck, split);
                 }
             }
-            loadedDeck = SI(loadedDeck, split);
-        }
-        else if (strcasecmp("SR", command) == 0) {
+        } else if (strcasecmp("SR", command) == 0) {
             SR(loadedDeck);
-        }
-        else if (strcasecmp("QQ", command) == 0) {
+        } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
             break;
         }
