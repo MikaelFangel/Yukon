@@ -1,5 +1,9 @@
 #include "linkedlist.h"
 
+/**
+ * Creates an empty linked list and return a pointer to the list.
+ * @return pointer to newly created linked list
+ */
 Linked_list *createLinkedList() {
     Linked_list *newLinkedList;
     newLinkedList = (Linked_list *) malloc(sizeof(Linked_list));
@@ -11,6 +15,11 @@ Linked_list *createLinkedList() {
     return newLinkedList;
 }
 
+/**
+ * Add a new node to the end of and existing list based on the key pointer.
+ * @param list list to add new node to
+ * @param key key to add as node to the list
+ */
 void addNode(Linked_list *list, void *key) {
     Node *newNode;
     newNode = (Node *) malloc(sizeof(Node));
@@ -33,6 +42,13 @@ void addNode(Linked_list *list, void *key) {
     list->size++;
 }
 
+/**
+ * Inserts a node in an existing linked list either before of after another specified node in the list.
+ * @param list list to perform insert on
+ * @param nodeToInsert node to added to linked list
+ * @param previousNode node before the node to insert
+ * @param insertBefore should the node be insert before or after
+ */
 void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool insertBefore) {
     Node *nodeCopy;
     nodeCopy = (Node *) malloc(sizeof(Node));
@@ -91,6 +107,10 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
     list->size++;
 }
 
+/**
+ * Removes a node of the end of the list.
+ * @param list list to remove node from
+ */
 void removeNode(Linked_list *list) {
     if (list->size == 0) {
         return;
@@ -107,6 +127,10 @@ void removeNode(Linked_list *list) {
     }
 }
 
+/**
+ * Delete an entire linked list and all of its nodes using the remove node function
+ * @param list list to the delete
+ */
 void deleteLinkedList(Linked_list *list) {
     while (list->size > 0) {
         removeNode(list);
@@ -115,7 +139,13 @@ void deleteLinkedList(Linked_list *list) {
     free(list);
 }
 
-void *findKey(Linked_list *list, void *key) {
+/**
+ * Finds a node in a linked list based on the key value
+ * @param list list to search
+ * @param key key to find
+ * @return the node in the linked list if found and NULL if node is not in the list
+ */
+Node *findKey(Linked_list *list, void *key) {
     Node *node = list->head;
     while (node != NULL && node->key != key) {
         node = node->next;
@@ -124,6 +154,13 @@ void *findKey(Linked_list *list, void *key) {
     return node;
 }
 
+/**
+ * Moves a key from anywhere in a linked list to the end of another
+ * @param from list to move from
+ * @param keyFrom key to move
+ * @param to list to move to
+ * @return true if successful and fall if unsuccessful
+ */
 bool moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_list *to) {
     // Finds the node corresponding to the key, so it can be detached from the linked list and added to the other
     bool result = false;
