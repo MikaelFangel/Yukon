@@ -112,7 +112,7 @@ int main(void) {
 
                     token = strtok(buf, delimeters);
 
-                    // Load gameMoves in 2D array with string tokens
+                    // Load gameMoves in 2D array with string toke
                     int i = 0;
                     while (token != NULL && i < 4) {
                         int j = 0;
