@@ -8,14 +8,12 @@ void linkedListAdd();
 
 void findKeyTest();
 
-void QQTest();
+void moveToEmptyListTest();
 
 int main(void) {
     linkedListAdd();
     findKeyTest();
-
-    // Need to be last because it ends the game.
-    QQTest();
+    moveToEmptyListTest();
 
     return 0;
 }
@@ -82,17 +80,46 @@ void findKeyTest() {
         puts("findKeyTest Error!");
 }
 
-void QQTest() {
-    Linked_list *list1 = createLinkedList();
-    Linked_list *list2 = createLinkedList();
-    Linked_list *list3 = createLinkedList();
+void moveToEmptyListTest() {
+    FILE *fptr = fopen("../resources/default.txt", "r");
+    Linked_list *loadedDeck = loadDeck(fptr);
+    Linked_list *emptyLinkedList = createLinkedList();
 
-    addNode(list1, "1");
-    addNode(list2, "2");
-    addNode(list2, "3");
-    addNode(list3, "4");
+    Card *key = (Card*) loadedDeck->head->key;
 
-    Linked_list *columns[3] = {list1, list2, list3};
+    moveKeyFromOneLinkedListToAnother(loadedDeck, key, emptyLinkedList);
 
-    QQ(columns, 3);
+    if(loadedDeck->size == 0 && emptyLinkedList->size == 52) {
+        puts("moveToEmptyListTest: Size Test Passed!");
+    } else {
+        puts("moveToEmptyListTest ERROR! Size Test Failed");
+    }
+
+    loadedDeck = loadDeck(fptr);
+
+    Node *deckNode = loadedDeck->head;
+    Node *emptyListNode = emptyLinkedList->head;
+
+    bool error = false;
+
+    while(deckNode != NULL && emptyListNode != NULL) {
+        Card *deckCard = (Card*) deckNode->key;
+        Card *emptyCard = (Card*) emptyListNode->key;
+
+        if(deckCard->value != emptyCard->value || deckCard->suit != emptyCard->suit) {
+            error = true;
+            break;
+        }
+
+        deckNode = deckNode->next;
+        emptyListNode = emptyListNode->next;
+    }
+
+    if(error) {
+        puts("moveToEmptyListTest ERROR! Consistency Test Failed");
+    } else {
+        puts("moveToEmptyListTest: Consistency Test Passed!");
+    }
+
+    fclose(fptr);
 }
