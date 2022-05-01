@@ -5,7 +5,6 @@
  * Generates the start view or empty views with error messages
  * @param lastCommand For start view, type ""
  * @param message For start view, type ""
- * @return
  */
 void generateEmptyView(char lastCommand[], char message[]) {
     clearView();
@@ -29,7 +28,7 @@ void generateEmptyView(char lastCommand[], char message[]) {
 }
 
 /**
- * View after calling SW and LD
+ * View after calling STARTUP commands
  * The tail of the list is the top of the deck!
  * @param deck_list the deck given as a Linked List
  * @param faceUp true of SW, false if LD, SI or SR
@@ -94,6 +93,85 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
 
     printf("\n");
     printCommandConsole(command, statusMessage);
+}
+
+/**
+ * Column: Printed from head to tail
+ * Foundation: Only tail is printed
+ * @param C_ptr
+ * @param F_ptr
+ * @param lastCommand
+ * @param message
+ */
+void makePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCommand[], char message[]) {
+    clearView();
+    generateColumns();
+
+    Linked_list *current_column;
+    Node *current_node;
+    Card *card;
+    int F_num = 1;
+    char value;
+    char suit;
+
+    // This loop is for Foundations
+    for (int i = 1; i <= 8; i++) {
+        // This loop is for Columns
+        for (int j = 0; j < 7; ++j) {
+            current_column = C_ptr[j];
+            if (current_column != NULL) {
+                if (current_node != NULL && current_node->prev != NULL && current_node != current_column->head)
+                    current_node = current_node->next;
+                else
+                    current_node = current_column->head;
+            }
+
+            if (current_node != NULL)
+                card = (Card *) current_node->key;
+
+            if (card == NULL || current_node == NULL || current_column == NULL) {
+                printf("\t");
+                continue;
+            }
+
+            if (card->faceDown == false) {
+                value = card->value;
+                suit = card->suit;
+            } else {
+                value = '[';
+                suit = ']';
+            }
+
+            printf("%c%c\t", value, suit);
+        }
+
+        Linked_list *current_foundation;
+        Node *current_F;
+        Card *Foundation_Card;
+        if (i % 2 == 1) {
+            current_foundation = F_ptr[F_num - 1];
+            if (current_foundation != NULL) {
+                current_F = current_foundation->tail;
+                if (current_node != NULL)
+                    Foundation_Card = (Card *) current_F->key;
+            }
+
+            if (card == NULL || current_node == NULL || current_foundation == NULL) {
+                printf("\t[]\tF%d\n", F_num);
+                continue;
+            } else {
+                value = Foundation_Card->value;
+                suit = Foundation_Card->suit;
+                printf("\t%c%c\tF%d\n", value, suit, F_num);
+            }
+
+            F_num++;
+        } else {
+            printf("\n");
+        }
+    }
+
+    printCommandConsole(lastCommand, message);
 }
 
 // Only used within this module
