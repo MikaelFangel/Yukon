@@ -107,12 +107,13 @@ int main(void) {
                      * gameMoves[1] from card, ex H2
                      * gameMoves[2] to column, ex C4
                      * gameMoves[3] to card, ex 8C
+                     * Initialize with 0
                      */
                     char gameMoves[4][3] = {0};
 
                     token = strtok(buf, delimeters);
 
-                    // Load gameMoves in 2D array with string toke
+                    // Load gameMoves in 2D array with string tokens
                     int i = 0;
                     while (token != NULL && i < 4) {
                         int j = 0;
