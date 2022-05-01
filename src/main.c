@@ -106,16 +106,16 @@ int main(void) {
                      * gameMove[0] from column, eg C3
                      * gameMove[1] from card, ex H2
                      * gameMove[2] to column, ex C4
-                     * gameMove[3] to card, ex 8C
-                     * Initialize with 0
+                     * Full command ex: C3:H2 -> C4
+                     * Initialize with 0.
                      */
-                    char gameMove[4][3] = {0};
+                    char gameMove[3][3] = {0};
 
                     token = strtok(buf, delimeters);
 
                     // Load gameMove in 2D array with string tokens
                     int i = 0;
-                    while (token != NULL && i < 4) {
+                    while (token != NULL && i < 3) {
                         int j = 0;
                         while(j < 2) {
                             gameMove[i][j] = token[j];
