@@ -102,23 +102,23 @@ int main(void) {
                     const char delimeters[] = "-> :\n";
                     char *token;
 
-                    /** GameMoves stored in 2D char array
-                     * gameMoves[0] from column, eg C3
-                     * gameMoves[1] from card, ex H2
-                     * gameMoves[2] to column, ex C4
-                     * gameMoves[3] to card, ex 8C
+                    /** GameMove stored in 2D char array
+                     * gameMove[0] from column, eg C3
+                     * gameMove[1] from card, ex H2
+                     * gameMove[2] to column, ex C4
+                     * gameMove[3] to card, ex 8C
                      * Initialize with 0
                      */
-                    char gameMoves[4][3] = {0};
+                    char gameMove[4][3] = {0};
 
                     token = strtok(buf, delimeters);
 
-                    // Load gameMoves in 2D array with string tokens
+                    // Load gameMove in 2D array with string tokens
                     int i = 0;
                     while (token != NULL && i < 4) {
                         int j = 0;
                         while(j < 2) {
-                            gameMoves[i][j] = token[j];
+                            gameMove[i][j] = token[j];
                             ++j;
                         }
                         token = strtok(NULL, delimeters);
