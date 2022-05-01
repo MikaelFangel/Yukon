@@ -114,7 +114,7 @@ Linked_list *loadDeck(FILE *fptr) {
         Card *newCard = (Card *) malloc(sizeof(Card));
         newCard->value = line[0];
         newCard->suit = line[1];
-        addNode(cardDeck, newCard);
+        appendNode(cardDeck, newCard);
         checkCard(newCard);
     }
     return cardDeck;

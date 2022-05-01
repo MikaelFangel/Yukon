@@ -22,16 +22,16 @@ void linkedListAdd() {
     bool status = true;
 
     Linked_list *list = createLinkedList();
-    addNode(list, "1");
-    addNode(list, "2");
-    addNode(list, "3");
-    addNode(list, "4");
-    addNode(list, "5");
-    addNode(list, "6");
-    addNode(list, "7");
-    addNode(list, "8");
-    addNode(list, "9");
-    addNode(list, "10");
+    appendNode(list, "1");
+    appendNode(list, "2");
+    appendNode(list, "3");
+    appendNode(list, "4");
+    appendNode(list, "5");
+    appendNode(list, "6");
+    appendNode(list, "7");
+    appendNode(list, "8");
+    appendNode(list, "9");
+    appendNode(list, "10");
 
     if (strcmp(list->head->key, "1") != 0) {
         puts("linkedListAdd Error! Wrong node at head");
@@ -58,16 +58,16 @@ void findKeyTest() {
     char notFound = '9';
 
     Linked_list *list = createLinkedList();
-    addNode(list, "1");
-    addNode(list, "2");
-    addNode(list, "3");
-    addNode(list, "4");
-    addNode(list, "5");
-    addNode(list, "6");
-    addNode(list, &key);
-    addNode(list, "8");
-    addNode(list, "9");
-    addNode(list, "10");
+    appendNode(list, "1");
+    appendNode(list, "2");
+    appendNode(list, "3");
+    appendNode(list, "4");
+    appendNode(list, "5");
+    appendNode(list, "6");
+    appendNode(list, &key);
+    appendNode(list, "8");
+    appendNode(list, "9");
+    appendNode(list, "10");
 
     Node *result = findKey(list, &key);
     // void *result2 = findKey(list, &notFound);
