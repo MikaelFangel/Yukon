@@ -15,7 +15,7 @@ int main(void) {
     char command[256], filepath[256], arg[256], buf[256];
     Linked_list* loadedDeck;
     bool deckLoaded = false;
-    bool startupPhase = true, gameRunning = true;
+    bool startupPhase = true, playPhase = true;
     generateEmptyView("", "");
 
     while (!deckLoaded) {
@@ -83,14 +83,17 @@ int main(void) {
 
         /** Play Phase*/
         else if (strcasecmp("P", command) == 0) {
-            gameRunning = true;
-            // TODO: Implement view
-            generateEmptyView("P", "OK");
-            while (gameRunning) {
+            playPhase = true;
+            // TODO: Generate needed linked lists for each column and foundation
+            Linked_list *Column_lists[7] = {createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList(),  createLinkedList()};
+            Linked_list *Foundation_lists[4] = {createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList()};
+            makePlayView(Column_lists, Foundation_lists, "P", "OK");
+
+            while (playPhase) {
                 fgets(buf, sizeof(buf), stdin);
                 numOfInputs = sscanf(buf, "%s %s", command, arg);
                 if (strcasecmp("Q", command) == 0) {
-                    gameRunning = false;
+                    playPhase = false;
                     // TODO: View??
                     generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
                 }
