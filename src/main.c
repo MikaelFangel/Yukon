@@ -92,6 +92,7 @@ int main(void) {
             while (playPhase) {
                 fgets(buf, sizeof(buf), stdin);
                 numOfInputs = sscanf(buf, "%s %s", command, arg);
+
                 if (strcasecmp("Q", command) == 0) {
                     playPhase = false;
                     // TODO: View??
@@ -100,7 +101,32 @@ int main(void) {
 
                 // TODO: Implement Game Moves
                 else {
-                    generateEmptyView("", "Error! Invalid command");
+                    const char delimeters[] = "-> :\n";
+                    char *token;
+
+                    /** GameMove stored in 2D char array
+                     * gameMove[0] from column, eg C3
+                     * gameMove[1] from card, ex H2
+                     * gameMove[2] to column, ex C4
+                     * Full command ex: C3:H2 -> C4
+                     * Initialize with 0.
+                     */
+                    char gameMove[3][3] = {0};
+
+                    token = strtok(buf, delimeters);
+
+                    // Load gameMove in 2D array with string tokens
+                    int i = 0;
+                    while (token != NULL && i < 3) {
+                        int j = 0;
+                        while(j < 2) {
+                            gameMove[i][j] = token[j];
+                            ++j;
+                        }
+                        token = strtok(NULL, delimeters);
+                        ++i;
+                    }
+                    generateEmptyView("Game Move", "OK");
                 }
             }
         } else {
