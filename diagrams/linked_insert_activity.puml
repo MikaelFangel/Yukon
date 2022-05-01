@@ -3,32 +3,28 @@
 
 start
 :nodeCopy = nodeToInsert;
-:nodeCopy->key = nodeToInsert->key;
+:nodeCopy.key = nodeToInsert.key;
 
-if(list->size <= 0) then (true)
-    :appendNode;
-    :free nodeCopy;
-else (false)
-    if(insertBefore) then (true)
-        if(previousNode->prev != NULL) then (true)
-            :nodeCopy->next = previousNode;
-            :nodeCopy->prev = previousNode->prev;
-            :previousNode->prev->next = nodeCopy;
-            :previousNode->prev = nodeCopy;
+    if(insertBefore and list.size > 0) then (true)
+        if(previousNode.prev != NULL) then (true)
+            :nodeCopy.next = previousNode;
+            :nodeCopy.prev = previousNode.prev;
+            :previousNode.prev.next = nodeCopy;
+            :previousNode.prev = nodeCopy;
 
         else (false)
-            :nodeCopy->next = previousNode;
-            :nodeCopy->prev=NULL;
-            :previousNode->prev = nodeCopy;
-            :list->head = nodeCopy;
+            :nodeCopy.next = previousNode;
+            :nodeCopy.prev = NULL;
+            :previousNode.prev = nodeCopy;
+            :list.head = nodeCopy;
 
         endif
     else (false)
-        if(previousNode->next != NULL) then (true)
-            :nodeCopy->next = previousNode;
-            :nodeCopy->prev = previousNode->next;
-            :previousNode->next->prev = nodeCopy;
-            :previousNode->next = nodeCopy;
+        if(list.size > 0 and previousNode.next != NULL) then (true)
+            :nodeCopy.next = previousNode;
+            :nodeCopy.prev = previousNode.next;
+            :previousNode.next.prev = nodeCopy;
+            :previousNode.next = nodeCopy;
 
         else (false)
             :appendNode;
@@ -36,9 +32,8 @@ else (false)
         endif
 
 endif
-endif
 
-:list->size++;
+:list.size++;
 
 stop
 
