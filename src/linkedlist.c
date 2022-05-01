@@ -20,7 +20,7 @@ Linked_list *createLinkedList() {
  * @param list list to add new node to
  * @param key key to add as node to the list
  */
-void addNode(Linked_list *list, void *key) {
+void appendNode(Linked_list *list, void *key) {
     Node *newNode;
     newNode = (Node *) malloc(sizeof(Node));
 
@@ -54,52 +54,34 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
     nodeCopy = (Node *) malloc(sizeof(Node));
 
     nodeCopy->key = nodeToInsert->key;
-    if (list->size == 0) {
-        nodeCopy->next = NULL;
-        nodeCopy->prev = NULL;
-
-        list->tail = nodeCopy;
-        list->head = nodeCopy;
+    if (list->size <= 0) {
+        appendNode(list, nodeToInsert->key);
+        free(nodeCopy);
     } else {
         if (insertBefore) {
-            if (previousNode->next != NULL && previousNode->prev != NULL) {
+            if (previousNode->prev != NULL) {
                 nodeCopy->next = previousNode;
                 nodeCopy->prev = previousNode->prev;
 
                 previousNode->prev->next = nodeCopy;
                 previousNode->prev = nodeCopy;
-            } else if (previousNode->prev == NULL) {
+            } else  {
                 nodeCopy->next = previousNode;
                 nodeCopy->prev = NULL;
                 previousNode->prev = nodeCopy;
 
                 list->head = nodeCopy;
-            } else if (previousNode->next == NULL) {
-                nodeCopy->next = previousNode;
-                nodeCopy->prev = previousNode->prev;
-
-                previousNode->prev->next = nodeCopy;
-                previousNode->prev = nodeCopy;
             }
         } else {
-            if (previousNode->next != NULL && previousNode->prev != NULL) {
+            if (previousNode->next != NULL) {
                 nodeCopy->next = previousNode->next;
                 nodeCopy->prev = previousNode;
 
                 previousNode->next->prev = nodeCopy;
                 previousNode->next = nodeCopy;
-            } else if (previousNode->next == NULL) {
-                nodeCopy->next = NULL;
-                nodeCopy->prev = previousNode;
-                previousNode->next = nodeCopy;
-
-                list->tail = nodeCopy;
-            } else if (previousNode->prev == NULL) {
-                nodeCopy->next = previousNode->next;
-                nodeCopy->prev = previousNode;
-
-                previousNode->next->prev = nodeCopy;
-                previousNode->next = nodeCopy;
+            } else {
+                appendNode(list, nodeToInsert->key);
+                free(nodeCopy);
             }
         }
     }

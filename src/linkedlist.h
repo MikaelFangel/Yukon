@@ -25,7 +25,7 @@ Linked_list *createLinkedList();
 
 Node *findKey(Linked_list *list, void *key);
 
-void addNode(Linked_list *list, void *key);
+void appendNode(Linked_list *list, void *key);
 
 void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool insertBefore);
 
