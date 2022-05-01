@@ -77,7 +77,7 @@ Linked_list *SR(Linked_list *unshuffledPile) {
     // Source: https://www.geeksforgeeks.org/rand-and-srand-in-ccpp/
     srand(time(0));
 
-    Node *node = unshuffledPile->head;
+    Node *node = unshuffledPile->tail;
     while (node != NULL) {
         int placement;
         if (shuffledPile->size > 0) {
@@ -87,17 +87,13 @@ Linked_list *SR(Linked_list *unshuffledPile) {
         }
 
         Node *shuffNode = shuffledPile->head;
-        for (int i = 0; i < placement; i++) {
-            if (shuffNode->next == NULL) {
-                break;
-            }
-
+        for (int i = 0; i < placement - 1; i++) {
             shuffNode = shuffNode->next;
         }
         int before = rand() % 2;
         insertNode(shuffledPile, node, shuffNode, before);
 
-        node = node->next;
+        node = node->prev;
     }
     return shuffledPile;
 }

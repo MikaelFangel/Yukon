@@ -57,6 +57,7 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
     if (list->size <= 0) {
         appendNode(list, nodeToInsert->key);
         free(nodeCopy);
+        list->size--;
     } else {
         if (insertBefore) {
             if (previousNode->prev != NULL) {
@@ -82,6 +83,7 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
             } else {
                 appendNode(list, nodeToInsert->key);
                 free(nodeCopy);
+                list->size--;
             }
         }
     }
