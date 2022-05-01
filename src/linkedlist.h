@@ -35,4 +35,6 @@ void deleteLinkedList(Linked_list *list);
 
 void LinkedListToString(Linked_list *list);
 
+bool moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_list *to);
+
 #endif //YUKON_LINKEDLIST_H

@@ -124,8 +124,44 @@ void *findKey(Linked_list *list, void *key) {
     return node;
 }
 
-void moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_list *to, void *keyTo) {
+bool moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_list *to) {
+    // Finds the node corresponding to the key, so it can be detached from the linked list and added to the other
+    bool result = false;
+    Node *node = findKey(from, keyFrom);
+    Node *prevNode = to->tail;
 
+    // Checks how many nodes that are going to be moved so that we can calculate the new list size
+    int nodesMoved = 0;
+    Node *lastMovedNode = node;
+    while (lastMovedNode != NULL) {
+        nodesMoved++;
+        lastMovedNode = lastMovedNode->next;
+    }
+
+    // Ends function if not found and to allow error handling
+    if(node != NULL) {
+        // Detach node from its list
+        if (node->prev != NULL)
+            node->prev->next = NULL;
+
+        from->tail = node->prev;
+        from->size = from->size - nodesMoved;
+
+        // Linking
+        node->prev = prevNode;
+        if(prevNode != NULL) {
+            prevNode->next = node;
+        } else {
+            to->head = prevNode;
+        }
+
+        to->tail = lastMovedNode;
+        to->size = to->size + nodesMoved;
+
+        result = true;
+    }
+
+    return result;
 }
 
 void LinkedListToString(Linked_list *list) {
