@@ -54,37 +54,31 @@ void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool 
     nodeCopy = (Node *) malloc(sizeof(Node));
 
     nodeCopy->key = nodeToInsert->key;
-    if (list->size <= 0) {
-        appendNode(list, nodeToInsert->key);
-        free(nodeCopy);
-        list->size--;
-    } else {
-        if (insertBefore) {
-            if (previousNode->prev != NULL) {
-                nodeCopy->next = previousNode;
-                nodeCopy->prev = previousNode->prev;
+    if (insertBefore && list->size > 0) {
+        if (previousNode->prev != NULL) {
+            nodeCopy->next = previousNode;
+            nodeCopy->prev = previousNode->prev;
 
-                previousNode->prev->next = nodeCopy;
-                previousNode->prev = nodeCopy;
-            } else  {
-                nodeCopy->next = previousNode;
-                nodeCopy->prev = NULL;
-                previousNode->prev = nodeCopy;
-
-                list->head = nodeCopy;
-            }
+            previousNode->prev->next = nodeCopy;
+            previousNode->prev = nodeCopy;
         } else {
-            if (previousNode->next != NULL) {
-                nodeCopy->next = previousNode->next;
-                nodeCopy->prev = previousNode;
+            nodeCopy->next = previousNode;
+            nodeCopy->prev = NULL;
+            previousNode->prev = nodeCopy;
 
-                previousNode->next->prev = nodeCopy;
-                previousNode->next = nodeCopy;
-            } else {
-                appendNode(list, nodeToInsert->key);
-                free(nodeCopy);
-                list->size--;
-            }
+            list->head = nodeCopy;
+        }
+    } else {
+        if (list->size > 0 && previousNode->next != NULL) {
+            nodeCopy->next = previousNode->next;
+            nodeCopy->prev = previousNode;
+
+            previousNode->next->prev = nodeCopy;
+            previousNode->next = nodeCopy;
+        } else {
+            appendNode(list, nodeToInsert->key);
+            free(nodeCopy);
+            list->size--;
         }
     }
 
@@ -160,7 +154,7 @@ bool moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_
     }
 
     // Ends function if not found and to allow error handling
-    if(node != NULL) {
+    if (node != NULL) {
         // Detach node from its list
         if (node->prev != NULL)
             node->prev->next = NULL;
@@ -170,7 +164,7 @@ bool moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_
 
         // Linking
         node->prev = prevNode;
-        if(prevNode != NULL) {
+        if (prevNode != NULL) {
             prevNode->next = node;
         } else {
             to->head = prevNode;
