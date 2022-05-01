@@ -86,12 +86,8 @@ Linked_list *SR(Linked_list *unshuffledPile) {
     Node *node = unshuffledPile->tail;
     while (node != NULL) {
         // Calculate a random placement within the ranges of the shuffled piles size.
-        int placement;
-        if (shuffledPile->size > 0) {
-            placement = rand() % shuffledPile->size + 1;
-        } else {
-            placement = 0;
-        }
+        // Add with 1 to avoid zero division error.
+        int placement = rand() % (shuffledPile->size + 1);
 
         // Finds the placement in the shuffled pile, so we know where to insert
         Node *shuffNode = shuffledPile->head;
