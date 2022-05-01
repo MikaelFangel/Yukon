@@ -121,7 +121,7 @@ Linked_list *loadDeck(FILE *fptr) {
 }
 
 /**
- * Save a deck to a file
+ * Save deck to a file
  * Used in SD command
  * @param list
  */
