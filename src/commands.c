@@ -71,14 +71,21 @@ Linked_list *SI(Linked_list *firstPile, int split) {
     return shuffledPile;
 }
 
+/**
+ * Shuffles the deck in a random manner where tail is the top of the deck and head the bottom.
+ * @param unshuffledPile the pile to be shuffled
+ * @return the shuffled pile of cards
+ */
 Linked_list *SR(Linked_list *unshuffledPile) {
     Linked_list *shuffledPile = createLinkedList();
 
+    // Seed the random function with system time
     // Source: https://www.geeksforgeeks.org/rand-and-srand-in-ccpp/
     srand(time(0));
 
     Node *node = unshuffledPile->tail;
     while (node != NULL) {
+        // Calculate a random placement within the ranges of the shuffled piles size.
         int placement;
         if (shuffledPile->size > 0) {
             placement = rand() % shuffledPile->size + 1;
@@ -86,14 +93,20 @@ Linked_list *SR(Linked_list *unshuffledPile) {
             placement = 0;
         }
 
+        // Finds the placement in the shuffled pile, so we know where to insert
         Node *shuffNode = shuffledPile->head;
         for (int i = 0; i < placement - 1; i++) {
             shuffNode = shuffNode->next;
         }
+
+        // Randomize if the card is placed before or after the chosen placement
         int before = rand() % 2;
         insertNode(shuffledPile, node, shuffNode, before);
 
         node = node->prev;
     }
+
+    // Avoid memory leak of deck piles
+    deleteLinkedList(unshuffledPile);
     return shuffledPile;
 }
