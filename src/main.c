@@ -12,12 +12,14 @@ int main(void) {
     setbuf(stdout, 0);
 #endif
 
-    char command[256], filepath[256], arg[256], buf[256];
+    char command[256], arg[256], buf[256];
     Linked_list* loadedDeck;
     bool deckLoaded = false;
     bool playPhase = true;
+    // Start view
     generateEmptyView("", "");
 
+    /** The first command has to be load */
     while (!deckLoaded) {
         fgets(buf, sizeof(buf), stdin);
         int numOfInputs = sscanf(buf, "%s %s", command, arg);

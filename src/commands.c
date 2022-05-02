@@ -51,12 +51,14 @@ void SD(Linked_list *list, char arg[]) {
  * @return A shuffled deck
  */
 Linked_list *SI(Linked_list *firstPile, int split) {
+    // Splits the deck into two decks, which should be interleaved
     Linked_list *secondPile = createLinkedList();
 
     for (int i = 0; i < split; ++i) {
         moveToAnotherDeck(firstPile, secondPile);
     }
 
+    // Interleaves the two decks into a shuffled pile
     Linked_list *shuffledPile = createLinkedList();
     while (firstPile->size > 0 || secondPile->size > 0) {
         if (firstPile->size > 0)

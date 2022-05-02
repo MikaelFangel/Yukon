@@ -17,4 +17,6 @@ void SD(Linked_list *list, char arg[]);
 
 Linked_list *SI(Linked_list *, int);
 
+Linked_list *P(Linked_list *);
+
 #endif //YUKON_COMMANDS_H
