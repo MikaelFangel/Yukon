@@ -15,7 +15,7 @@ int main(void) {
     char command[256], arg[256], buf[256];
     Linked_list* loadedDeck;
     bool deckLoaded = false;
-    bool playPhase = true;
+    bool gameRunning = true, playPhase = true;
     // Start view
     generateEmptyView("", "");
 
@@ -34,7 +34,7 @@ int main(void) {
     }
 
     /** Startup Phase */
-    while (true) {
+    while (gameRunning) {
         fgets(buf, sizeof(buf), stdin);
         // arg = ../resources/default.txt
         int numOfInputs = sscanf(buf, "%s %s", command, arg);
@@ -90,15 +90,29 @@ int main(void) {
         else if (strcasecmp("P", command) == 0) {
             playPhase = true;
             // TODO: Generate needed linked lists for each column
-            Linked_list *Column_lists[7] = {createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList(),  createLinkedList()};
-            Linked_list *Foundation_lists[4] = {createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList()};
-            makePlayView(Column_lists, Foundation_lists, "P", "OK");
+            Linked_list *Column_lists[7] = {createLinkedList(), createLinkedList(), createLinkedList(),
+                                            createLinkedList(), createLinkedList(), createLinkedList(),
+                                            createLinkedList()};
+            Linked_list *Foundation_lists[4] = {createLinkedList(), createLinkedList(),
+                                                createLinkedList(), createLinkedList()};
+            generatePlayView(Column_lists, Foundation_lists, "P", "OK");
 
             while (playPhase) {
                 fgets(buf, sizeof(buf), stdin);
                 numOfInputs = sscanf(buf, "%s %s", command, arg);
 
-                if (strcasecmp("Q", command) == 0) {
+                if (strcasecmp("LD", command) == 0 || strcasecmp("SW", command) == 0
+                    || strcasecmp("SI", command) == 0 || strcasecmp("SR", command) == 0
+                    || strcasecmp("SD", command) == 0) {
+                    generatePlayView(Column_lists, Foundation_lists,
+                                     command, "ERROR! Command not available in the PLAY phase");
+                }
+                else if (strcasecmp("QQ", command) == 0) {
+                    puts("Ending Yukon...");
+                    gameRunning = false;
+                    break;
+                }
+                else if (strcasecmp("Q", command) == 0) {
                     playPhase = false;
                     // TODO: View??
                     generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
