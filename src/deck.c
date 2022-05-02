@@ -143,12 +143,19 @@ void saveDeck(Linked_list *list, FILE *fptr) {
  * Adds a card from the top of one deck to the bottom of another deck.
  * The tail is the top of the deck!
  * Used in the SI command
- * @param fromDeck The deck from which the card is being moved
- * @param toDeck The deck to which the card is being moved
+ * @param fromDeck  The deck from which the card is being moved
+ * @param toDeck    The deck to which the card is being moved
+ * @param toBottom  to Bottom (head) or to Top (tail)
  */
-void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck) {
+void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck, bool toBottom) {
+    if (fromDeck == NULL || toDeck == NULL) {
+        printf("ERROR");
+        return;
+    }
+
     Node *nodeBeingMoved = fromDeck->tail;
     fromDeck->tail = nodeBeingMoved->prev;
+
     // To prevent segmentation error
     if (fromDeck->tail != NULL)
         fromDeck->tail->next = NULL;
@@ -163,11 +170,20 @@ void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck) {
     }
     // Add to a non-empty deck
     else {
-        nodeBeingMoved->next = toDeck->head;
-        nodeBeingMoved->prev = NULL;
+        if (toBottom) {
+            nodeBeingMoved->next = toDeck->head;
+            nodeBeingMoved->prev = NULL;
 
-        toDeck->head->prev = nodeBeingMoved;
-        toDeck->head = nodeBeingMoved;
+            toDeck->head->prev = nodeBeingMoved;
+            toDeck->head = nodeBeingMoved;
+        }
+        else {
+            nodeBeingMoved->next = NULL;
+            nodeBeingMoved->prev = toDeck->tail;
+
+            toDeck->tail->next = nodeBeingMoved;
+            toDeck->tail = nodeBeingMoved;
+        }
     }
 
     fromDeck->size--;

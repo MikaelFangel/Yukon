@@ -1,5 +1,9 @@
 #include "view.h"
 
+// If a deck of more than (7 columns * 8 rows) = 56 cards is desired, increase this constant
+int MAX_NUM_OF_ROWS = 8;
+const int NUM_OF_COLUMNS = 7;
+
 /**
  * Generates the start view or empty views with error messages
  * @param lastCommand For start view, type ""
@@ -35,7 +39,6 @@ void generateEmptyView(char lastCommand[], char message[]) {
  * because the game hasn't started yet :)
  *
  * @param deck_list the deck given as a Linked List
- * @param faceUp true of SW, false if LD, SI or SR
  */
 void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
     // Creates an empty view
@@ -110,7 +113,7 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
     generateColumns();
 
     Linked_list *current_column;
-    Node *current_node;
+    Node *current_node = NULL;
     Card *card;
     int F_num = 1;
     char value, suit;
@@ -124,10 +127,16 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
 
             // Check if NULL
             if (current_column != NULL) {
-                if (current_node != NULL && current_node->prev != NULL && current_node != current_column->head)
-                    current_node = current_node->next;
-                else
-                    current_node = current_column->head;
+                // if (current_node != NULL && current_node->prev != NULL && current_node != current_column->head)
+                //     current_node = current_node->next;
+                // else
+                current_node = current_column->head;
+                for (int k = 0; k < i - 1; ++k) {
+                    if (current_node != NULL)
+                        current_node = current_node->next;
+                    else break;
+                }
+
                 if (current_node != NULL)
                     card = (Card *) current_node->key;
             }
@@ -153,24 +162,24 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
         // Prints foundations
         Linked_list *current_foundation;
         Node *current_F;
-        Card *Foundation_Card;
+        Card *foundation_Card;
         if (i % 2 == 1 && i < 8) {
             current_foundation = F_ptr[F_num - 1];
 
             // Check if NULL
-            if (current_foundation != NULL) {
+            if (current_foundation->tail != NULL) {
                 current_F = current_foundation->tail;
                 if (current_node != NULL)
-                    Foundation_Card = (Card *) current_F->key;
+                    foundation_Card = (Card *) current_F->key;
             }
 
-            if (card == NULL || current_node == NULL || current_foundation == NULL) {
+            if (foundation_Card == NULL || current_F == NULL || current_foundation == NULL) {
                 printf("\t[]\tF%d\n", F_num);
                 continue;
             }
             else {
-                value = Foundation_Card->value;
-                suit = Foundation_Card->suit;
+                value = foundation_Card->value;
+                suit = foundation_Card->suit;
                 printf("\t%c%c\tF%d\n", value, suit, F_num);
             }
             F_num++;
@@ -179,7 +188,6 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
             printf("\n");
         }
     }
-
     printCommandConsole(lastCommand, message);
 }
 
@@ -203,7 +211,7 @@ void generateColumns() {
 
 // Only used within this module
 void printCommandConsole(char lastCommand[], char message[]) {
-    printf("LAST Command: %s \n", lastCommand);
+    printf("\nLAST Command: %s \n", lastCommand);
     printf("Message: %s \n", message);
     printf("INPUT > ");
 

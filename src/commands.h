@@ -17,6 +17,6 @@ Linked_list *SI(Linked_list *, int);
 
 Linked_list *SR(Linked_list *unshuffledPile);
 
-Linked_list *P(Linked_list *);
+Linked_list **P(Linked_list *);
 
 #endif //YUKON_COMMANDS_H
