@@ -66,10 +66,12 @@ int main(void) {
                     showDeck(loadedDeck, "SI", "OK");
                 }
             }
-        } else if (strcasecmp("SR", command) == 0) {
+        }
+        else if (strcasecmp("SR", command) == 0) {
             loadedDeck = SR(loadedDeck);
             showDeck(loadedDeck, "SR", "OK");
-        } else if (strcasecmp("SD", command) == 0) {
+        }
+        else if (strcasecmp("SD", command) == 0) {
 
             if (numOfInputs == 1) {
                 SD(loadedDeck, "cards");
@@ -78,7 +80,8 @@ int main(void) {
             }
             showDeck(loadedDeck, "SD", "Deck has been saved.");
 
-        } else if (strcasecmp("QQ", command) == 0) {
+        }
+        else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
             break;
         }
@@ -86,7 +89,7 @@ int main(void) {
         /** Play Phase*/
         else if (strcasecmp("P", command) == 0) {
             playPhase = true;
-            // TODO: Generate needed linked lists for each column and foundation
+            // TODO: Generate needed linked lists for each column
             Linked_list *Column_lists[7] = {createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList(),  createLinkedList()};
             Linked_list *Foundation_lists[4] = {createLinkedList(), createLinkedList(), createLinkedList(), createLinkedList()};
             makePlayView(Column_lists, Foundation_lists, "P", "OK");

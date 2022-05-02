@@ -11,11 +11,11 @@
 
 Linked_list *LD(char arg[], int numOfInputs);
 
-Linked_list *SR(Linked_list *unshuffledPile);
-
 void SD(Linked_list *list, char arg[]);
 
 Linked_list *SI(Linked_list *, int);
+
+Linked_list *SR(Linked_list *unshuffledPile);
 
 Linked_list *P(Linked_list *);
 
