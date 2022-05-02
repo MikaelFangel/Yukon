@@ -124,7 +124,7 @@ void deleteLinkedList(Linked_list *list) {
  * @param key key to find
  * @return the node in the linked list if found and NULL if node is not in the list
  */
- //Slightly misleading name. Maybe rename to findNodeFromKey
+//Slightly misleading name. Maybe rename to findNodeFromKey
 Node *findKey(Linked_list *list, void *key) {
     Node *node = list->head;
     while (node != NULL && node->key != key) {
@@ -133,6 +133,7 @@ Node *findKey(Linked_list *list, void *key) {
 
     return node;
 }
+
 Node *findNodeFromCard(Linked_list *list, char value, char suit) {
     Node *node = list->head;
     while (node != NULL) {
@@ -154,11 +155,7 @@ bool moveNodeFromOneLinkedListToAnother(Linked_list *from, Node *node, Linked_li
     Node *lastMovedNode = node;
     while (lastMovedNode != NULL) {
         nodesMoved++;
-        if (lastMovedNode->next != NULL) {
-            lastMovedNode = lastMovedNode->next;
-        } else {
-            break;
-        }
+        lastMovedNode = lastMovedNode->next;
     }
     // Ends function if not found and to allow error handling
     if (node != NULL) {
@@ -200,15 +197,11 @@ bool moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_
     Node *prevNode = to->tail;
 
     // Checks how many nodes that are going to be moved so that we can calculate the new list size
-    int nodesMoved = 0;
+    int nodesMoved = 1;
     Node *lastMovedNode = node;
-    while (lastMovedNode != NULL) {
+    while (lastMovedNode->next != NULL) {
         nodesMoved++;
-        if (lastMovedNode->next != NULL) {
-            lastMovedNode = lastMovedNode->next;
-        } else {
-            break;
-        }
+        lastMovedNode = lastMovedNode->next;
     }
 
     // Ends function if not found and to allow error handling
@@ -219,13 +212,16 @@ bool moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_
 
         from->tail = node->prev;
         from->size = from->size - nodesMoved;
+        if(from->size == 0) {
+            from->head = NULL;
+        }
 
         // Linking
         node->prev = prevNode;
         if (prevNode != NULL) {
             prevNode->next = node;
         } else {
-            to->head = prevNode;
+            to->head = node;
         }
 
         to->tail = lastMovedNode;
