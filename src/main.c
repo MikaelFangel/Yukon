@@ -15,7 +15,7 @@ int main(void) {
     char command[256], filepath[256], arg[256], buf[256];
     Linked_list* loadedDeck;
     bool deckLoaded = false;
-    bool startupPhase = true, playPhase = true;
+    bool playPhase = true;
     generateEmptyView("", "");
 
     while (!deckLoaded) {

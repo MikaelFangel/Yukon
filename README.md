@@ -19,7 +19,10 @@ how the deck should be split (allowed numbers are \]1:52\[). If no split is give
 choose a random value to split by.
  * SR  
 Shuffles the loaded deck in a random manner.
- * SD \<filename\>
+ * SD \<filename\>  
+This command saves the deck currently being used. If no name is specified, a default filename 
+is assigned to the deck. Otherwise, the user can optionally choose under which name they want 
+to save the current deck. 
 
 ### Play Phase:
  * P  
