@@ -28,6 +28,6 @@ void saveDeck(Linked_list *list, FILE *fptr);
 
 int checkCard(Card *deck_card);
 
-void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck);
+void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck, bool toBottom);
 
 #endif
