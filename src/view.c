@@ -1,9 +1,5 @@
 #include "view.h"
 
-// If a deck of more than (7 columns * 8 rows) = 56 cards is desired, increase this constant
-const int MAX_NUM_OF_ROWS = 8;
-
-
 /**
  * Generates the start view or empty views with error messages
  * @param lastCommand For start view, type ""
@@ -15,11 +11,11 @@ void generateEmptyView(char lastCommand[], char message[]) {
     int Fnum = 1;
 
     for (int i = 1; i <= 7; i++) {
-        for (int j = 0; j < 8; ++j) {
+        for (int j = 0; j < NUM_OF_COLUMNS; ++j) {
             printf("\t");
         }
 
-        if (i % 2 == 1) {
+        if (i % 2 == 1 && i < 8) {
             printf("\t[]\tF%d\n", Fnum);
             Fnum++;
         }
@@ -61,7 +57,7 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
     // Loop determining whether a foundation should be printed or not
     for (int i = 1; i <= MAX_NUM_OF_ROWS; i++) {
         // Loop to print the cards in the columns
-        for (int j = 0; j < 7; ++j) {
+        for (int j = 0; j < NUM_OF_COLUMNS; ++j) {
             if (card == NULL || current_node == NULL) {
                 printf("\t");
                 continue;
@@ -107,6 +103,9 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
  * @param message
  */
 void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCommand[], char message[]) {
+    int tmp = calculateMaxNumOfRows(C_ptr);
+    if (tmp > MAX_NUM_OF_ROWS) MAX_NUM_OF_ROWS = tmp;
+
     clearView();
     generateColumns();
 
@@ -114,13 +113,13 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
     Node *current_node;
     Card *card;
     int F_num = 1;
-    char value;
-    char suit;
+    char value, suit;
 
     // This loop is for Foundations
     for (int i = 1; i <= MAX_NUM_OF_ROWS; i++) {
+
         // This loop is for Columns
-        for (int j = 0; j < 7; ++j) {
+        for (int j = 0; j < NUM_OF_COLUMNS; ++j) {
             current_column = C_ptr[j];
 
             // Check if NULL
@@ -182,6 +181,16 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
     }
 
     printCommandConsole(lastCommand, message);
+}
+
+int calculateMaxNumOfRows(Linked_list *columns[NUM_OF_COLUMNS]) {
+    int maxNumOfRows = 0;
+    for (int i = 0; i < NUM_OF_COLUMNS; ++i) {
+        Linked_list *tmp = columns[i];
+        if (tmp == NULL) continue;
+        if (maxNumOfRows < tmp->size) maxNumOfRows = tmp->size;
+    }
+    return maxNumOfRows;
 }
 
 // Only used within this module
