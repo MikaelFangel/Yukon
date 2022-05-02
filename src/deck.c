@@ -149,7 +149,7 @@ void saveDeck(Linked_list *list, FILE *fptr) {
  */
 void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck, bool toBottom) {
     if (fromDeck == NULL || toDeck == NULL) {
-        printf("ERROR");
+        //printf("ERROR");
         return;
     }
 

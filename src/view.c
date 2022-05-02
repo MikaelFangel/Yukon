@@ -161,19 +161,19 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
 
         // Prints foundations
         Linked_list *current_foundation;
-        Node *current_F;
-        Card *foundation_Card;
+        Node *current_F = NULL;
+        Card *foundation_Card = NULL;
         if (i % 2 == 1 && i < 8) {
             current_foundation = F_ptr[F_num - 1];
 
             // Check if NULL
             if (current_foundation->tail != NULL) {
                 current_F = current_foundation->tail;
-                if (current_node != NULL)
+                if (current_F != NULL)
                     foundation_Card = (Card *) current_F->key;
             }
 
-            if (foundation_Card == NULL || current_F == NULL || current_foundation == NULL) {
+            if (foundation_Card == NULL || current_F == NULL) {
                 printf("\t[]\tF%d\n", F_num);
                 continue;
             }
