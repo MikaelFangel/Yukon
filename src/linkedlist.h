@@ -35,6 +35,10 @@ void deleteLinkedList(Linked_list *list);
 
 void LinkedListToString(Linked_list *list);
 
+Node *findNodeFromCard(Linked_list *list, char value, char suit);
+
 bool moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_list *to);
+
+bool moveNodeFromOneLinkedListToAnother(Linked_list *from, Node *node, Linked_list *to);
 
 #endif //YUKON_LINKEDLIST_H
