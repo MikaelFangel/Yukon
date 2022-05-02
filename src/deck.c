@@ -143,15 +143,17 @@ void saveDeck(Linked_list *list, FILE *fptr) {
  * Adds a card from the top of one deck to the bottom of another deck.
  * The tail is the top of the deck!
  * Used in the SI command
- * @param toDeck
- * @param nodeBeingMoved
+ * @param fromDeck The deck from which the card is being moved
+ * @param toDeck The deck to which the card is being moved
  */
 void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck) {
     Node *nodeBeingMoved = fromDeck->tail;
     fromDeck->tail = nodeBeingMoved->prev;
+    // To prevent segmentation error
     if (fromDeck->tail != NULL)
         fromDeck->tail->next = NULL;
 
+    // Add to an emtpy deck
     if (toDeck->size == 0) {
         nodeBeingMoved->prev = NULL;
         nodeBeingMoved->next = NULL;
@@ -159,6 +161,7 @@ void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck) {
         toDeck->head = nodeBeingMoved;
         toDeck->tail = nodeBeingMoved;
     }
+    // Add to a non-empty deck
     else {
         nodeBeingMoved->next = toDeck->head;
         nodeBeingMoved->prev = NULL;
