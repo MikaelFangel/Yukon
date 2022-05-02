@@ -122,9 +122,9 @@ int main(void) {
 
                     /** GameMove stored in 2D char array
                      * gameMove[0] from column, eg C3
-                     * gameMove[1] from card, ex H2
+                     * gameMove[1] from card, ex 2H
                      * gameMove[2] to column, ex C4
-                     * Full command ex: C3:H2 -> C4
+                     * Full command ex: C3:2H -> C4
                      * Initialize with 0.
                      */
                     char gameMove[3][3] = {0};
@@ -142,7 +142,24 @@ int main(void) {
                         token = strtok(NULL, delimeters);
                         ++i;
                     }
-                    generateEmptyView("Game Move", "OK");
+
+                    // Get columns TODO: Check for Foundation or column
+                    int fromColumn = gameMove[0][1] - 49;
+                    int toColumn = gameMove[2][1] - 49;
+
+                    //Get card //TODO: Input validation.
+                    Card *fromCard = (Card *) malloc(sizeof(Card));
+                    fromCard->value = gameMove[1][0];
+                    fromCard->suit = gameMove[1][1];
+                    Node *nodeFrom = findNodeFromCard(column_lists[fromColumn], fromCard->value,fromCard->suit);
+
+                    // Move the card to the now column
+                    // TODO: Discuss which method is best. Search by key or by node
+                    //moveKeyFromOneLinkedListToAnother(column_lists[fromColumn], nodeFrom->key, column_lists[toColumn]);
+                    moveNodeFromOneLinkedListToAnother(column_lists[fromColumn], nodeFrom, column_lists[toColumn]);
+
+                    // Show deck
+                    generatePlayView(column_lists, foundation_lists, "Move command", "OK");
                 }
             }
         } else {
