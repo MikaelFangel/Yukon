@@ -11,14 +11,10 @@
 
 Linked_list *LD(char arg[], int numOfInputs);
 
-int SW();
-
 Linked_list *SR(Linked_list *unshuffledPile);
 
 void SD(Linked_list *list, char arg[]);
 
 Linked_list *SI(Linked_list *, int);
-
-void QQ(Linked_list *lists[], int numberOfLists);
 
 #endif //YUKON_COMMANDS_H
