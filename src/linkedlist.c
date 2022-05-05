@@ -151,7 +151,7 @@ bool moveNodeFromOneLinkedListToAnother(Linked_list *from, Node *node, Linked_li
     Node *prevNode = to->tail;
 
     // Checks how many nodes that are going to be moved so that we can calculate the new list size
-    int nodesMoved = 0;
+    int nodesMoved = 1;
     Node *lastMovedNode = node;
     while (lastMovedNode != NULL) {
         nodesMoved++;
@@ -166,12 +166,16 @@ bool moveNodeFromOneLinkedListToAnother(Linked_list *from, Node *node, Linked_li
         from->tail = node->prev;
         from->size = from->size - nodesMoved;
 
+        if(from->size == 0) {
+            from->head = NULL;
+        }
+
         // Linking
         node->prev = prevNode;
         if (prevNode != NULL) {
             prevNode->next = node;
         } else {
-            to->head = prevNode;
+            to->head = node;
         }
 
         to->tail = lastMovedNode;
