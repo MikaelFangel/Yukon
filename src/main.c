@@ -154,7 +154,7 @@ int main(void) {
                     Linked_list *toList = NULL;
                     // Check if <FROM> is Column (C) or Foundation (F).
                     if (gameMove[0][0] == 'C') {
-                        // Set from list and card
+                        // Set <FROM>> list and card
                         fromCard->value = gameMove[1][0];
                         fromCard->suit = gameMove[1][1];
                         fromList = column_lists[from];
