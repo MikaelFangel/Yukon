@@ -166,7 +166,7 @@ int main(void) {
                         // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
                         fromList = foundation_lists[from];
                         toList = column_lists[to];
-                        Card *tempCard = fromList->head->key;
+                        Card *tempCard = (Card *) fromList->head->key;
                         fromCard->value = tempCard->value;
                         fromCard->suit = tempCard->suit;
                     } else; // TODO: Error handling if not C or F is typed in <FROM>
