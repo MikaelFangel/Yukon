@@ -1,4 +1,5 @@
 #include "deck.h"
+#include "view.h"
 
 Card clubs[SUIT_SIZE];
 Card diamonds[SUIT_SIZE];
@@ -94,7 +95,7 @@ int checkCard(Card *deck_card) {
             return 1;
         }
     }
-    // Card cannot be found
+    // Invalid card - cannot be found
     return 2;
 }
 
@@ -110,12 +111,14 @@ Linked_list *loadDeck(FILE *fptr) {
     char line[4];
     Linked_list *cardDeck = createLinkedList();
     // While file not empty, read a line, create a card, and add it to linked list.
+    int counter = 1;
     while (fgets(line, sizeof line, fptr) != NULL) {
         Card *newCard = (Card *) malloc(sizeof(Card));
         newCard->value = line[0];
         newCard->suit = line[1];
         appendNode(cardDeck, newCard);
-        checkCard(newCard);
+        if (checkCard(newCard) != 0) generateEmptyView("LD", "Error with card on line");
+        ++counter;
     }
     return cardDeck;
 }
