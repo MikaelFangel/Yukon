@@ -123,7 +123,7 @@ int main(void) {
                     /** GameMove stored in 2D char array
                      * gameMove[0] from column, eg C3
                      * gameMove[1] from card, ex 2H
-                     * gameMove[2] to column, ex C4
+                     * gameMove[2] to column, ex C4 or F2
                      * Full command ex: C3:2H -> C4
                      * Initialize with 0.
                      */
@@ -143,20 +143,39 @@ int main(void) {
                         ++i;
                     }
 
-                    // Get columns TODO: Check for Foundation or column
-                    int fromColumn = gameMove[0][1] - 49;
-                    int toColumn = gameMove[2][1] - 49;
+                    // Get columns/foundation numbers
+                    int from = gameMove[0][1] - 49;
+                    int to = gameMove[2][1] - 49;
 
                     //Get card //TODO: Input validation.
                     Card *fromCard = (Card *) malloc(sizeof(Card));
-                    fromCard->value = gameMove[1][0];
-                    fromCard->suit = gameMove[1][1];
-                    Node *nodeFrom = findNodeFromCard(column_lists[fromColumn], fromCard->value,fromCard->suit);
+
+                    Linked_list *fromList = NULL;
+                    Linked_list *toList = NULL;
+                    // Check if <FROM> is Column (C) or Foundation (F).
+                    if (gameMove[0][0] == 'C') {
+                        // Set from list and card
+                        fromCard->value = gameMove[1][0];
+                        fromCard->suit = gameMove[1][1];
+                        fromList = column_lists[from];
+                         // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
+                         if (gameMove[2][0] == 'C') toList = column_lists[to];
+                         else if(gameMove[2][0] == 'F') toList = foundation_lists[to];
+                         else; // TODO: Error handling if not C or F is typed in <TO>
+                    } else if (gameMove[0][0] == 'F') {
+                        // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
+                        fromList = foundation_lists[from];
+                        toList = column_lists[to];
+                        Card *tempCard = fromList->head->key;
+                        fromCard->value = tempCard->value;
+                        fromCard->suit = tempCard->suit;
+                    } else; // TODO: Error handling if not C or F is typed in <FROM>
+                    Node *nodeFrom = findNodeFromCard(fromList, fromCard->value, fromCard->suit);
 
                     // Move the card to the now column
                     // TODO: Discuss which method is best. Search by key or by node
-                    //moveKeyFromOneLinkedListToAnother(column_lists[fromColumn], nodeFrom->key, column_lists[toColumn]);
-                    moveNodeFromOneLinkedListToAnother(column_lists[fromColumn], nodeFrom, column_lists[toColumn]);
+                    //moveKeyFromOneLinkedListToAnother(column_lists[from], nodeFrom->key, column_lists[to]);
+                    moveNodeFromOneLinkedListToAnother(fromList, nodeFrom, toList);
 
                     // Show deck
                     generatePlayView(column_lists, foundation_lists, "Move command", "OK");
