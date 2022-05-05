@@ -147,16 +147,15 @@ int main(void) {
                     int from = gameMove[0][1] - 49;
                     int to = gameMove[2][1] - 49;
 
-                    //Get card //TODO: Input validation.
-                    Card *fromCard = (Card *) malloc(sizeof(Card));
-
+                    // Get card. 0. value : 1. suit
+                    char fromCard[2];
                     Linked_list *fromList = NULL;
                     Linked_list *toList = NULL;
                     // Check if <FROM> is Column (C) or Foundation (F).
                     if (gameMove[0][0] == 'C') {
                         // Set <FROM>> list and card
-                        fromCard->value = gameMove[1][0];
-                        fromCard->suit = gameMove[1][1];
+                        fromCard[0] = gameMove[1][0];
+                        fromCard[1] = gameMove[1][1];
                         fromList = column_lists[from];
                          // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
                          if (gameMove[2][0] == 'C') toList = column_lists[to];
@@ -167,13 +166,14 @@ int main(void) {
                         fromList = foundation_lists[from];
                         toList = column_lists[to];
                         Card *tempCard = (Card *) fromList->head->key;
-                        fromCard->value = tempCard->value;
-                        fromCard->suit = tempCard->suit;
+                        fromCard[0] = tempCard->value;
+                        fromCard[1] = tempCard->suit;
                     } else; // TODO: Error handling if not C or F is typed in <FROM>
-                    Node *nodeFrom = findNodeFromCard(fromList, fromCard->value, fromCard->suit);
+                    Node *nodeFrom = findNodeFromCard(fromList, fromCard[0], fromCard[1]);
 
                     // Move the card to the now column
                     // TODO: Discuss which method is best. Search by key or by node
+                    // TODO: Validate move
                     //moveKeyFromOneLinkedListToAnother(column_lists[from], nodeFrom->key, column_lists[to]);
                     moveNodeFromOneLinkedListToAnother(fromList, nodeFrom, toList);
 
