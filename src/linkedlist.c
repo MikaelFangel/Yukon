@@ -26,6 +26,7 @@ void appendCard(Linked_list *list, struct ListCard card) {
 
     if (list->size == 0) {
         newCard->suit = card.suit;
+        newCard->value = card.value;
         newCard->next = NULL;
         newCard->prev = NULL;
 
@@ -80,6 +81,7 @@ void insertNode(Linked_list *list, struct ListCard *nodeToInsert, struct ListCar
             previousNode->next = nodeCopy;
         } else {
             appendCard(list, *nodeToInsert);
+            free(nodeCopy);
             list->size--;
         }
     }
