@@ -17,15 +17,13 @@ Linked_list *LD(char arg[], int numOfInputs) {
             loadedDeck = loadDeck(file);
             showDeck(loadedDeck, "LD", "OK");
             fclose(file);
-        }
-        else {
+        } else {
             generateEmptyView("LD", "The file does not exist");
             return NULL;
         }
 
         /** If no filepath is given, load unshuffled deck */
-    }
-    else {
+    } else {
         FILE *defaultDeck = fopen("../resources/default.txt", "r");
         loadedDeck = loadDeck(defaultDeck);
         showDeck(loadedDeck, "LD", "No name specified unshuffled deck loaded");
@@ -87,14 +85,14 @@ Linked_list *SR(Linked_list *unshuffledPile) {
     // Source: https://www.geeksforgeeks.org/rand-and-srand-in-ccpp/
     srand(time(0));
 
-    Node *node = unshuffledPile->tail;
+    struct ListCard *node = unshuffledPile->tail;
     while (node != NULL) {
         // Calculate a random placement within the ranges of the shuffled piles size.
         // Add with 1 to avoid zero division error.
         int placement = rand() % (shuffledPile->size + 1);
 
         // Finds the placement in the shuffled pile, so we know where to insert
-        Node *shuffNode = shuffledPile->head;
+        struct ListCard *shuffNode = shuffledPile->head;
         for (int i = 0; i < placement - 1; i++) {
             shuffNode = shuffNode->next;
         }
@@ -107,7 +105,7 @@ Linked_list *SR(Linked_list *unshuffledPile) {
     }
 
     // Avoid memory leak of deck piles
-    deleteLinkedList(unshuffledPile);
+    // deleteLinkedList(unshuffledPile);
     return shuffledPile;
 }
 
@@ -134,32 +132,26 @@ Linked_list **P(Linked_list *loadedDeck) {
             if (tmp->size == 0) break; // current_node == NULL ||
 
             Linked_list *toDeck = NULL;
-            Card *card = (Card *) tmp->tail->key;;
+            struct ListCard *card = tmp->tail;;
             card->faceDown = false;
             if (j == 1 && i <= 1) {
                 toDeck = C1;
-            }
-            else if (j == 2 && i <= 6) {
+            } else if (j == 2 && i <= 6) {
                 toDeck = C2;
                 if (i <= 1) card->faceDown = true;
-            }
-            else if (j == 3 && i <= 7) {
+            } else if (j == 3 && i <= 7) {
                 toDeck = C3;
                 if (i <= 2) card->faceDown = true;
-            }
-            else if (j == 4 && i <= 8) {
+            } else if (j == 4 && i <= 8) {
                 toDeck = C4;
                 if (i <= 3) card->faceDown = true;
-            }
-            else if (j == 5 && i <= 9) {
+            } else if (j == 5 && i <= 9) {
                 toDeck = C5;
                 if (i <= 4) card->faceDown = true;
-            }
-            else if (j == 6 && i <= 10) {
+            } else if (j == 6 && i <= 10) {
                 toDeck = C6;
                 if (i <= 5) card->faceDown = true;
-            }
-            else if (j == 7 && i <= 11) {
+            } else if (j == 7 && i <= 11) {
                 toDeck = C7;
                 if (i <= 6) card->faceDown = true;
             }

@@ -47,14 +47,14 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
         return;
     }
 
-    Node *current_node = deck_list->tail;
+    struct ListCard *current_node = deck_list->tail;
 
     clearView();
     generateColumns();
 
     // Foundation number
     int Fnum = 1;
-    Card *card = (Card *) current_node->key;;
+    struct ListCard *card = current_node;
     char value, suit;
 
     // Loop determining whether a foundation should be printed or not
@@ -80,7 +80,7 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
             printf("%c%c\t", value, suit);
             current_node = current_node->prev;
             if (current_node != NULL)
-                card = (Card *) current_node->key;
+                card = current_node;
         }
 
         // Only prints if uneven and less than 8. Only 4 foundations should be printed.
@@ -113,8 +113,8 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
     generateColumns();
 
     Linked_list *current_column;
-    Node *current_node = NULL;
-    Card *card;
+    struct ListCard *current_node = NULL;
+    struct ListCard *card;
     int F_num = 1;
     char value, suit;
 
@@ -138,7 +138,7 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
                 }
 
                 if (current_node != NULL)
-                    card = (Card *) current_node->key;
+                    card = current_node;
             }
 
             if (card == NULL || current_node == NULL || current_column == NULL) {
@@ -161,8 +161,8 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
 
         // Prints foundations
         Linked_list *current_foundation;
-        Node *current_F = NULL;
-        Card *foundation_Card = NULL;
+        struct ListCard *current_F = NULL;
+        struct ListCard *foundation_Card = NULL;
         if (i % 2 == 1 && i < 8) {
             current_foundation = F_ptr[F_num - 1];
 
@@ -170,7 +170,7 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
             if (current_foundation->tail != NULL) {
                 current_F = current_foundation->tail;
                 if (current_F != NULL)
-                    foundation_Card = (Card *) current_F->key;
+                    foundation_Card = current_F;
             }
 
             if (foundation_Card == NULL || current_F == NULL) {
