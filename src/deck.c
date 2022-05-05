@@ -113,11 +113,11 @@ Linked_list *loadDeck(FILE *fptr) {
     // While file not empty, read a line, create a card, and add it to linked list.
     int counter = 1;
     while (fgets(line, sizeof line, fptr) != NULL) {
-        Card *newCard = (Card *) malloc(sizeof(Card));
-        newCard->value = line[0];
-        newCard->suit = line[1];
-        appendNode(cardDeck, newCard);
-        if (checkCard(newCard) != 0) generateEmptyView("LD", "Error with card on line");
+        struct ListCard newCard;
+        newCard.value = line[0];
+        newCard.suit = line[1];
+        appendCard(cardDeck, newCard);
+        //if (checkCard(newCard) != 0) generateEmptyView("LD", "Error with card on line");
         ++counter;
     }
     return cardDeck;
@@ -131,10 +131,10 @@ Linked_list *loadDeck(FILE *fptr) {
 void saveDeck(Linked_list *list, FILE *fptr) {
     char line[3];
     line[2] = '\n';
-    Node *node = list->head;
+    struct ListCard *node = list->head;
     // While linked list not null, write a card to the file.
     while (node != NULL) {
-        Card *card = (Card *) node->key;
+        struct ListCard *card = node;
         line[0] = card->value;
         line[1] = card->suit;
         fwrite(line, 1, sizeof line, fptr);
@@ -156,7 +156,7 @@ void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck, bool toBottom
         return;
     }
 
-    Node *nodeBeingMoved = fromDeck->tail;
+    struct ListCard *nodeBeingMoved = fromDeck->tail;
     fromDeck->tail = nodeBeingMoved->prev;
 
     // To prevent segmentation error
@@ -171,7 +171,7 @@ void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck, bool toBottom
         toDeck->head = nodeBeingMoved;
         toDeck->tail = nodeBeingMoved;
     }
-    // Add to a non-empty deck
+        // Add to a non-empty deck
     else {
         if (toBottom) {
             nodeBeingMoved->next = toDeck->head;
@@ -179,8 +179,7 @@ void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck, bool toBottom
 
             toDeck->head->prev = nodeBeingMoved;
             toDeck->head = nodeBeingMoved;
-        }
-        else {
+        } else {
             nodeBeingMoved->next = NULL;
             nodeBeingMoved->prev = toDeck->tail;
 

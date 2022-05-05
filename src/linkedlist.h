@@ -6,28 +6,27 @@
 #include <stdbool.h>
 
 /** Structs start here */
-struct Node {
-    void *key;
-    struct Node *next;
-    struct Node *prev;
+struct ListCard {
+    char suit;
+    char value;
+    bool faceDown;
+    bool existsInGame;
+    struct ListCard *next;
+    struct ListCard *prev;
 };
 
-typedef struct Node Node;
-
 typedef struct {
-    Node *head;
-    Node *tail;
+    struct ListCard *head;
+    struct ListCard *tail;
     int size;
 } Linked_list;
 
 /** Methods start here */
 Linked_list *createLinkedList();
 
-Node *findKey(Linked_list *list, void *key);
+void appendCard(Linked_list *list, struct ListCard card);
 
-void appendNode(Linked_list *list, void *key);
-
-void insertNode(Linked_list *list, Node *nodeToInsert, Node *previousNode, bool insertBefore);
+void insertNode(Linked_list *list, struct ListCard *nodeToInsert, struct ListCard *previousNode, bool insertBefore);
 
 void removeNode(Linked_list *list);
 
@@ -35,10 +34,8 @@ void deleteLinkedList(Linked_list *list);
 
 void LinkedListToString(Linked_list *list);
 
-Node *findNodeFromCard(Linked_list *list, char value, char suit);
+struct ListCard *findNodeFromCard(Linked_list *list, char value, char suit);
 
-bool moveKeyFromOneLinkedListToAnother(Linked_list *from, void *keyFrom, Linked_list *to);
-
-bool moveNodeFromOneLinkedListToAnother(Linked_list *from, Node *node, Linked_list *to);
+bool moveCardFromOneLinkedListToAnother(Linked_list *from, struct ListCard *cardFrom, Linked_list *to);
 
 #endif //YUKON_LINKEDLIST_H

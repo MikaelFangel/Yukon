@@ -22,22 +22,22 @@ void linkedListAdd() {
     bool status = true;
 
     Linked_list *list = createLinkedList();
-    appendNode(list, "1");
-    appendNode(list, "2");
-    appendNode(list, "3");
-    appendNode(list, "4");
-    appendNode(list, "5");
-    appendNode(list, "6");
-    appendNode(list, "7");
-    appendNode(list, "8");
-    appendNode(list, "9");
-    appendNode(list, "10");
+    appendCard(list, "1");
+    appendCard(list, "2");
+    appendCard(list, "3");
+    appendCard(list, "4");
+    appendCard(list, "5");
+    appendCard(list, "6");
+    appendCard(list, "7");
+    appendCard(list, "8");
+    appendCard(list, "9");
+    appendCard(list, "10");
 
-    if (strcmp(list->head->key, "1") != 0) {
+    if (strcmp(list->head->card, "1") != 0) {
         puts("linkedListAdd Error! Wrong node at head");
         status = false;
     }
-    if (strcmp(list->tail->key, "10") != 0) {
+    if (strcmp(list->tail->card, "10") != 0) {
         puts("linkedListAdd Error! Wrong node at tail");
         status = false;
     }
@@ -58,23 +58,23 @@ void findKeyTest() {
     char notFound = '9';
 
     Linked_list *list = createLinkedList();
-    appendNode(list, "1");
-    appendNode(list, "2");
-    appendNode(list, "3");
-    appendNode(list, "4");
-    appendNode(list, "5");
-    appendNode(list, "6");
-    appendNode(list, &key);
-    appendNode(list, "8");
-    appendNode(list, "9");
-    appendNode(list, "10");
+    appendCard(list, "1");
+    appendCard(list, "2");
+    appendCard(list, "3");
+    appendCard(list, "4");
+    appendCard(list, "5");
+    appendCard(list, "6");
+    appendCard(list, &key);
+    appendCard(list, "8");
+    appendCard(list, "9");
+    appendCard(list, "10");
 
     Node *result = findKey(list, &key);
     // void *result2 = findKey(list, &notFound);
 
-    //printf("%c", *(char*) result->key);
+    //printf("%c", *(char*) result->card);
 
-    if (result->key != NULL && *(char*) result->key == '7')
+    if (result->card != NULL && *(char*) result->card == '7')
         puts("findKeyTest: Test Passed!");
     else
         puts("findKeyTest Error!");
@@ -85,7 +85,7 @@ void moveToEmptyListTest() {
     Linked_list *loadedDeck = loadDeck(fptr);
     Linked_list *emptyLinkedList = createLinkedList();
 
-    Card *key = (Card*) loadedDeck->head->key;
+    ListCard *key = (ListCard*) loadedDeck->head->card;
 
     moveKeyFromOneLinkedListToAnother(loadedDeck, key, emptyLinkedList);
 
@@ -103,8 +103,8 @@ void moveToEmptyListTest() {
     bool error = false;
 
     while(deckNode != NULL && emptyListNode != NULL) {
-        Card *deckCard = (Card*) deckNode->key;
-        Card *emptyCard = (Card*) emptyListNode->key;
+        ListCard *deckCard = (ListCard*) deckNode->card;
+        ListCard *emptyCard = (ListCard*) emptyListNode->card;
 
         if(deckCard->value != emptyCard->value || deckCard->suit != emptyCard->suit) {
             error = true;
