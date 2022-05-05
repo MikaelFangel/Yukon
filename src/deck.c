@@ -32,7 +32,7 @@ void fillSuits() {
 
 }
 
-int checkCard(Card *deck_card) {
+int checkCard(struct ListCard *deck_card) {
     int suit_value;
     int value;
     switch (deck_card->suit) {
@@ -117,7 +117,7 @@ Linked_list *loadDeck(FILE *fptr) {
         newCard.value = line[0];
         newCard.suit = line[1];
         appendCard(cardDeck, newCard);
-        //if (checkCard(newCard) != 0) generateEmptyView("LD", "Error with card on line");
+        if (checkCard(&newCard) != 0) generateEmptyView("LD", "Error with card on line");
         ++counter;
     }
     return cardDeck;

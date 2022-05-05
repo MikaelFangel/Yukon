@@ -26,7 +26,7 @@ Linked_list *loadDeck(FILE *);
 
 void saveDeck(Linked_list *list, FILE *fptr);
 
-int checkCard(Card *deck_card);
+int checkCard(struct ListCard *deck_card);
 
 void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck, bool toBottom);
 
