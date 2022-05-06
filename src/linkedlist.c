@@ -27,6 +27,8 @@ void appendCard(Linked_list *list, struct ListCard card) {
     if (list->size == 0) {
         newCard->suit = card.suit;
         newCard->value = card.value;
+        newCard->existsInGame = card.existsInGame;
+        newCard->faceDown = card.faceDown;
         newCard->next = NULL;
         newCard->prev = NULL;
 
@@ -58,6 +60,8 @@ void prependCard(Linked_list *list, struct ListCard card) {
     if (list->size == 0) {
         newCard->suit = card.suit;
         newCard->value = card.value;
+        newCard->existsInGame = card.existsInGame;
+        newCard->faceDown = card.faceDown;
         newCard->next = NULL;
         newCard->prev = NULL;
 
