@@ -193,3 +193,13 @@ Linked_list** P(Linked_list* loadedDeck) {
     C_ptr[6] = C7;
     return C_ptr;
 }
+
+bool moveValidation(struct ListCard* from, struct ListCard* to, bool toFoundation) {
+    bool result = false;
+    int diff = to->value - from->value;
+    if (toFoundation) {
+        if (diff == 1 && from->suit == to->suit) result = true;
+    } else if (diff == 1 && from->suit != to->suit) result = true;
+    //if (toFoundation && to->next != NULL && diff == 1 && from->suit == to->suit) { result = true; }
+    return result;
+}
