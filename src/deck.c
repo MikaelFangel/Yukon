@@ -116,6 +116,8 @@ Linked_list *loadDeck(FILE *fptr) {
         struct ListCard newCard;
         newCard.value = line[0];
         newCard.suit = line[1];
+        newCard.existsInGame = false;
+        newCard.faceDown = false;
         appendCard(cardDeck, newCard);
         if (checkCard(&newCard) != 0) generateEmptyView("LD", "Error with card on line");
         ++counter;
