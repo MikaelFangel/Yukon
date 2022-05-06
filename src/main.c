@@ -147,7 +147,7 @@ int main(void) {
                     int from = gameMove[0][1] - 49;
                     int to = gameMove[2][1] - 49;
 
-                    // Get card. 0. value : 1. suit
+                    // Get card either from gaveMove or from head of Foundation/Column. 0. value : 1. suit
                     char fromCard[2];
 
                     Linked_list *fromList = NULL;
@@ -164,8 +164,9 @@ int main(void) {
                         else; // TODO: Error handling if not C or F is typed in <TO>
                     } else if (gameMove[0][0] == 'F') {
                         // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
+                        int toColumn = gameMove[1][1] - 49;
                         fromList = foundation_lists[from];
-                        toList = column_lists[to];
+                        toList = column_lists[toColumn];
                         struct ListCard *tempCard = fromList->head;
                         fromCard[0] = tempCard->value;
                         fromCard[1] = tempCard->suit;
