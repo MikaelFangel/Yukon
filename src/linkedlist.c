@@ -1,8 +1,8 @@
 #include "linkedlist.h"
-#include "deck.h"
 
 /**
  * Creates an empty linked list and return a pointer to the list.
+ * @author s215797 Mikael Fangel
  * @return pointer to newly created linked list
  */
 Linked_list *createLinkedList() {
@@ -18,6 +18,7 @@ Linked_list *createLinkedList() {
 
 /**
  * Add a new node to the end of and existing list based on the card pointer.
+ * @author s215797 Mikael Fangel
  * @param list list to add new node to
  * @param card card to add as node to the list
  */
@@ -46,6 +47,7 @@ void appendCard(Linked_list *list, struct ListCard card) {
 
 /**
  * Add a new node to the begging of and existing list based on the card pointer.
+ * @author s215797 Mikael Fangel
  * @param list list to add new node to
  * @param card card to add as node to the list
  */
@@ -74,6 +76,7 @@ void prependCard(Linked_list *list, struct ListCard card) {
 
 /**
  * Inserts a node in an existing linked list either before of after another specified node in the list.
+ * @author s215797 Mikael Fangel
  * @param list list to perform insert on
  * @param nodeToInsert node to added to linked list
  * @param previousNode node before the node to insert
@@ -114,6 +117,7 @@ void insertNode(Linked_list *list, struct ListCard *nodeToInsert, struct ListCar
 
 /**
  * Removes a node of the end of the list.
+ * @author s215797 Mikael Fangel
  * @param list list to remove node from
  */
 void removeNode(Linked_list *list) {
@@ -134,6 +138,7 @@ void removeNode(Linked_list *list) {
 
 /**
  * Delete an entire linked list and all of its nodes using the remove node function
+ * @author s215797 Mikael Fangel
  * @param list list to the delete
  */
 void deleteLinkedList(Linked_list *list) {
@@ -146,6 +151,7 @@ void deleteLinkedList(Linked_list *list) {
 
 /**
  * Finds a node in a linked list based on the searchCard value
+ * @author s215797 Mikael Fangel
  * @param list list to search
  * @param searchCard searchCard to find
  * @return the node in the linked list if found and NULL if node is not in the list
@@ -163,6 +169,7 @@ struct ListCard *findNodeFromCard(Linked_list *list, char value, char suit) {
 
 /**
  * Moves a card from anywhere in a linked list to the end of another
+ * @author s215797 Mikael Fangel
  * @param from list to move from
  * @param cardFrom card to move
  * @param to list to move to
@@ -210,6 +217,11 @@ bool moveCardFromOneLinkedListToAnother(Linked_list *from, struct ListCard *card
     return result;
 }
 
+/**
+ * Prints the cards each on one new line
+ * @author s215797 Mikael Fangel
+ * @param list
+ */
 void LinkedListToString(Linked_list *list) {
     struct ListCard *card = list->head;
     while (card != NULL) {
