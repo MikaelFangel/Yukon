@@ -2,9 +2,9 @@
 
 /**
  * @authors s216812 Silja Ye-Chi Sandersen (80%), s215805 Mads Sørensen (15 %), s215797 Mikael Fangel (5%)
- * @param arg
- * @param numOfInputs
- * @return
+ * @param arg the filename of the deck to be loaded
+ * @param numOfInputs 2 if load deck from file and all other loads default.txt
+ * @return loaded deck as a linked list pointer
  */
 Linked_list *LD(char arg[], int numOfInputs) {
     char filepath[256];
@@ -28,7 +28,7 @@ Linked_list *LD(char arg[], int numOfInputs) {
             return NULL;
         }
 
-    /** If no filepath is given, load unshuffled deck */
+        /** If no filepath is given, load unshuffled deck */
     } else {
         FILE *defaultDeck = fopen("../resources/default.txt", "r");
         loadedDeck = loadDeck(defaultDeck);
@@ -63,6 +63,14 @@ void SD(Linked_list *list, char arg[]) {
  * @return A shuffled deck
  */
 Linked_list *SI(Linked_list *firstPile, int split) {
+    if (split <= 0) {
+        generateEmptyView("SI", "ERROR! You can't split on zero or something that ain't a number.");
+        return NULL;
+    } else if (split >= firstPile->size) {
+        generateEmptyView("SI", "ERROR! You can't split on a number bigger than the number of cards in the deck.");
+        return NULL;
+    }
+
     // Splits the deck into two decks, which should be interleaved
     Linked_list *secondPile = createLinkedList();
 
@@ -125,27 +133,27 @@ Linked_list *SR(Linked_list *unshuffledPile) {
     }
 
     // Avoid memory leak of deck piles
-    // deleteLinkedList(unshuffledPile);
+    deleteLinkedList(unshuffledPile);
     return shuffledPile;
 }
 
 /**
- * Generates the decks needed for the startview of the PLAY pahse
+ * Generates the decks needed for the startview of the PLAY phase
  * @author s215912 Silja Ye-Chi Sandersen
  * @param loadedDeck The deck being used
  * @return A array with pointers to the columns as LinkedLists
  */
-Linked_list** P(Linked_list* loadedDeck) {
-    Linked_list* C1 = createLinkedList();
-    Linked_list* C2 = createLinkedList();
-    Linked_list* C3 = createLinkedList();
-    Linked_list* C4 = createLinkedList();
-    Linked_list* C5 = createLinkedList();
-    Linked_list* C6 = createLinkedList();
-    Linked_list* C7 = createLinkedList();
-    struct ListCard* current_card = loadedDeck->tail;
+Linked_list **P(Linked_list *loadedDeck) {
+    Linked_list *C1 = createLinkedList();
+    Linked_list *C2 = createLinkedList();
+    Linked_list *C3 = createLinkedList();
+    Linked_list *C4 = createLinkedList();
+    Linked_list *C5 = createLinkedList();
+    Linked_list *C6 = createLinkedList();
+    Linked_list *C7 = createLinkedList();
+    struct ListCard *current_card = loadedDeck->tail;
 
-    Linked_list* toDeck = NULL;
+    Linked_list *toDeck = NULL;
     // Columns
     for (int j = 1, i = 1; j <= 7; ++j) {
         if (current_card == NULL) break;
@@ -183,7 +191,7 @@ Linked_list** P(Linked_list* loadedDeck) {
         }
     }
 
-    Linked_list** C_ptr = malloc(sizeof(Linked_list*) * 7);
+    Linked_list **C_ptr = malloc(sizeof(Linked_list *) * 7);
     C_ptr[0] = C1;
     C_ptr[1] = C2;
     C_ptr[2] = C3;
@@ -194,7 +202,7 @@ Linked_list** P(Linked_list* loadedDeck) {
     return C_ptr;
 }
 
-bool moveValidation(struct ListCard* from, struct ListCard* to, bool toFoundation) {
+bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundation) {
     bool result = false;
     int diff = to->value - from->value;
     if (toFoundation) {

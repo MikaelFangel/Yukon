@@ -13,12 +13,12 @@ Linked_list *LD(char arg[], int numOfInputs);
 
 void SD(Linked_list *list, char arg[]);
 
-Linked_list *SI(Linked_list *, int);
+Linked_list *SI(Linked_list *, int split);
 
 Linked_list *SR(Linked_list *unshuffledPile);
 
 Linked_list **P(Linked_list *);
 
-bool moveValidation(struct ListCard* from, struct ListCard* to, bool toFoundation);
+bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundation);
 
 #endif //YUKON_COMMANDS_H
