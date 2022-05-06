@@ -28,7 +28,11 @@ int main(void) {
             loadedDeck = LD(arg, numOfInputs);
             if (loadedDeck != NULL)
                 deckLoaded = true;
-        } else {
+        } else if (strcasecmp("QQ", command) == 0) {
+            puts("Ending Yukon...");
+            break;
+        }
+        else {
             generateEmptyView("", "Error! The only valid command is LD");
         }
     }
