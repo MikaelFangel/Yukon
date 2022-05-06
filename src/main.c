@@ -146,6 +146,7 @@ int main(void) {
                     // Get columns/foundation numbers
                     int from = gameMove[0][1] - 49;
                     int to = gameMove[2][1] - 49;
+                    if (to > 0 && to < 8 || from > 0 && to < 8) { generatePlayView(column_lists, foundation_lists, "Move", "Error not a valid column number"); continue;}
 
                     // Get card either from gaveMove or from head of Foundation/Column. 0. value : 1. suit
                     char fromCard[2];
@@ -160,11 +161,12 @@ int main(void) {
                         fromList = column_lists[from];
                         // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
                         if (gameMove[2][0] == 'C') toList = column_lists[to];
-                        else if (gameMove[2][0] == 'F') toList = foundation_lists[to];
+                        else if (gameMove[2][0] == 'F') toList = foundation_lists[to]; // TODO: More validation can be added to check for correct foundation number.
                         else { generatePlayView(column_lists, foundation_lists,"Move", "ERROR. Not a valid <TO> command."); continue; }
                     } else if (gameMove[0][0] == 'F') {
                         // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
                         int toColumn = gameMove[1][1] - 49;
+                        // TODO: Add validation for toColumn in range 0 - 7
                         fromList = foundation_lists[from];
                         toList = column_lists[toColumn];
                         struct ListCard *tempCard = fromList->head;
