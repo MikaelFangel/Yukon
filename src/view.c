@@ -171,6 +171,7 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
 
             if (foundation_Card == NULL || current_F == NULL) {
                 printf("\t[]\tF%d\n", F_num);
+                F_num++;
                 continue;
             }
             else {
