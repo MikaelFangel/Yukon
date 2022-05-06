@@ -6,6 +6,9 @@
 #include "commands.h"
 #include <string.h>
 
+/**
+ * @authors s215812 Silja Sandersen (50%), s215805 Mads Sørensen (30), s215797 Mikael Fangel (20%)
+ */
 int main(void) {
 // Source: https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000763330-Debugger-not-working-on-Windows-CLion-
 #if defined(_WIN32) || defined(_WIN64)
