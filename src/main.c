@@ -154,14 +154,14 @@ int main(void) {
                     Linked_list *toList = NULL;
                     // Check if <FROM> is Column (C) or Foundation (F).
                     if (gameMove[0][0] == 'C') {
-                        // Set <FROM>> list and card
+                        // Set <FROM> list and card
                         fromCard[0] = gameMove[1][0];
                         fromCard[1] = gameMove[1][1];
                         fromList = column_lists[from];
                         // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
                         if (gameMove[2][0] == 'C') toList = column_lists[to];
                         else if (gameMove[2][0] == 'F') toList = foundation_lists[to];
-                        else; // TODO: Error handling if not C or F is typed in <TO>
+                        else { generatePlayView(column_lists, foundation_lists,"Move", "ERROR. Not a valid <TO> command."); continue; }
                     } else if (gameMove[0][0] == 'F') {
                         // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
                         int toColumn = gameMove[1][1] - 49;
@@ -170,8 +170,10 @@ int main(void) {
                         struct ListCard *tempCard = fromList->head;
                         fromCard[0] = tempCard->value;
                         fromCard[1] = tempCard->suit;
-                    } else; // TODO: Error handling if not C or F is typed in <FROM>
+                    } else { generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Not a valid <FROM> command."); continue; }
                     struct ListCard *nodeFrom = findNodeFromCard(fromList, fromCard[0], fromCard[1]);
+
+                    if (nodeFrom == NULL) { generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Card cannot be found"); continue; }
 
                     // Move the card to the now column
                     // TODO: Discuss which method is best. Search by key or by node
