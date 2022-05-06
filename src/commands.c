@@ -46,6 +46,7 @@ void SD(Linked_list *list, char arg[]) {
 /**
  * Shuffles the deck in an interleaved manner
  * The tail of the list is the top of the deck!
+ * @authors s215812 Silja Ye-Chi Sandersen (90%), s215797 Mikael Fangel (10%)
  * @param firstPile deck you want to shuffle
  * @param split Where to split the deck
  * @return A shuffled deck
@@ -82,6 +83,7 @@ Linked_list *SI(Linked_list *firstPile, int split) {
 
 /**
  * Shuffles the deck in a random manner where tail is the top of the deck and head the bottom.
+ * @author s215797 Mikael Fangel
  * @param unshuffledPile the pile to be shuffled
  * @return the shuffled pile of cards
  */
