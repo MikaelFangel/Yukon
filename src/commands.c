@@ -74,7 +74,7 @@ Linked_list *SI(Linked_list *firstPile, int split) {
         }
     }
 
-    //free(firstPile);
+    free(firstPile);
     free(secondPile);
 
     return shuffledPile;
@@ -116,59 +116,61 @@ Linked_list *SR(Linked_list *unshuffledPile) {
     return shuffledPile;
 }
 
-Linked_list **P(Linked_list *loadedDeck) {
-    Linked_list *tmp = malloc(sizeof(Linked_list));
-    *tmp = *loadedDeck;
+/**
+ * Generates the decks needed for the startview of the PLAY pahse
+ * @author s215912 Silja Ye-Chi Sandersen
+ * @param loadedDeck The deck being used
+ * @return A array with pointers to the columns as LinkedLists
+ */
+Linked_list** P(Linked_list* loadedDeck) {
+    Linked_list* C1 = createLinkedList();
+    Linked_list* C2 = createLinkedList();
+    Linked_list* C3 = createLinkedList();
+    Linked_list* C4 = createLinkedList();
+    Linked_list* C5 = createLinkedList();
+    Linked_list* C6 = createLinkedList();
+    Linked_list* C7 = createLinkedList();
+    struct ListCard* current_card = loadedDeck->tail;
 
-    Linked_list *C1 = createLinkedList();
-    Linked_list *C2 = createLinkedList();
-    Linked_list *C3 = createLinkedList();
-    Linked_list *C4 = createLinkedList();
-    Linked_list *C5 = createLinkedList();
-    Linked_list *C6 = createLinkedList();
-    Linked_list *C7 = createLinkedList();
+    Linked_list* toDeck = NULL;
+    // Columns
+    for (int j = 1, i = 1; j <= 7; ++j) {
+        if (current_card == NULL) break;
 
-    // Node *current_node = tmp->tail;
+        current_card->faceDown = false;
+        if (j == 1 && i <= 1) {
+            toDeck = C1;
+        } else if (j == 2 && i <= 6) {
+            toDeck = C2;
+            if (i <= 1)
+                current_card->faceDown = true;
+        } else if (j == 3 && i <= 7) {
+            toDeck = C3;
+            if (i <= 2) current_card->faceDown = true;
+        } else if (j == 4 && i <= 8) {
+            toDeck = C4;
+            if (i <= 3) current_card->faceDown = true;
+        } else if (j == 5 && i <= 9) {
+            toDeck = C5;
+            if (i <= 4) current_card->faceDown = true;
+        } else if (j == 6 && i <= 10) {
+            toDeck = C6;
+            if (i <= 5) current_card->faceDown = true;
+        } else if (j == 7 && i <= 11) {
+            toDeck = C7;
+            if (i <= 6) current_card->faceDown = true;
+        } else continue;
 
-    // Rows
-    for (int i = 1; i <= 11; ++i) {
-        if (tmp->size == 0) break; // current_node == NULL
-        // Columns
-        for (int j = 1; j <= 7; ++j) {
-            // Check if NULL
-            if (tmp->size == 0) break; // current_node == NULL ||
-
-            Linked_list *toDeck = NULL;
-            struct ListCard *card = tmp->tail;;
-            card->faceDown = false;
-            if (j == 1 && i <= 1) {
-                toDeck = C1;
-            } else if (j == 2 && i <= 6) {
-                toDeck = C2;
-                if (i <= 1) card->faceDown = true;
-            } else if (j == 3 && i <= 7) {
-                toDeck = C3;
-                if (i <= 2) card->faceDown = true;
-            } else if (j == 4 && i <= 8) {
-                toDeck = C4;
-                if (i <= 3) card->faceDown = true;
-            } else if (j == 5 && i <= 9) {
-                toDeck = C5;
-                if (i <= 4) card->faceDown = true;
-            } else if (j == 6 && i <= 10) {
-                toDeck = C6;
-                if (i <= 5) card->faceDown = true;
-            } else if (j == 7 && i <= 11) {
-                toDeck = C7;
-                if (i <= 6) card->faceDown = true;
-            }
-
-            //moveToAnotherDeck(tmp, toDeck, false);
-            // current_node = current_node->next;
+        appendCard(toDeck, *current_card);
+        current_card = current_card->prev;
+        if (j >= 7) {
+            // Determines faceUp or faceDown
+            i++;
+            j = 0;
         }
     }
 
-    Linked_list **C_ptr = malloc(sizeof(Linked_list *) * 7);
+    Linked_list** C_ptr = malloc(sizeof(Linked_list*) * 7);
     C_ptr[0] = C1;
     C_ptr[1] = C2;
     C_ptr[2] = C3;
@@ -176,6 +178,5 @@ Linked_list **P(Linked_list *loadedDeck) {
     C_ptr[4] = C5;
     C_ptr[5] = C6;
     C_ptr[6] = C7;
-    free(tmp);
     return C_ptr;
 }

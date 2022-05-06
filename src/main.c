@@ -81,7 +81,7 @@ int main(void) {
             break;
         }
 
-            /** Play Phase*/
+        /** Play Phase*/
         else if (strcasecmp("P", command) == 0) {
             playPhase = true;
             Linked_list **column_lists = P(loadedDeck);

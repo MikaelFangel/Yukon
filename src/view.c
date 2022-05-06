@@ -113,8 +113,7 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
     generateColumns();
 
     Linked_list *current_column;
-    struct ListCard *current_node = NULL;
-    struct ListCard *card;
+    struct ListCard *current_card;
     int F_num = 1;
     char value, suit;
 
@@ -130,26 +129,23 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
                 // if (current_node != NULL && current_node->prev != NULL && current_node != current_column->head)
                 //     current_node = current_node->next;
                 // else
-                current_node = current_column->head;
+                current_card = current_column->head;
                 for (int k = 0; k < i - 1; ++k) {
-                    if (current_node != NULL)
-                        current_node = current_node->next;
+                    if (current_card != NULL)
+                        current_card = current_card->next;
                     else break;
                 }
-
-                if (current_node != NULL)
-                    card = current_node;
             }
 
-            if (card == NULL || current_node == NULL || current_column == NULL) {
+            if (current_card == NULL || current_column == NULL) {
                 printf("\t");
                 continue;
             }
 
             // Check if faceUp or faceDown
-            if (card->faceDown == false) {
-                value = card->value;
-                suit = card->suit;
+            if (current_card->faceDown == false) {
+                value = current_card->value;
+                suit = current_card->suit;
             }
             else {
                 value = '[';
