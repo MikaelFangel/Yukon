@@ -37,7 +37,7 @@ void deleteLinkedList(Linked_list *list);
 void LinkedListToString(Linked_list *list);
 
 struct ListCard *findNodeFromCard(Linked_list *list, char value, char suit);
-void appendCard(Linked_list *list, struct ListCard card);
+
 bool moveCardFromOneLinkedListToAnother(Linked_list *from, struct ListCard *cardFrom, Linked_list *to);
 
 #endif //YUKON_LINKEDLIST_H
