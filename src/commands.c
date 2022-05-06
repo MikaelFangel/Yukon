@@ -54,20 +54,27 @@ Linked_list *SI(Linked_list *firstPile, int split) {
     // Splits the deck into two decks, which should be interleaved
     Linked_list *secondPile = createLinkedList();
 
+    struct ListCard *card = firstPile->head;
     for (int i = 0; i < split; ++i) {
-        moveToAnotherDeck(firstPile, secondPile, true);
+        card = card->next;
     }
+
+    moveCardFromOneLinkedListToAnother(firstPile, card, secondPile);
 
     // Interleaves the two decks into a shuffled pile
     Linked_list *shuffledPile = createLinkedList();
     while (firstPile->size > 0 || secondPile->size > 0) {
-        if (firstPile->size > 0)
-            moveToAnotherDeck(firstPile, shuffledPile, true);
-        if (secondPile->size > 0)
-            moveToAnotherDeck(secondPile, shuffledPile, true);
+        if (firstPile->size > 0) {
+            prependCard(shuffledPile, *firstPile->tail);
+            removeNode(firstPile);
+        }
+        if (secondPile->size > 0) {
+            prependCard(shuffledPile, *secondPile->tail);
+            removeNode(secondPile);
+        }
     }
 
-    free(firstPile);
+    //free(firstPile);
     free(secondPile);
 
     return shuffledPile;
@@ -156,7 +163,7 @@ Linked_list **P(Linked_list *loadedDeck) {
                 if (i <= 6) card->faceDown = true;
             }
 
-            moveToAnotherDeck(tmp, toDeck, false);
+            //moveToAnotherDeck(tmp, toDeck, false);
             // current_node = current_node->next;
         }
     }
