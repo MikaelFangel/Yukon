@@ -151,7 +151,7 @@ void deleteLinkedList(Linked_list *list) {
 
 /**
  * Finds a node in a linked list based on the searchCard value
- * @author s215805 Mads Sørensen
+ * @authors s215805 Mads Sørensen (20%), s215797 Mikael Fangel (80%)
  * @param list list to search
  * @param searchCard searchCard to find
  * @return the node in the linked list if found and NULL if node is not in the list
@@ -219,7 +219,7 @@ bool moveCardFromOneLinkedListToAnother(Linked_list *from, struct ListCard *card
 
 /**
  * Prints the cards each on one new line
- * @author s215797 Mads Sørensen
+ * @authors s215805 Mads Sørensen (90%), s215797 Mikael Fangel (10%)
  * @param list
  */
 void LinkedListToString(Linked_list *list) {
