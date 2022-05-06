@@ -10,6 +10,8 @@ void startUpPhase(Linked_list *loadedDeck, bool *gameRunning);
 
 void playPhase(Linked_list *loadedDeck, bool *gameRunning);
 
+bool checkIfWinner(Linked_list *foundations[]);
+
 /**
  * @authors s215812 Silja Sandersen (50%), s215805 Mads Sørensen (30%), s215797 Mikael Fangel (20%)
  */
@@ -221,5 +223,29 @@ void playPhase(Linked_list *loadedDeck, bool *gameRunning) {
             // Show deck
             generatePlayView(column_lists, foundation_lists, "Move command", "OK");
         }
+
+        bool winner = checkIfWinner(foundation_lists);
+        if(winner) {
+            generateEmptyView("", "Game Won");
+
+            // gameRunning is the inverse of if there is a winner and is set to stop the game.
+            *gameRunning = !winner;
+        }
     }
+}
+
+/**
+ * Checks if all four foundations are full and thereby determines if the game has a winner or not
+ * @author s215797 Mikael Fangel
+ * @param foundations
+ * @return true if all foundations a full
+ */
+bool checkIfWinner(Linked_list *foundations[]) {
+    int filledFoundations = 0;
+    for (int i = 0; i < 4; i++) {
+        if (foundations[i]->size == SUIT_SIZE)
+            filledFoundations++;
+    }
+
+    return filledFoundations == 4;
 }
