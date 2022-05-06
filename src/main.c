@@ -66,28 +66,28 @@ void startUpPhase(Linked_list *loadedDeck, bool *gameRunning) {
 
         if (strcasecmp("LD", command) == 0) {
             Linked_list *tmpDeck = LD(arg, numOfInputs);
-            if (loadedDeck != NULL)
-                loadedDeck = tmpDeck;
-            free(tmpDeck);
+            if (loadedDeck != NULL) {
+                deleteLinkedList(loadedDeck);
+                *loadedDeck = *tmpDeck;
+            }
+            deleteLinkedList(tmpDeck);
         } else if (strcasecmp("SW", command) == 0) {
             showDeck(loadedDeck, "SW", "OK");
         } else if (strcasecmp("SI", command) == 0) {
             int split;
+
+            // if split is not giving generate a random split
             if (numOfInputs == 1) {
                 split = rand() % (loadedDeck->size - 1) + 1;
-                loadedDeck = SI(loadedDeck, split);
-                showDeck(loadedDeck, "SI", "OK");
             } else {
                 split = atoi(arg);
-                if (split <= 0) {
-                    generateEmptyView("SI", "ERROR! You can't split on zero or something that ain't a number.");
-                } else if (split >= loadedDeck->size) {
-                    generateEmptyView("SI", "ERROR! You can't split on a number bigger than"
-                                            " the number of cards in the deck.");
-                } else {
-                    loadedDeck = SI(loadedDeck, split);
-                    showDeck(loadedDeck, "SI", "OK");
-                }
+            }
+
+            // Tries to run SI if SI returns NULL then skip because SI handles the error
+            Linked_list *result = SI(loadedDeck, split);
+            if (result != NULL) {
+                loadedDeck = result;
+                showDeck(loadedDeck, "SI", "OK");
             }
         } else if (strcasecmp("SR", command) == 0) {
             loadedDeck = SR(loadedDeck);
@@ -225,7 +225,7 @@ void playPhase(Linked_list *loadedDeck, bool *gameRunning) {
         }
 
         bool winner = checkIfWinner(foundation_lists);
-        if(winner) {
+        if (winner) {
             generateEmptyView("", "Game Won");
 
             // gameRunning is the inverse of if there is a winner and is set to stop the game.
