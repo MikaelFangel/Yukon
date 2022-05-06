@@ -24,22 +24,17 @@ Linked_list *createLinkedList() {
 void appendCard(Linked_list *list, struct ListCard card) {
     struct ListCard *newCard = (struct ListCard *) malloc(sizeof(struct ListCard));
 
+    newCard->suit = card.suit;
+    newCard->value = card.value;
+    newCard->existsInGame = card.existsInGame;
+    newCard->faceDown = card.faceDown;
+
     if (list->size == 0) {
-        newCard->suit = card.suit;
-        newCard->value = card.value;
-        newCard->existsInGame = card.existsInGame;
-        newCard->faceDown = card.faceDown;
         newCard->next = NULL;
         newCard->prev = NULL;
-
         list->head = newCard;
         list->tail = newCard;
     } else {
-        newCard->suit = card.suit;
-        newCard->value = card.value;
-        newCard->existsInGame = card.existsInGame;
-        newCard->faceDown = card.faceDown;
-
         newCard->prev = list->tail;
         list->tail->next = newCard;
         newCard->next = NULL;
@@ -57,22 +52,17 @@ void appendCard(Linked_list *list, struct ListCard card) {
 void prependCard(Linked_list *list, struct ListCard card) {
     struct ListCard *newCard = (struct ListCard *) malloc(sizeof(struct ListCard));
 
+    newCard->suit = card.suit;
+    newCard->value = card.value;
+    newCard->existsInGame = card.existsInGame;
+    newCard->faceDown = card.faceDown;
+
     if (list->size == 0) {
-        newCard->suit = card.suit;
-        newCard->value = card.value;
-        newCard->existsInGame = card.existsInGame;
-        newCard->faceDown = card.faceDown;
         newCard->next = NULL;
         newCard->prev = NULL;
-
         list->head = newCard;
         list->tail = newCard;
     } else {
-        newCard->suit = card.suit;
-        newCard->value = card.value;
-        newCard->existsInGame = card.existsInGame;
-        newCard->faceDown = card.faceDown;
-
         newCard->next = list->head;
         list->head->prev = newCard;
         newCard->prev = NULL;
@@ -101,11 +91,9 @@ void insertNode(Linked_list *list, struct ListCard *nodeToInsert, struct ListCar
             previousNode->prev->next = nodeCopy;
             previousNode->prev = nodeCopy;
         } else {
-            nodeCopy->next = previousNode;
-            nodeCopy->prev = NULL;
-            previousNode->prev = nodeCopy;
-
-            list->head = nodeCopy;
+            prependCard(list, *nodeToInsert);
+            free(nodeCopy);
+            list->size--;
         }
     } else {
         if (list->size > 0 && previousNode->next != NULL) {
