@@ -48,6 +48,37 @@ void appendCard(Linked_list *list, struct ListCard card) {
 }
 
 /**
+ * Add a new node to the begging of and existing list based on the card pointer.
+ * @param list list to add new node to
+ * @param card card to add as node to the list
+ */
+void prependCard(Linked_list *list, struct ListCard card) {
+    struct ListCard *newCard = (struct ListCard *) malloc(sizeof(struct ListCard));
+
+    if (list->size == 0) {
+        newCard->suit = card.suit;
+        newCard->value = card.value;
+        newCard->next = NULL;
+        newCard->prev = NULL;
+
+        list->head = newCard;
+        list->tail = newCard;
+    } else {
+        newCard->suit = card.suit;
+        newCard->value = card.value;
+        newCard->existsInGame = card.existsInGame;
+        newCard->faceDown = card.faceDown;
+
+        newCard->next = list->head;
+        list->head->prev = newCard;
+        newCard->prev = NULL;
+        list->head = newCard;
+    }
+
+    list->size++;
+}
+
+/**
  * Inserts a node in an existing linked list either before of after another specified node in the list.
  * @param list list to perform insert on
  * @param nodeToInsert node to added to linked list
