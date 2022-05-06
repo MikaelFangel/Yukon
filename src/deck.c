@@ -8,6 +8,9 @@ Card spades[SUIT_SIZE];
 
 Card *deck[4] = {clubs, diamonds, hearts, spades};
 
+/**
+ * @authors s215797 Mikael Fangel (45%), s215812 Silja Ye-Chi Sandersen (45%), s215805 Mads Sørensen (10%)
+ */
 void fillSuits() {
     char suits[4] = {'C', 'D', 'H', 'S'};
 
@@ -32,6 +35,11 @@ void fillSuits() {
 
 }
 
+/**
+ * @authors s215805 Mads Sørensen (95%), s215812 Silja Ye-Chi Sandersen (5%)
+ * @param deck_card
+ * @return
+ */
 int checkCard(struct ListCard *deck_card) {
     int suit_value;
     int value;
@@ -103,6 +111,7 @@ int checkCard(struct ListCard *deck_card) {
  * Load a deck from a file. File must be a list of cards represented with 2 characters
  * eg. Ace of Hearts - "AH" with newline after each card. Returns the deck in a linked list
  * Used in LD command
+ * @author s215805 Mads Sørensen
  * @param fptr
  * @return cardDeck
  */
@@ -128,6 +137,7 @@ Linked_list *loadDeck(FILE *fptr) {
 /**
  * Save deck to a file
  * Used in SD command
+ * @author s215805 Mads Sørensen
  * @param list
  */
 void saveDeck(Linked_list *list, FILE *fptr) {

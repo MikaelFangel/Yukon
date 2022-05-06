@@ -6,6 +6,7 @@ const int NUM_OF_COLUMNS = 7;
 
 /**
  * Generates the start view or empty views with error messages
+ * @author s215812 Silja Ye-Chi Sandersen
  * @param lastCommand For start view, type ""
  * @param message For start view, type ""
  */
@@ -38,6 +39,7 @@ void generateEmptyView(char lastCommand[], char message[]) {
  * It doesn't matter if the attribute faceDown on the card is true or false,
  * because the game hasn't started yet :)
  *
+ * @author s215812 Silja Ye-Chi Sandersen
  * @param deck_list the deck given as a Linked List
  */
 void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
@@ -100,6 +102,7 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
 /**
  * Column: Printed from head to tail
  * Foundation: Only tail is printed
+ * @author s215812 Silja Ye-Chi Sandersen
  * @param C_ptr
  * @param F_ptr
  * @param lastCommand
@@ -188,6 +191,7 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
     printCommandConsole(lastCommand, message);
 }
 
+/** @author s215812 Silja Ye-Chi Sandersen */
 int calculateMaxNumOfRows(Linked_list *columns[NUM_OF_COLUMNS]) {
     int maxNumOfRows = 0;
     for (int i = 0; i < NUM_OF_COLUMNS; ++i) {
@@ -198,6 +202,7 @@ int calculateMaxNumOfRows(Linked_list *columns[NUM_OF_COLUMNS]) {
     return maxNumOfRows;
 }
 
+/** @author s215812 Silja Ye-Chi Sandersen */
 // Only used within this module
 void generateColumns() {
     for (int i = 1; i <= 7; ++i) {
@@ -206,6 +211,7 @@ void generateColumns() {
     printf("\n\n");
 }
 
+/** @author s215797 Mikael Fangel */
 // Only used within this module
 void printCommandConsole(char lastCommand[], char message[]) {
     printf("\nLAST Command: %s \n", lastCommand);
@@ -218,6 +224,7 @@ void printCommandConsole(char lastCommand[], char message[]) {
 /**
  * Clears console depending on OS
  * Only used within view.c
+ * @author s215812 Silja Ye-Chi Sandersen
  */
 void clearView() {
     printf("\n\n\n");

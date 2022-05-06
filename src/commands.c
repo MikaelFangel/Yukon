@@ -1,5 +1,11 @@
 #include "commands.h"
 
+/**
+ * @authors s216812 Silja Ye-Chi Sandersen (80%), s215805 Mads Sørensen (15 %), s215797 Mikael Fangel (5%)
+ * @param arg
+ * @param numOfInputs
+ * @return
+ */
 Linked_list *LD(char arg[], int numOfInputs) {
     char filepath[256];
     Linked_list *loadedDeck;
@@ -22,7 +28,7 @@ Linked_list *LD(char arg[], int numOfInputs) {
             return NULL;
         }
 
-        /** If no filepath is given, load unshuffled deck */
+    /** If no filepath is given, load unshuffled deck */
     } else {
         FILE *defaultDeck = fopen("../resources/default.txt", "r");
         loadedDeck = loadDeck(defaultDeck);
@@ -33,6 +39,11 @@ Linked_list *LD(char arg[], int numOfInputs) {
     return loadedDeck;
 }
 
+/**
+ * @author s215805 Mads Sørensen
+ * @param list
+ * @param arg
+ */
 void SD(Linked_list *list, char arg[]) {
     char filepath[256];
     strncpy(filepath, "../resources/", 256);
