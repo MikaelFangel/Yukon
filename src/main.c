@@ -61,7 +61,7 @@ int main(void) {
  * @param gameRunning the current running state of the game
  */
 void startUpPhase(Linked_list *loadedDeck, bool *gameRunning) {
-    char command[256], arg[256], buf[256];
+    char command[256] = {0}, arg[256] = {0}, buf[256] = {0};
 
     // Ends the loop if the P commands is given and thereby signaling the play phase.
     while ((strcasecmp("P", command) != 0)) {
@@ -126,7 +126,7 @@ void playPhase(Linked_list *loadedDeck, bool *gameRunning) {
                                         createLinkedList(), createLinkedList()};
     generatePlayView(column_lists, foundation_lists, "P", "OK");
 
-    char command[256], arg[256], buf[256];
+    char command[256] = {0}, arg[256] = {0}, buf[256] = {0};
     while ((strcasecmp("Q", command) != 0)) {
         fgets(buf, sizeof(buf), stdin);
         int numOfInputs = sscanf(buf, "%s %s", command, arg);
