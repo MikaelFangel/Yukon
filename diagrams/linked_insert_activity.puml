@@ -13,11 +13,8 @@ start
             :previousNode.prev = nodeCopy;
 
         else (false)
-            :nodeCopy.next = previousNode;
-            :nodeCopy.prev = NULL;
-            :previousNode.prev = nodeCopy;
-            :list.head = nodeCopy;
-
+            :prependNode;
+            :free(nodeCopy);
         endif
     else (false)
         if(list.size > 0 and previousNode.next != NULL) then (true)
