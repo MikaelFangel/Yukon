@@ -21,4 +21,6 @@ Linked_list **P(Linked_list *);
 
 bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundation);
 
+int convertCardValue(char value);
+
 #endif //YUKON_COMMANDS_H
