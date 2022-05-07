@@ -43,6 +43,7 @@ void generateEmptyView(char lastCommand[], char message[]) {
  * @param deck_list the deck given as a Linked List
  */
 void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
+    MAX_NUM_OF_ROWS = 8;
     // Creates an empty view
     if (deck_list == NULL) {
         generateEmptyView(command, "ERROR! No deck of cards is loaded");
@@ -95,7 +96,6 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
         }
     }
 
-    printf("\n");
     printCommandConsole(command, statusMessage);
 }
 
