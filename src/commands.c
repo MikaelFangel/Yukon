@@ -36,13 +36,20 @@ Linked_list *LD(char arg[], int numOfInputs) {
         /** If no filepath is given, load unshuffled deck */
     } else {
         FILE *defaultDeck = fopen("../resources/default.txt", "r");
-        loadedDeck = loadDeck(defaultDeck);
+        if (defaultDeck != NULL) {
+            loadedDeck = loadDeck(defaultDeck);
 
-        if (loadedDeck != NULL) {
-            showDeck(loadedDeck, "LD", "No name specified unshuffled deck loaded");
-            fclose(defaultDeck);
-        } else {
-            fclose(defaultDeck);
+            if (loadedDeck != NULL) {
+                showDeck(loadedDeck, "LD", "No name specified unshuffled deck loaded");
+                fclose(defaultDeck);
+            }
+            else {
+                fclose(defaultDeck);
+                return NULL;
+            }
+        }
+        else {
+            generateEmptyView("LD", "ERROR! The default deck does not exist");
             return NULL;
         }
     }
