@@ -52,10 +52,10 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded)
         int numOfInputs = sscanf(buf, "%s %s", command, arg);
 
         if (strcasecmp("LD", command) == 0) {
-            Linked_list *tmpDeck = LD(arg, numOfInputs);
-            if (tmpDeck != NULL) {
+            Linked_list *result = LD(arg, numOfInputs);
+            if (result != NULL) {
                 deleteLinkedList(*loadedDeck);
-                *loadedDeck = tmpDeck;
+                *loadedDeck = result;
                 *deckLoaded = true;
             }
 
@@ -66,8 +66,7 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded)
 
             // if split is not giving generate a random split
             if (numOfInputs == 1) {
-                Linked_list *test = *loadedDeck;
-                split = rand() % (test->size - 1) + 1;
+                split = rand() % (((Linked_list*) *loadedDeck)->size - 1) + 1;
             } else {
                 split = atoi(arg);
             }
