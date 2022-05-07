@@ -91,7 +91,6 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
             printf("\n");
         }
     }
-
     printCommandConsole(command, statusMessage);
 }
 
