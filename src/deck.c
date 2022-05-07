@@ -70,7 +70,8 @@ int checkCard(struct ListCard *deck_card) {
         deck[suit][value].existsInGame = true;
         deck_card->existsInGame = true;
         return 0;
-    } else return 1;
+    }
+    else return 1;
 }
 
 /**
@@ -81,13 +82,14 @@ int checkCard(struct ListCard *deck_card) {
 int convertCardASCIItoDecimal(char cardValue) {
     int value;
     // 65 = A and 97 = a
-    if(cardValue == 65 || cardValue == 97) {
+    if (cardValue == 65 || cardValue == 97) {
         value = 0;
     }
-    // If between 1 and 10
-    else if(cardValue > 49 && cardValue <  58) {
+        // If between 1 and 10
+    else if (cardValue > 49 && cardValue < 58) {
         value = cardValue - 49;
-    } else {
+    }
+    else {
         switch (cardValue) {
             case 'T':
                 value = 9;
@@ -142,7 +144,8 @@ Linked_list *loadDeck(FILE *fptr) {
             generateEmptyView("LD", buffer);
             deleteLinkedList(cardDeck);
             return NULL;
-        } else {
+        }
+        else {
             appendCard(cardDeck, newCard);
             ++lineNum;
         }
@@ -169,12 +172,3 @@ void saveDeck(Linked_list *list, FILE *fptr) {
         node = node->next;
     }
 }
-
-// int checkIfFileExists(const char * filename) {
-//     FILE* file;
-//     if (file = fopen(filename, "r")) {
-//         fclose(file);
-//         return 1;
-//     }
-//     return 0;
-// }
