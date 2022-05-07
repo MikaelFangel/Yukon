@@ -197,7 +197,7 @@ void playPhase(Linked_list *loadedDeck, bool *gameRunning) {
                 else if (gameMove[2][0] == 'F') {
                     toList = foundation_lists[to];
                     toFoundation = true;
-                }// TODO: More validation can be added to check for correct foundation number.
+                } // TODO: More validation can be added to check for correct foundation number.
                 else {
                     generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Not a valid <TO> command.");
                     continue;
@@ -208,7 +208,7 @@ void playPhase(Linked_list *loadedDeck, bool *gameRunning) {
                 // TODO: Add validation for toColumn in range 1 - 7
                 fromList = foundation_lists[from];
                 toList = column_lists[toColumn];
-                struct ListCard *tempCard = fromList->head;
+                struct ListCard *tempCard = fromList->tail;
                 fromCard[0] = tempCard->value;
                 fromCard[1] = tempCard->suit;
             } else {
