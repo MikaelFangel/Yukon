@@ -206,14 +206,15 @@ bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundatio
     bool result = false;
     // If moving to empty foundation
     if (to == NULL && from->value == 'A') return true;
+    if (to == NULL) return false;
 
     int fromValue = convertCardValue(from->value);
     int toValue = convertCardValue(to->value);
 
-    int diff = fromValue - toValue;
+    int diff = toValue - fromValue;
 
     if (toFoundation) {
-        if (diff == 1 && from->suit == to->suit) result = true;
+        if (diff == -1 && from->suit == to->suit) result = true;
     } else if (diff == 1 && from->suit != to->suit) result = true;
     //if (toFoundation && to->next != NULL && diff == 1 && from->suit == to->suit) { result = true; }
     return result;
@@ -236,16 +237,16 @@ int convertCardValue(char value) {
             value = value - 48;
             break;
         case 'T':
-            value = 9;
-            break;
-        case 'J':
             value = 10;
             break;
-        case 'Q':
+        case 'J':
             value = 11;
             break;
-        case 'K':
+        case 'Q':
             value = 12;
+            break;
+        case 'K':
+            value = 13;
             break;
         default:
             break;
