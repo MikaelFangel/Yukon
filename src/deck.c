@@ -73,6 +73,11 @@ int checkCard(struct ListCard *deck_card) {
     } else return 1;
 }
 
+/**
+ * @authors s215805 Mads Sørensen (45%), s215812 Silja Ye-Chi Sandersen (40%), s215797 Mikael Fangel (25%)
+ * @param cardValue the ascii value from the card to be converted to a decimal number
+ * @return the 0 index decimal corresponding to the card
+ */
 int convertCardASCIItoDecimal(char cardValue) {
     int value;
     // 65 = A and 97 = a
