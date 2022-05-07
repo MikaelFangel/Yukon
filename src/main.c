@@ -70,11 +70,11 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning) {
 
         if (strcasecmp("LD", command) == 0) {
             Linked_list *tmpDeck = LD(arg, numOfInputs);
-            if (loadedDeck != NULL) {
+            if (tmpDeck != NULL) {
                 deleteLinkedList(*loadedDeck);
                 *loadedDeck = tmpDeck;
             }
-            deleteLinkedList(tmpDeck);
+
         } else if (strcasecmp("SW", command) == 0) {
             showDeck(*loadedDeck, "SW", "OK");
         } else if (strcasecmp("SI", command) == 0) {
