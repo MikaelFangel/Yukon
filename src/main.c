@@ -6,9 +6,9 @@
 #include "commands.h"
 #include <string.h>
 
-void startUpPhase(Linked_list *loadedDeck, bool *gameRunning);
+void startUpPhase(Linked_list **loadedDeck, bool *gameRunning);
 
-void playPhase(Linked_list *loadedDeck, bool *gameRunning);
+void playPhase(Linked_list **loadedDeck, bool *gameRunning);
 
 bool checkIfWinner(Linked_list *foundations[]);
 
@@ -46,10 +46,10 @@ int main(void) {
     }
 
     while (gameRunning) {
-        startUpPhase(loadedDeck, &gameRunning);
+        startUpPhase(&loadedDeck, &gameRunning);
 
         if (gameRunning)
-            playPhase(loadedDeck, &gameRunning);
+            playPhase(&loadedDeck, &gameRunning);
     }
 
     return 0;
@@ -60,7 +60,7 @@ int main(void) {
  * @param loadedDeck currently loaded deck
  * @param gameRunning the current running state of the game
  */
-void startUpPhase(Linked_list *loadedDeck, bool *gameRunning) {
+void startUpPhase(Linked_list **loadedDeck, bool *gameRunning) {
     char command[256] = {0}, arg[256] = {0}, buf[256] = {0};
 
     // Ends the loop if the P commands is given and thereby signaling the play phase.
@@ -71,39 +71,40 @@ void startUpPhase(Linked_list *loadedDeck, bool *gameRunning) {
         if (strcasecmp("LD", command) == 0) {
             Linked_list *tmpDeck = LD(arg, numOfInputs);
             if (loadedDeck != NULL) {
-                deleteLinkedList(loadedDeck);
-                *loadedDeck = *tmpDeck;
+                deleteLinkedList(*loadedDeck);
+                *loadedDeck = tmpDeck;
             }
             deleteLinkedList(tmpDeck);
         } else if (strcasecmp("SW", command) == 0) {
-            showDeck(loadedDeck, "SW", "OK");
+            showDeck(*loadedDeck, "SW", "OK");
         } else if (strcasecmp("SI", command) == 0) {
             int split;
 
             // if split is not giving generate a random split
             if (numOfInputs == 1) {
-                split = rand() % (loadedDeck->size - 1) + 1;
+                Linked_list * test = *loadedDeck;
+                split = rand() % (test->size - 1) + 1;
             } else {
                 split = atoi(arg);
             }
 
             // Tries to run SI if SI returns NULL then skip because SI handles the error
-            Linked_list *result = SI(loadedDeck, split);
+            Linked_list *result = SI(*loadedDeck, split);
             if (result != NULL) {
-                *loadedDeck = *result;
-                showDeck(loadedDeck, "SI", "OK");
+                *loadedDeck = result;
+                showDeck(*loadedDeck, "SI", "OK");
             }
         } else if (strcasecmp("SR", command) == 0) {
-            *loadedDeck = *SR(loadedDeck);
-            showDeck(loadedDeck, "SR", "OK");
+            *loadedDeck = SR(*loadedDeck);
+            showDeck(*loadedDeck, "SR", "OK");
         } else if (strcasecmp("SD", command) == 0) {
 
             if (numOfInputs == 1) {
-                SD(loadedDeck, "cards");
+                SD(*loadedDeck, "cards");
             } else {
-                SD(loadedDeck, arg);
+                SD(*loadedDeck, arg);
             }
-            showDeck(loadedDeck, "SD", "Deck has been saved.");
+            showDeck(*loadedDeck, "SD", "Deck has been saved.");
 
         } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
@@ -120,8 +121,8 @@ void startUpPhase(Linked_list *loadedDeck, bool *gameRunning) {
  * @param loadedDeck currently loaded deck
  * @param gameRunning the current running state of the game
  */
-void playPhase(Linked_list *loadedDeck, bool *gameRunning) {
-    Linked_list **column_lists = P(loadedDeck);
+void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
+    Linked_list **column_lists = P(*loadedDeck);
     Linked_list *foundation_lists[4] = {createLinkedList(), createLinkedList(),
                                         createLinkedList(), createLinkedList()};
     generatePlayView(column_lists, foundation_lists, "P", "OK");

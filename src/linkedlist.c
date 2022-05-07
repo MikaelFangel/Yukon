@@ -146,7 +146,7 @@ void deleteLinkedList(Linked_list *list) {
         removeNode(list);
     }
 
-    // free(list);
+    free(list);
 }
 
 /**
