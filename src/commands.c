@@ -247,6 +247,15 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         ++i;
     }
 
+    bool fromCardExcists = true;
+    // If no from Card, recalibrate game move positions in array
+    if(gameMove[2][0] == '\0' && gameMove[2][1] == '\0' && gameMove[2][2] == '\0') {
+        gameMove[2][0] = gameMove[1][0];
+        gameMove[2][1] = gameMove[1][1];
+        gameMove[2][2] = gameMove[1][2];
+        fromCardExcists = false;
+    }
+
     // Get columns/foundation numbers
     int from = gameMove[0][1] - 49;
     int to = gameMove[2][1] - 49;
@@ -260,10 +269,17 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
     Linked_list *toList = NULL;
     // Check if <FROM> is Column (C) or Foundation (F).
     if (gameMove[0][0] == 'C') {
-        // Set <FROM> list and card
-        fromCard[0] = gameMove[1][0];
-        fromCard[1] = gameMove[1][1];
+        // Set <FROM> list
         fromList = column_lists[from];
+        // Set <FROM> card
+        if (fromCardExcists) {
+            fromCard[0] = gameMove[1][0];
+            fromCard[1] = gameMove[1][1];
+        } else {
+            // No from card. Set tail as <FROM> Card
+            fromCard[0] = fromList->tail->value;
+            fromCard[1] = fromList->tail->suit;
+        }
         // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
         if (gameMove[2][0] == 'C') toList = column_lists[to];
         else if (gameMove[2][0] == 'F') {
