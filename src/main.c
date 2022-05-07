@@ -50,12 +50,16 @@ int main(void) {
 
         if (gameRunning)
             playPhase(loadedDeck, &gameRunning);
-
     }
 
     return 0;
 }
 
+/**
+ * Runs the startUpPhase of the game where the player is allowed to load decks and shuffle them
+ * @param loadedDeck currently loaded deck
+ * @param gameRunning the current running state of the game
+ */
 void startUpPhase(Linked_list *loadedDeck, bool *gameRunning) {
     char command[256], arg[256], buf[256];
 
@@ -86,11 +90,11 @@ void startUpPhase(Linked_list *loadedDeck, bool *gameRunning) {
             // Tries to run SI if SI returns NULL then skip because SI handles the error
             Linked_list *result = SI(loadedDeck, split);
             if (result != NULL) {
-                loadedDeck = result;
+                *loadedDeck = *result;
                 showDeck(loadedDeck, "SI", "OK");
             }
         } else if (strcasecmp("SR", command) == 0) {
-            loadedDeck = SR(loadedDeck);
+            *loadedDeck = *SR(loadedDeck);
             showDeck(loadedDeck, "SR", "OK");
         } else if (strcasecmp("SD", command) == 0) {
 
@@ -111,6 +115,11 @@ void startUpPhase(Linked_list *loadedDeck, bool *gameRunning) {
     }
 }
 
+/**
+ * Runs the runs the play phase of the game to allow players to move cards and disable not allowed commands
+ * @param loadedDeck currently loaded deck
+ * @param gameRunning the current running state of the game
+ */
 void playPhase(Linked_list *loadedDeck, bool *gameRunning) {
     Linked_list **column_lists = P(loadedDeck);
     Linked_list *foundation_lists[4] = {createLinkedList(), createLinkedList(),

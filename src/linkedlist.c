@@ -124,7 +124,7 @@ void removeNode(Linked_list *list) {
     if (list->size == 0) {
         return;
     } else {
-        struct ListCard *card = (struct ListCard *) list->tail;
+        struct ListCard *card = list->tail;
         if (card->prev != NULL) {
             struct ListCard *prevNode = card->prev;
             prevNode->next = NULL;
@@ -146,7 +146,7 @@ void deleteLinkedList(Linked_list *list) {
         removeNode(list);
     }
 
-    free(list);
+    // free(list);
 }
 
 /**
