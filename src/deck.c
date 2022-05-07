@@ -78,7 +78,7 @@ int checkCard(struct ListCard *deck_card) {
 /**
  * @authors s215805 Mads Sørensen (45%), s215812 Silja Ye-Chi Sandersen (40%), s215797 Mikael Fangel (25%)
  * @param cardValue the ascii value from the card to be converted to a decimal number
- * @return the 0 index decimal corresponding to the card
+ * @return the 0 index decimal corresponding to the card in the deck (2D array)
  */
 int convertCardASCIItoDecimal(char cardValue) {
     int value;
@@ -116,14 +116,15 @@ int convertCardASCIItoDecimal(char cardValue) {
  * Load a deck from a file. File must be a list of cards represented with 2 characters
  * eg. Ace of Hearts - "AH" with newline after each card. Returns the deck in a linked list
  * Used in LD command
- * @author s215805 Mads Sørensen
- * @param fptr
- * @return cardDeck
+ * @authors s215805 Mads Sørensen (70%), s215812 Silja Ye-Chi Sandersen (30%)
+ * @param fptr pointer to the file from which should be read
+ * @return NULL if errors occur. A deck of cards, where all cards are valid and there is no duplicates
  */
 Linked_list *loadDeck(FILE *fptr) {
     fillSuits();
     char line[4];
     Linked_list *cardDeck = createLinkedList();
+
     // While file not empty, read a line, create a card, and add it to linked list.
     int lineNum = 1;
     while (fgets(line, sizeof(line), fptr) != NULL) {
