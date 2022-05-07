@@ -1,5 +1,7 @@
 #ifndef DECK_H
 #define DECK_H
+// defined because of asprintf on line 124 in deck.c
+#define _GNU_SOURCE
 
 #include <stdio.h>
 #include <stdbool.h>

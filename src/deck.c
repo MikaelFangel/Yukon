@@ -32,34 +32,33 @@ void fillSuits() {
         deck[i][12].value = 'K';
         deck[i][12].suit = suits[i];
     }
-
 }
 
 /**
- * @authors s215805 Mads Sørensen (95%), s215812 Silja Ye-Chi Sandersen (5%)
+ * @authors s215805 Mads Sørensen (60%), s215812 Silja Ye-Chi Sandersen (40%)
  * @param deck_card
- * @return
+ * @return if duplicate card returns 1. If invalid card returns 2. If existing card returns 0
  */
 int checkCard(struct ListCard *deck_card) {
-    int suit_value;
-    int value;
+    int suit;
     switch (deck_card->suit) {
         case 'C' :
-            suit_value = 0;
+            suit = 0;
             break;
         case 'D' :
-            suit_value = 1;
+            suit = 1;
             break;
         case 'H' :
-            suit_value = 2;
+            suit = 2;
             break;
         case 'S' :
-            suit_value = 3;
+            suit = 3;
             break;
         default:
-            // Error handling?
-            break;
+            return 2;
     }
+
+    int value;
     switch (deck_card->value) {
         case 'A':
             value = 0;
@@ -88,23 +87,14 @@ int checkCard(struct ListCard *deck_card) {
             value = 12;
             break;
         default:
-            //Error handling?
-            break;
+            return 2;
     }
 
-    Card *card_to_test = &deck[suit_value][value];
-
-    if (card_to_test->suit == deck_card->suit && card_to_test->value == deck_card->value) {
-        if (!deck_card->existsInGame) {
-            deck_card->existsInGame = true;
-            return 0;
-        } else {
-            //Duplicate cards
-            return 1;
-        }
-    }
-    // Invalid card - cannot be found
-    return 2;
+    if (!deck[suit][value].existsInGame) {
+        deck[suit][value].existsInGame = true;
+        deck_card->existsInGame = true;
+        return 0;
+    } else return 1;
 }
 
 /**
@@ -120,16 +110,30 @@ Linked_list *loadDeck(FILE *fptr) {
     char line[4];
     Linked_list *cardDeck = createLinkedList();
     // While file not empty, read a line, create a card, and add it to linked list.
-    int counter = 1;
-    while (fgets(line, sizeof (line), fptr) != NULL) {
+    int lineNum = 1;
+    while (fgets(line, sizeof(line), fptr) != NULL) {
         struct ListCard newCard;
         newCard.value = line[0];
         newCard.suit = line[1];
-        newCard.existsInGame = false;
-        newCard.faceDown = false;
-        appendCard(cardDeck, newCard);
-        if (checkCard(&newCard) != 0) generateEmptyView("LD", "Error with card on line");
-        ++counter;
+
+        char buffer[40];
+        char *num;
+
+        int check = checkCard(&newCard);
+
+        if (check != 0 && asprintf(&num, "%d", lineNum) != -1) {
+            if (check == 1)
+                strcat(strcpy(buffer, "ERROR! Duplicate card found on line "), num);
+            else {
+                strcat(strcpy(buffer, "ERROR! Invalid card found on line "), num);
+            }
+            generateEmptyView("LD", buffer);
+            deleteLinkedList(cardDeck);
+            return NULL;
+        } else {
+            appendCard(cardDeck, newCard);
+            ++lineNum;
+        }
     }
     return cardDeck;
 }
@@ -153,3 +157,12 @@ void saveDeck(Linked_list *list, FILE *fptr) {
         node = node->next;
     }
 }
+
+// int checkIfFileExists(const char * filename) {
+//     FILE* file;
+//     if (file = fopen(filename, "r")) {
+//         fclose(file);
+//         return 1;
+//     }
+//     return 0;
+// }
