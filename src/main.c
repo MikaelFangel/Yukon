@@ -5,6 +5,7 @@
 #include "deck.h"
 #include "commands.h"
 #include <string.h>
+#include <regex.h>
 
 void startUpPhase(Linked_list **loadedDeck, bool *gameRunning);
 
@@ -37,12 +38,10 @@ int main(void) {
             loadedDeck = LD(arg, numOfInputs);
             if (loadedDeck != NULL)
                 deckLoaded = true;
-        }
-        else if (strcasecmp("QQ", command) == 0) {
+        } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
             break;
-        }
-        else {
+        } else {
             generateEmptyView("", "Error! The only valid command is LD");
         }
     }
@@ -77,19 +76,16 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning) {
                 *loadedDeck = tmpDeck;
             }
 
-        }
-        else if (strcasecmp("SW", command) == 0) {
+        } else if (strcasecmp("SW", command) == 0) {
             showDeck(*loadedDeck, "SW", "OK");
-        }
-        else if (strcasecmp("SI", command) == 0) {
+        } else if (strcasecmp("SI", command) == 0) {
             int split;
 
             // if split is not giving generate a random split
             if (numOfInputs == 1) {
                 Linked_list *test = *loadedDeck;
                 split = rand() % (test->size - 1) + 1;
-            }
-            else {
+            } else {
                 split = atoi(arg);
             }
 
@@ -99,28 +95,23 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning) {
                 *loadedDeck = result;
                 showDeck(*loadedDeck, "SI", "OK");
             }
-        }
-        else if (strcasecmp("SR", command) == 0) {
+        } else if (strcasecmp("SR", command) == 0) {
             *loadedDeck = SR(*loadedDeck);
             showDeck(*loadedDeck, "SR", "OK");
-        }
-        else if (strcasecmp("SD", command) == 0) {
+        } else if (strcasecmp("SD", command) == 0) {
 
             if (numOfInputs == 1) {
                 SD(*loadedDeck, "cards");
-            }
-            else {
+            } else {
                 SD(*loadedDeck, arg);
             }
             showDeck(*loadedDeck, "SD", "Deck has been saved.");
 
-        }
-        else if (strcasecmp("QQ", command) == 0) {
+        } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
             *gameRunning = false;
             break;
-        }
-        else {
+        } else {
             generateEmptyView("", "Error! Invalid command");
         }
     }
@@ -137,6 +128,9 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
                                         createLinkedList(), createLinkedList()};
     generatePlayView(column_lists, foundation_lists, "P", "OK");
 
+    regex_t regex;
+    regcomp(&regex, "^((C[1-7]|F[1-4]):?([ATJQKatjqk2-9][DHCSdhcs])?(:|->)(C[1-7]|F[1-4])$)", REG_EXTENDED);
+
     char command[256] = {0}, arg[256] = {0}, buf[256] = {0};
     while ((strcasecmp("Q", command) != 0)) {
         fgets(buf, sizeof(buf), stdin);
@@ -147,21 +141,25 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
             || strcasecmp("SD", command) == 0) {
             generatePlayView(column_lists, foundation_lists,
                              command, "ERROR! Command not available in the PLAY phase");
-        }
-        else if (strcasecmp("QQ", command) == 0) {
+        } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
             *gameRunning = false;
             break;
-        }
-        else if (strcasecmp("Q", command) == 0) {
+        } else if (strcasecmp("Q", command) == 0) {
             // TODO: View??
 
             generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
             break;
         }
 
-            // TODO: Implement Game Moves
-        else {
+        //  How to remove buffer \n value answer gotten from StackOverflow
+        // https://stackoverflow.com/a/27491954
+        size_t len = strlen(buf);
+        if (len > 0 && buf[len - 1] == '\n') {
+            buf[--len] = '\0';
+        }
+
+        if (regexec(&regex, buf, 0, NULL, 0) == 0) {
             gameMoves(buf, column_lists, foundation_lists);
         }
 
