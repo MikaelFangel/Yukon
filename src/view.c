@@ -50,29 +50,27 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
         return;
     }
 
-    struct ListCard *current_node = deck_list->tail;
-
     clearView();
     generateColumns();
 
     // Foundation number
     int Fnum = 1;
-    struct ListCard *card = current_node;
+    struct ListCard *current_card = deck_list->tail;
     char value, suit;
 
     // Loop determining whether a foundation should be printed or not
     for (int i = 1; i <= MAX_NUM_OF_ROWS; i++) {
         // Loop to print the cards in the columns
         for (int j = 0; j < NUM_OF_COLUMNS; ++j) {
-            if (card == NULL || current_node == NULL) {
+            if (current_card == NULL) {
                 printf("\t");
                 continue;
             }
 
             // Show faceUp
             if (strcasecmp("SW", command) == 0) {
-                value = card->value;
-                suit = card->suit;
+                value = current_card->value;
+                suit = current_card->suit;
             }
                 // Show faceDown
             else {
@@ -81,9 +79,7 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
             }
 
             printf("%c%c\t", value, suit);
-            current_node = current_node->prev;
-            if (current_node != NULL)
-                card = current_node;
+            current_card = current_card->prev;
         }
 
         // Only prints if uneven and less than 8. Only 4 foundations should be printed.
