@@ -32,6 +32,4 @@ int checkCard(struct ListCard *deck_card);
 
 int convertCardASCIItoDecimal(char cardValue);
 
-void moveToAnotherDeck(Linked_list *fromDeck, Linked_list *toDeck, bool toBottom);
-
 #endif
