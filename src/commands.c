@@ -94,7 +94,7 @@ Linked_list *SI(Linked_list *firstPile, int split) {
         }
     }
 
-    free(firstPile);
+    //free(firstPile);
     free(secondPile);
 
     return shuffledPile;

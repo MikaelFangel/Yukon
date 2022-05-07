@@ -121,7 +121,7 @@ Linked_list *loadDeck(FILE *fptr) {
     Linked_list *cardDeck = createLinkedList();
     // While file not empty, read a line, create a card, and add it to linked list.
     int counter = 1;
-    while (fgets(line, sizeof line, fptr) != NULL) {
+    while (fgets(line, sizeof (line), fptr) != NULL) {
         struct ListCard newCard;
         newCard.value = line[0];
         newCard.suit = line[1];
