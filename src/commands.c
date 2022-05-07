@@ -204,10 +204,51 @@ Linked_list **P(Linked_list *loadedDeck) {
 
 bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundation) {
     bool result = false;
-    int diff = to->value - from->value;
+    // If moving to empty foundation
+    if (to == NULL && from->value == 'A') return true;
+
+    int fromValue = convertCardValue(from->value);
+    int toValue = convertCardValue(to->value);
+
+    int diff = fromValue - toValue;
+
     if (toFoundation) {
         if (diff == 1 && from->suit == to->suit) result = true;
     } else if (diff == 1 && from->suit != to->suit) result = true;
     //if (toFoundation && to->next != NULL && diff == 1 && from->suit == to->suit) { result = true; }
     return result;
+}
+
+int convertCardValue(char value) {
+    switch (value) {
+        case 'A':
+            value = 1;
+            break;
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            // Calculates the corresponding number of its ASCII value
+            value = value - 48;
+            break;
+        case 'T':
+            value = 9;
+            break;
+        case 'J':
+            value = 10;
+            break;
+        case 'Q':
+            value = 11;
+            break;
+        case 'K':
+            value = 12;
+            break;
+        default:
+            break;
+    }
+    return value;
 }

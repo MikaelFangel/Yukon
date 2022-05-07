@@ -205,7 +205,7 @@ void playPhase(Linked_list *loadedDeck, bool *gameRunning) {
             } else if (gameMove[0][0] == 'F') {
                 // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
                 int toColumn = gameMove[1][1] - 49;
-                // TODO: Add validation for toColumn in range 0 - 7
+                // TODO: Add validation for toColumn in range 1 - 7
                 fromList = foundation_lists[from];
                 toList = column_lists[toColumn];
                 struct ListCard *tempCard = fromList->head;
