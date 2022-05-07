@@ -82,7 +82,7 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning) {
 
             // if split is not giving generate a random split
             if (numOfInputs == 1) {
-                Linked_list * test = *loadedDeck;
+                Linked_list *test = *loadedDeck;
                 split = rand() % (test->size - 1) + 1;
             } else {
                 split = atoi(arg);
@@ -150,88 +150,7 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
 
             // TODO: Implement Game Moves
         else {
-            const char delimeters[] = "-> :\n";
-            char *token;
-
-            /** GameMove stored in 2D char array
-             * gameMove[0] from column, eg C3
-             * gameMove[1] from card, ex 2H
-             * gameMove[2] to column, ex C4 or F2
-             * Full command ex: C3:2H -> C4
-             * Initialize with 0.
-             */
-            char gameMove[3][3] = {0};
-
-            token = strtok(buf, delimeters);
-
-            // Load gameMove in 2D array with string tokens
-            int i = 0;
-            while (token != NULL && i < 3) {
-                int j = 0;
-                while (j < 2) {
-                    gameMove[i][j] = token[j];
-                    ++j;
-                }
-                token = strtok(NULL, delimeters);
-                ++i;
-            }
-
-            // Get columns/foundation numbers
-            int from = gameMove[0][1] - 49;
-            int to = gameMove[2][1] - 49;
-            //if (to <= 0 || to >= 8 || from <= 0 || from >= 8) { generatePlayView(column_lists, foundation_lists, "Move", "Error not a valid column number"); continue;}
-
-            // Get card either from gaveMove or from head of Foundation/Column. 0. value : 1. suit
-            char fromCard[2];
-            bool toFoundation = false;
-
-            Linked_list *fromList = NULL;
-            Linked_list *toList = NULL;
-            // Check if <FROM> is Column (C) or Foundation (F).
-            if (gameMove[0][0] == 'C') {
-                // Set <FROM> list and card
-                fromCard[0] = gameMove[1][0];
-                fromCard[1] = gameMove[1][1];
-                fromList = column_lists[from];
-                // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
-                if (gameMove[2][0] == 'C') toList = column_lists[to];
-                else if (gameMove[2][0] == 'F') {
-                    toList = foundation_lists[to];
-                    toFoundation = true;
-                } // TODO: More validation can be added to check for correct foundation number.
-                else {
-                    generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Not a valid <TO> command.");
-                    continue;
-                }
-            } else if (gameMove[0][0] == 'F') {
-                // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
-                int toColumn = gameMove[1][1] - 49;
-                // TODO: Add validation for toColumn in range 1 - 7
-                fromList = foundation_lists[from];
-                toList = column_lists[toColumn];
-                struct ListCard *tempCard = fromList->tail;
-                fromCard[0] = tempCard->value;
-                fromCard[1] = tempCard->suit;
-            } else {
-                generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Not a valid <FROM> command.");
-                continue;
-            }
-            struct ListCard *nodeFrom = findNodeFromCard(fromList, fromCard[0], fromCard[1]);
-
-            if (nodeFrom == NULL) {
-                generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Card cannot be found");
-                continue;
-            }
-
-            // Move the card to the new column
-            if (moveValidation(nodeFrom, toList->tail, toFoundation) == false) {
-                generatePlayView(column_lists, foundation_lists, "Move", "Invalid move");
-                continue;
-            }
-            moveCardFromOneLinkedListToAnother(fromList, nodeFrom, toList);
-
-            // Show deck
-            generatePlayView(column_lists, foundation_lists, "Move command", "OK");
+            gameMoves(buf, column_lists, foundation_lists);
         }
 
         bool winner = checkIfWinner(foundation_lists);

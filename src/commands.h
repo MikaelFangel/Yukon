@@ -23,4 +23,6 @@ bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundatio
 
 int convertCardValue(char value);
 
+bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_lists);
+
 #endif //YUKON_COMMANDS_H
