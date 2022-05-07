@@ -61,7 +61,7 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded)
 
         } else if (*deckLoaded && strcasecmp("SW", command) == 0) {
             showDeck(*loadedDeck, "SW", "OK");
-        } else if (strcasecmp("SI", command) == 0) {
+        } else if (*deckLoaded && strcasecmp("SI", command) == 0) {
             int split;
 
             // if split is not giving generate a random split
