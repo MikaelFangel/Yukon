@@ -65,6 +65,7 @@ int checkCard(struct ListCard *deck_card) {
     }
 
     int value = convertCardASCIItoDecimal(deck_card->value);
+    if (value == -1) return 2;
 
     if (!deck[suit][value].existsInGame) {
         deck[suit][value].existsInGame = true;
