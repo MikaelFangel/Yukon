@@ -213,8 +213,8 @@ bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundatio
     if (to == NULL && from->value == 'A') return true;
     if (to == NULL) return false;
 
-    int fromValue = convertCardValue(from->value);
-    int toValue = convertCardValue(to->value);
+    int fromValue = convertCardASCIItoDecimal(from->value) + 1;
+    int toValue = convertCardASCIItoDecimal(to->value) + 1;
 
     int diff = toValue - fromValue;
 
@@ -223,38 +223,4 @@ bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundatio
     } else if (diff == 1 && from->suit != to->suit) result = true;
     //if (toFoundation && to->next != NULL && diff == 1 && from->suit == to->suit) { result = true; }
     return result;
-}
-
-int convertCardValue(char value) {
-    switch (value) {
-        case 'A':
-            value = 1;
-            break;
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            // Calculates the corresponding number of its ASCII value
-            value = value - 48;
-            break;
-        case 'T':
-            value = 10;
-            break;
-        case 'J':
-            value = 11;
-            break;
-        case 'Q':
-            value = 12;
-            break;
-        case 'K':
-            value = 13;
-            break;
-        default:
-            break;
-    }
-    return value;
 }
