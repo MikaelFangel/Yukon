@@ -7,7 +7,7 @@
 #include <string.h>
 #include <regex.h>
 
-void startUpPhase(Linked_list **loadedDeck, bool *gameRunning);
+void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded);
 
 void playPhase(Linked_list **loadedDeck, bool *gameRunning);
 
@@ -22,34 +22,16 @@ int main(void) {
     setbuf(stdout, 0);
 #endif
 
-    char command[256], arg[256], buf[256];
-    Linked_list *loadedDeck;
+    Linked_list *loadedDeck = createLinkedList();
     bool deckLoaded = false;
     bool gameRunning = true;
     // Start view
     generateEmptyView("", "");
 
-    /** The first command has to be load */
-    while (!deckLoaded) {
-        fgets(buf, sizeof(buf), stdin);
-        int numOfInputs = sscanf(buf, "%s %s", command, arg);
-
-        if (strcasecmp("LD", command) == 0) {
-            loadedDeck = LD(arg, numOfInputs);
-            if (loadedDeck != NULL)
-                deckLoaded = true;
-        } else if (strcasecmp("QQ", command) == 0) {
-            puts("Ending Yukon...");
-            break;
-        } else {
-            generateEmptyView("", "Error! The only valid command is LD");
-        }
-    }
-
     while (gameRunning) {
-        startUpPhase(&loadedDeck, &gameRunning);
+        startUpPhase(&loadedDeck, &gameRunning, &deckLoaded);
 
-        if (gameRunning)
+        if (gameRunning && deckLoaded)
             playPhase(&loadedDeck, &gameRunning);
     }
 
@@ -61,7 +43,7 @@ int main(void) {
  * @param loadedDeck currently loaded deck
  * @param gameRunning the current running state of the game
  */
-void startUpPhase(Linked_list **loadedDeck, bool *gameRunning) {
+void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded) {
     char command[256] = {0}, arg[256] = {0}, buf[256] = {0};
 
     // Ends the loop if the P commands is given and thereby signaling the play phase.
@@ -74,9 +56,10 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning) {
             if (tmpDeck != NULL) {
                 deleteLinkedList(*loadedDeck);
                 *loadedDeck = tmpDeck;
+                *deckLoaded = true;
             }
 
-        } else if (strcasecmp("SW", command) == 0) {
+        } else if (*deckLoaded && strcasecmp("SW", command) == 0) {
             showDeck(*loadedDeck, "SW", "OK");
         } else if (strcasecmp("SI", command) == 0) {
             int split;
@@ -95,10 +78,10 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning) {
                 *loadedDeck = result;
                 showDeck(*loadedDeck, "SI", "OK");
             }
-        } else if (strcasecmp("SR", command) == 0) {
+        } else if (*deckLoaded && strcasecmp("SR", command) == 0) {
             *loadedDeck = SR(*loadedDeck);
             showDeck(*loadedDeck, "SR", "OK");
-        } else if (strcasecmp("SD", command) == 0) {
+        } else if (*deckLoaded && strcasecmp("SD", command) == 0) {
 
             if (numOfInputs == 1) {
                 SD(*loadedDeck, "cards");
