@@ -308,6 +308,8 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
     if (nodeFrom == NULL) {
         generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Card cannot be found");
         return false;
+    } else if(nodeFrom->next != NULL && gameMove[2][0]) {
+        generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Can only move one card to Foundation");
     }
 
     // Move the card to the new column
