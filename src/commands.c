@@ -37,8 +37,14 @@ Linked_list *LD(char arg[], int numOfInputs) {
     } else {
         FILE *defaultDeck = fopen("../resources/default.txt", "r");
         loadedDeck = loadDeck(defaultDeck);
-        showDeck(loadedDeck, "LD", "No name specified unshuffled deck loaded");
-        fclose(defaultDeck);
+
+        if (loadedDeck != NULL) {
+            showDeck(loadedDeck, "LD", "No name specified unshuffled deck loaded");
+            fclose(defaultDeck);
+        } else {
+            fclose(defaultDeck);
+            return NULL;
+        }
     }
 
     return loadedDeck;
