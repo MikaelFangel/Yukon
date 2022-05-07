@@ -17,20 +17,26 @@ void fillSuits() {
     for (int i = 0; i < 4; i++) {
         deck[i][0].value = 'A';
         deck[i][0].suit = suits[i];
+        deck[i][0].existsInGame = false;
 
         for (int j = 1; j < 10; ++j) {
             deck[i][j].value = (j + 1) + '0';
             deck[i][j].suit = suits[i];
+            deck[i][j].existsInGame = false;
         }
 
         deck[i][9].value = 'T';
         deck[i][9].suit = suits[i];
+        deck[i][9].existsInGame = false;
         deck[i][10].value = 'J';
         deck[i][10].suit = suits[i];
+        deck[i][10].existsInGame = false;
         deck[i][11].value = 'Q';
         deck[i][11].suit = suits[i];
+        deck[i][11].existsInGame = false;
         deck[i][12].value = 'K';
         deck[i][12].suit = suits[i];
+        deck[i][12].existsInGame = false;
     }
 }
 

@@ -29,7 +29,7 @@ Linked_list *LD(char arg[], int numOfInputs) {
                 return NULL;
             }
         } else {
-            generateEmptyView("LD", "The file does not exist");
+            generateEmptyView("LD", "ERROR! The file does not exist");
             return NULL;
         }
 
