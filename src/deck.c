@@ -64,43 +64,44 @@ int checkCard(struct ListCard *deck_card) {
             return 2;
     }
 
-    int value;
-    switch (deck_card->value) {
-        case 'A':
-            value = 0;
-            break;
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            // Calculates the corresponding number of its ASCII value
-            value = deck_card->value - 49;
-            break;
-        case 'T':
-            value = 9;
-            break;
-        case 'J':
-            value = 10;
-            break;
-        case 'Q':
-            value = 11;
-            break;
-        case 'K':
-            value = 12;
-            break;
-        default:
-            return 2;
-    }
+    int value = convertCardASCIItoDecimal(deck_card->value);
 
     if (!deck[suit][value].existsInGame) {
         deck[suit][value].existsInGame = true;
         deck_card->existsInGame = true;
         return 0;
     } else return 1;
+}
+
+int convertCardASCIItoDecimal(char cardValue) {
+    int value;
+    // 65 = A and 97 = a
+    if(cardValue == 65 || cardValue == 97) {
+        value = 0;
+    }
+    // If between 1 and 10
+    else if(cardValue > 49 && cardValue <  58) {
+        value = cardValue - 49;
+    } else {
+        switch (cardValue) {
+            case 'T':
+                value = 9;
+                break;
+            case 'J':
+                value = 10;
+                break;
+            case 'Q':
+                value = 11;
+                break;
+            case 'K':
+                value = 12;
+                break;
+            default:
+                return -1;
+        }
+    }
+
+    return value;
 }
 
 /**
