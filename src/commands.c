@@ -1,7 +1,7 @@
 #include "commands.h"
 
 /**
- * @authors s216812 Silja Ye-Chi Sandersen (80%), s215805 Mads Sørensen (15 %), s215797 Mikael Fangel (5%)
+ * @authors s216812 Silja Ye-Chi Sandersen (85%), s215805 Mads Sørensen (10 %), s215797 Mikael Fangel (5%)
  * @param arg the filename of the deck to be loaded
  * @param numOfInputs 2 if load deck from file and all other loads default.txt
  * @return loaded deck as a linked list pointer
@@ -21,8 +21,13 @@ Linked_list *LD(char arg[], int numOfInputs) {
         /** If file exists */
         if (file != NULL) {
             loadedDeck = loadDeck(file);
-            showDeck(loadedDeck, "LD", "OK");
-            fclose(file);
+            if (loadedDeck != NULL) {
+                showDeck(loadedDeck, "LD", "OK");
+                fclose(file);
+            } else {
+                fclose(file);
+                return NULL;
+            }
         } else {
             generateEmptyView("LD", "The file does not exist");
             return NULL;
@@ -94,8 +99,8 @@ Linked_list *SI(Linked_list *firstPile, int split) {
         }
     }
 
-    //free(firstPile);
-    free(secondPile);
+    deleteLinkedList(firstPile);
+    deleteLinkedList(secondPile);
 
     return shuffledPile;
 }
