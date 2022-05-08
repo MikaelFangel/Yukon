@@ -31,7 +31,13 @@ Starts up the play phase and disables the commands from the startup phase.
 Quits the play phase with the current deck as is.
 
 #### Game Moves:
+Move cards between columns and foundations with the following commands. C is used for columns and F for foundations.
+* One card from column to column: C1- > C2. Move the bottom card from C1 to the bottom of C2
+* Multiple cards from column to column: C1:H2->C2. Move H2 and all cards below from C1 to C2
+* One card from column to foundation: C1:H2 -> F1. Move H2 from the bottom of C2 to F1 top. It is optional to specify the card, eg. C1 -> F1 is also valid.
+* From foundation to column: F1 -> C1. Moves the top card from F1 to the bottom of C1. 
 
+The moves can only be done, if the move is valid according to game rules. Otherwise an error will be printed.
 ### General Commmands:
  * QQ  
 Quits Yukon
