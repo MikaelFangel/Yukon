@@ -248,7 +248,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
     }
 
     bool fromCardExcists = true;
-    // If no from Card, recalibrate game move positions in array
+    // If no from Card is present, recalibrate game move positions in array
     if(gameMove[2][0] == '\0' && gameMove[2][1] == '\0' && gameMove[2][2] == '\0') {
         gameMove[2][0] = gameMove[1][0];
         gameMove[2][1] = gameMove[1][1];
