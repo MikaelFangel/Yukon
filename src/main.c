@@ -145,6 +145,8 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
 
         if (regexec(&regex, buf, 0, NULL, 0) == 0) {
             gameMoves(buf, column_lists, foundation_lists);
+        } else {
+            generateEmptyView(buf, "Input not accepted");
         }
 
         bool winner = checkIfWinner(foundation_lists);
