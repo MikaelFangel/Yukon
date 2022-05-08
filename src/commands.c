@@ -325,7 +325,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
     }
 
     // Turns the previous card if it is face down.
-    if (nodeFrom->prev->faceDown) {
+    if (nodeFrom->prev != NULL && nodeFrom->prev->faceDown) {
         nodeFrom->prev->faceDown = false;
     }
 
