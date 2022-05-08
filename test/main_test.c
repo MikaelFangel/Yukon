@@ -6,42 +6,55 @@
 
 void linkedListAdd();
 
-void findKeyTest();
+void findCardTest();
 
 void moveToEmptyListTest();
 
+void removeNodeTest();
+
+Linked_list *loadTestDeck();
+
 int main(void) {
     linkedListAdd();
-    findKeyTest();
+    findCardTest();
     moveToEmptyListTest();
+    removeNodeTest();
 
     return 0;
 }
 
+/**
+ * Test adding to a linked list gives the right size
+ * @author s215797 Mikael Fangel
+ */
 void linkedListAdd() {
     bool status = true;
 
     Linked_list *list = createLinkedList();
-    appendCard(list, "1");
-    appendCard(list, "2");
-    appendCard(list, "3");
-    appendCard(list, "4");
-    appendCard(list, "5");
-    appendCard(list, "6");
-    appendCard(list, "7");
-    appendCard(list, "8");
-    appendCard(list, "9");
-    appendCard(list, "10");
+    struct ListCard card;
+    card.value = 'A';
+    card.suit = 'C';
+    card.faceDown = true;
+    card.existsInGame = true;
+    appendCard(list, card);
 
-    if (strcmp(list->head->card, "1") != 0) {
+    card.value = '2';
+    appendCard(list, card);
+
+    for (int i = ('2' + 1); i <= '9'; ++i) {
+        card.value = i;
+        appendCard(list, card);
+    }
+
+    if (list->head->value != 'A' && list->head->suit != 'C') {
         puts("linkedListAdd Error! Wrong node at head");
         status = false;
     }
-    if (strcmp(list->tail->card, "10") != 0) {
+    if (list->tail->value != '9' && list->tail->suit != 'C') {
         puts("linkedListAdd Error! Wrong node at tail");
         status = false;
     }
-    if (list->size != 10) {
+    if (list->size != 9) {
         puts("linkedListAdd Error! Wrong size of list");
         status = false;
     }
@@ -53,43 +66,43 @@ void linkedListAdd() {
     deleteLinkedList(list);
 }
 
-void findKeyTest() {
-    char key = '7';
-    char notFound = '9';
+/**
+ * Checks if cards can be found and not found cards are handled correctly
+ * @author Mikael Fangel
+ */
+void findCardTest() {
+    Linked_list *list = loadTestDeck();
 
-    Linked_list *list = createLinkedList();
-    appendCard(list, "1");
-    appendCard(list, "2");
-    appendCard(list, "3");
-    appendCard(list, "4");
-    appendCard(list, "5");
-    appendCard(list, "6");
-    appendCard(list, &key);
-    appendCard(list, "8");
-    appendCard(list, "9");
-    appendCard(list, "10");
+    struct ListCard *result = findNodeFromCard(list, '9', 'C');
+    struct ListCard *result2 = findNodeFromCard(list, 'A', 'C');
+    struct ListCard *result3 = findNodeFromCard(list, '5', 'C');
+    struct ListCard *notFound = findNodeFromCard(list, '3', 'S');
 
-    Node *result = findKey(list, &key);
-    // void *result2 = findKey(list, &notFound);
-
-    //printf("%c", *(char*) result->card);
-
-    if (result->card != NULL && *(char*) result->card == '7')
-        puts("findKeyTest: Test Passed!");
+    if (result != NULL && result->value == '9' &&
+        result2 != NULL && result2->value == 'A' &&
+        result3 != NULL && result3->value == '5' &&
+        notFound == NULL)
+        puts("findCardTest: Test Passed!");
     else
-        puts("findKeyTest Error!");
+        puts("findCardTest Error!");
+
+    deleteLinkedList(list);
 }
 
+/**
+ * Checks that you can move to an empty list
+ * @author s215797 Mikael Fangel
+ */
 void moveToEmptyListTest() {
     FILE *fptr = fopen("../resources/default.txt", "r");
     Linked_list *loadedDeck = loadDeck(fptr);
     Linked_list *emptyLinkedList = createLinkedList();
 
-    ListCard *key = (ListCard*) loadedDeck->head->card;
+    struct ListCard *key = loadedDeck->head;
 
-    moveKeyFromOneLinkedListToAnother(loadedDeck, key, emptyLinkedList);
+    moveCardFromOneLinkedListToAnother(loadedDeck, key, emptyLinkedList);
 
-    if(loadedDeck->size == 0 && emptyLinkedList->size == 52) {
+    if (loadedDeck->size == 0 && emptyLinkedList->size == 52) {
         puts("moveToEmptyListTest: Size Test Passed!");
     } else {
         puts("moveToEmptyListTest ERROR! Size Test Failed");
@@ -97,16 +110,16 @@ void moveToEmptyListTest() {
 
     loadedDeck = loadDeck(fptr);
 
-    Node *deckNode = loadedDeck->head;
-    Node *emptyListNode = emptyLinkedList->head;
+    struct ListCard *deckNode = loadedDeck->head;
+    struct ListCard *emptyListNode = emptyLinkedList->head;
 
     bool error = false;
 
-    while(deckNode != NULL && emptyListNode != NULL) {
-        ListCard *deckCard = (ListCard*) deckNode->card;
-        ListCard *emptyCard = (ListCard*) emptyListNode->card;
+    while (deckNode != NULL && emptyListNode != NULL) {
+        struct ListCard *deckCard = deckNode;
+        struct ListCard *emptyCard = emptyListNode;
 
-        if(deckCard->value != emptyCard->value || deckCard->suit != emptyCard->suit) {
+        if (deckCard->value != emptyCard->value || deckCard->suit != emptyCard->suit) {
             error = true;
             break;
         }
@@ -115,11 +128,67 @@ void moveToEmptyListTest() {
         emptyListNode = emptyListNode->next;
     }
 
-    if(error) {
+    if (error) {
         puts("moveToEmptyListTest ERROR! Consistency Test Failed");
     } else {
         puts("moveToEmptyListTest: Consistency Test Passed!");
     }
 
+    deleteLinkedList(loadedDeck);
     fclose(fptr);
+}
+
+/**
+ * Tests that nodes can be removed correctly
+ * @author s215797 Mikael Fangel
+ */
+void removeNodeTest() {
+    Linked_list *list = loadTestDeck();
+
+    removeNode(list);
+    if (list->tail->value != '9' && list->tail->next == NULL) {
+        puts("removeNodeTest: Remove Last Node Passed");
+    } else {
+        puts("removeNodeTest ERROR! Last Node Not Removed Correctly!");
+    }
+
+    struct ListCard *card = list->tail;
+    while (card != NULL) {
+        struct ListCard *tmp = card;
+        removeNode(list);
+        card = tmp->prev;
+    }
+
+    if(list->size == 0 && list->head == NULL && list->tail == NULL) {
+        puts("removeNodeTest: All nodes removed successfully");
+    } else {
+        puts("removeNodeTest: ERROR! Not All Nodes Removed");
+    }
+
+    deleteLinkedList(list);
+}
+
+/**
+ * Loads a test deck
+ * @author s215797 Mikael Fangel
+ * @return test deck
+ */
+Linked_list *loadTestDeck() {
+    Linked_list *list = createLinkedList();
+    struct ListCard card;
+    card.value = 'A';
+    card.suit = 'C';
+    card.faceDown = true;
+    card.existsInGame = true;
+    appendCard(list, card);
+
+    card.value = '2';
+    appendCard(list, card);
+
+    for (int i = ('2' + 1); i <= '9'; ++i) {
+        card.value = i;
+        appendCard(list, card);
+    }
+
+    return list;
 }

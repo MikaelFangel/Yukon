@@ -129,6 +129,9 @@ void removeNode(Linked_list *list) {
             struct ListCard *prevNode = card->prev;
             prevNode->next = NULL;
             list->tail = prevNode;
+        } else {
+            list->tail = NULL;
+            list->head = NULL;
         }
 
         free(card);
