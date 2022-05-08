@@ -138,6 +138,10 @@ void moveToEmptyListTest() {
     fclose(fptr);
 }
 
+/**
+ * Tests that nodes can be removed correctly
+ * @author s215797 Mikael Fangel
+ */
 void removeNodeTest() {
     Linked_list *list = loadTestDeck();
 
@@ -164,6 +168,11 @@ void removeNodeTest() {
     deleteLinkedList(list);
 }
 
+/**
+ * Loads a test deck
+ * @author s215797 Mikael Fangel
+ * @return test deck
+ */
 Linked_list *loadTestDeck() {
     Linked_list *list = createLinkedList();
     struct ListCard card;
