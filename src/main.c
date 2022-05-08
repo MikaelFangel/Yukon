@@ -5,8 +5,10 @@
 #include "deck.h"
 #include "commands.h"
 #include <string.h>
-#include <regex.h>
 
+#if defined(__linux__) || defined(__APPLE__)
+    #include <regex.h>
+#endif
 void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded);
 
 void playPhase(Linked_list **loadedDeck, bool *gameRunning);
@@ -143,11 +145,13 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
             buf[--len] = '\0';
         }
 
+#if defined(__linux__) || defined(__APPLE)
         if (regexec(&regex, buf, 0, NULL, 0) == 0) {
             gameMoves(buf, column_lists, foundation_lists);
         } else {
             generateEmptyView(buf, "Input not accepted");
         }
+#endif
 
         bool winner = checkIfWinner(foundation_lists);
         if (winner) {
