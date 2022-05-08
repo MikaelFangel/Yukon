@@ -5,12 +5,7 @@
 #include "deck.h"
 #include "commands.h"
 #include <string.h>
-
-#if defined(__linux__) || defined(__APPLE__)
-
 #include <regex.h>
-
-#endif
 
 void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded);
 
@@ -135,8 +130,13 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
             *gameRunning = false;
             break;
         } else if (strcasecmp("Q", command) == 0) {
-            // TODO: Delete columns anf foundations??
-
+            for (int i = 0; i < 7; ++i) {
+                deleteLinkedList(column_lists[i]);
+            }
+            free(column_lists);
+            for (int i = 0; i < 4; ++i) {
+                deleteLinkedList(foundation_lists[i]);
+            }
             generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
             break;
         }
@@ -147,15 +147,10 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
         if (len > 0 && buf[len - 1] == '\n') {
             buf[--len] = '\0';
         }
-
-#if defined(__linux__) || defined(__APPLE__)
         if (regexec(&regex, buf, 0, NULL, 0) == 0) {
-#else
-            if (true) {
-#endif
             gameMoves(buf, column_lists, foundation_lists);
         } else {
-            generateEmptyView(buf, "Input not accepted");
+            generatePlayView(column_lists, foundation_lists, buf, "Input not accepted");
         }
 
         bool winner = checkIfWinner(foundation_lists);
