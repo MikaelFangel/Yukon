@@ -263,19 +263,18 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         fromCardExcists = false;
     }
 
-    // Get columns/foundation numbers
+    // Get columns/foundation numbers converted from ASCII value
     int from = gameMove[0][1] - 49;
     int to = gameMove[2][1] - 49;
-    //if (to <= 0 || to >= 8 || from <= 0 || from >= 8) { generatePlayView(column_lists, foundation_lists, "Move", "Error not a valid column number"); continue;}
 
-    // Get card either from gaveMove or from head of Foundation/Column. 0. value : 1. suit
+    // We need fromCard later to get the optional card. 0. value : 1. suit
     char fromCard[2];
     bool toFoundation = false;
 
     Linked_list *fromList = NULL;
     Linked_list *toList = NULL;
     // Check if <FROM> is Column (C) or Foundation (F).
-    if (gameMove[0][0] == 'C') {
+    if (gameMove[0][0] == 'C' || gameMove[0][0] == 'c') {
         // Set <FROM> list
         fromList = column_lists[from];
         // Set <FROM> card
@@ -288,40 +287,39 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
             fromCard[1] = fromList->tail->suit;
         }
         // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
-        if (gameMove[2][0] == 'C') toList = column_lists[to];
-        else if (gameMove[2][0] == 'F') {
+        if (gameMove[2][0] == 'C'  || gameMove[0][0] == 'c') toList = column_lists[to];
+        else if (gameMove[2][0] == 'F'  && gameMove[0][0] == 'f') {
             toList = foundation_lists[to];
             toFoundation = true;
-        } // TODO: More validation can be added to check for correct foundation number.
+        }
         else {
-            generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Not a valid <TO> command.");
+            generatePlayView(column_lists, foundation_lists, buf, "ERROR. Not a valid <TO> command.");
             return false;
         }
-    } else if (gameMove[0][0] == 'F') {
+    } else if (gameMove[0][0] == 'F'  || gameMove[0][0] == 'f') {
         // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
         int toColumn = gameMove[1][1] - 49;
-        // TODO: Add validation for toColumn in range 1 - 7
         fromList = foundation_lists[from];
         toList = column_lists[toColumn];
         struct ListCard *tempCard = fromList->tail;
         fromCard[0] = tempCard->value;
         fromCard[1] = tempCard->suit;
     } else {
-        generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Not a valid <FROM> command.");
+        generatePlayView(column_lists, foundation_lists, buf, "ERROR. Not a valid <FROM> command.");
         return false;
     }
+    // Search for the node in the specified column
     struct ListCard *nodeFrom = findNodeFromCard(fromList, fromCard[0], fromCard[1]);
 
+    // Check for card not found
     if (nodeFrom == NULL) {
-        generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Card cannot be found");
+        generatePlayView(column_lists, foundation_lists, buf, "ERROR. Card cannot be found");
         return false;
-    } else if (nodeFrom->next != NULL && gameMove[2][0]) {
-        generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Can only move one card to Foundation");
     }
 
     // Move the card to the new column
     if (moveValidation(nodeFrom, toList->tail, toFoundation) == false) {
-        generatePlayView(column_lists, foundation_lists, "Move", "Invalid move");
+        generatePlayView(column_lists, foundation_lists, buf, "Invalid move");
         return false;
     }
 
@@ -333,7 +331,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
     moveCardFromOneLinkedListToAnother(fromList, nodeFrom, toList);
 
     // Show deck
-    generatePlayView(column_lists, foundation_lists, "Move command", "OK");
+    generatePlayView(column_lists, foundation_lists, buf, "OK");
 
 }
 
@@ -360,6 +358,5 @@ bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundatio
     if (toFoundation) {
         if (diff == -1 && from->suit == to->suit) result = true;
     } else if (diff == 1 && from->suit != to->suit) result = true;
-    //if (toFoundation && to->next != NULL && diff == 1 && from->suit == to->suit) { result = true; }
     return result;
 }
