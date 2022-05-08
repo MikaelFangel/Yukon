@@ -319,7 +319,6 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         return false;
     }
 
-    // Move the card to the new column
     if (moveValidation(nodeFrom, toList->tail, toFoundation) == false) {
         generatePlayView(column_lists, foundation_lists, command, "Invalid move");
         return false;
@@ -330,6 +329,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         nodeFrom->prev->faceDown = false;
     }
 
+    // Move the card to the new column
     moveCardFromOneLinkedListToAnother(fromList, nodeFrom, toList);
 
     // Show deck
