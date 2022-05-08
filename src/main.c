@@ -93,6 +93,8 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded)
             puts("Ending Yukon...");
             *gameRunning = false;
             break;
+        } else if (strcasecmp("P", command) == 0) {
+            return;
         } else {
             generateEmptyView("", "Error! Invalid command");
         }
@@ -128,7 +130,7 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
             *gameRunning = false;
             break;
         } else if (strcasecmp("Q", command) == 0) {
-            // TODO: View??
+            // TODO: Delete columns anf foundations??
 
             generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
             break;
