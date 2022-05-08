@@ -230,6 +230,8 @@ Linked_list **P(Linked_list *loadedDeck) {
 bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_lists) {
     char delimiters[] = "-> :\n";
     char *token;
+    char command[256];
+    strcpy(command, buf);
 
     /** GameMove stored in 2D char array
      * gameMove[0] from column, eg C3
@@ -288,12 +290,12 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         }
         // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
         if (gameMove[2][0] == 'C'  || gameMove[0][0] == 'c') toList = column_lists[to];
-        else if (gameMove[2][0] == 'F'  && gameMove[0][0] == 'f') {
+        else if (gameMove[2][0] == 'F'  || gameMove[0][0] == 'f') {
             toList = foundation_lists[to];
             toFoundation = true;
         }
         else {
-            generatePlayView(column_lists, foundation_lists, buf, "ERROR. Not a valid <TO> command.");
+            generatePlayView(column_lists, foundation_lists, command, "ERROR. Not a valid <TO> command.");
             return false;
         }
     } else if (gameMove[0][0] == 'F'  || gameMove[0][0] == 'f') {
@@ -305,7 +307,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         fromCard[0] = tempCard->value;
         fromCard[1] = tempCard->suit;
     } else {
-        generatePlayView(column_lists, foundation_lists, buf, "ERROR. Not a valid <FROM> command.");
+        generatePlayView(column_lists, foundation_lists, command, "ERROR. Not a valid <FROM> command.");
         return false;
     }
     // Search for the node in the specified column
@@ -313,13 +315,13 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
 
     // Check for card not found
     if (nodeFrom == NULL) {
-        generatePlayView(column_lists, foundation_lists, buf, "ERROR. Card cannot be found");
+        generatePlayView(column_lists, foundation_lists, command, "ERROR. Card cannot be found");
         return false;
     }
 
     // Move the card to the new column
     if (moveValidation(nodeFrom, toList->tail, toFoundation) == false) {
-        generatePlayView(column_lists, foundation_lists, buf, "Invalid move");
+        generatePlayView(column_lists, foundation_lists, command, "Invalid move");
         return false;
     }
 
@@ -331,7 +333,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
     moveCardFromOneLinkedListToAnother(fromList, nodeFrom, toList);
 
     // Show deck
-    generatePlayView(column_lists, foundation_lists, buf, "OK");
+    generatePlayView(column_lists, foundation_lists, command, "OK");
 
 }
 
