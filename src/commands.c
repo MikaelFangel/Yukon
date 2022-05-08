@@ -288,7 +288,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         }
         // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
         if (gameMove[2][0] == 'C'  || gameMove[0][0] == 'c') toList = column_lists[to];
-        else if (gameMove[2][0] == 'F'  && gameMove[0][0] == 'f') {
+        else if (gameMove[2][0] == 'F'  || gameMove[2][0] == 'f') {
             toList = foundation_lists[to];
             toFoundation = true;
         }
