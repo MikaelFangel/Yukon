@@ -276,7 +276,8 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
     Linked_list *fromList = NULL;
     Linked_list *toList = NULL;
     // Check if <FROM> is Column (C) or Foundation (F).
-    if (gameMove[0][0] == 'C' || gameMove[0][0] == 'c') {
+    if ((gameMove[0][0] == 'C' || gameMove[0][0] == 'c') &&
+        strcmp(&gameMove[0][0], &gameMove[2][0]) != 0) {
         // Set <FROM> list
         fromList = column_lists[from];
         // Set <FROM> card
@@ -289,16 +290,15 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
             fromCard[1] = fromList->tail->suit;
         }
         // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
-        if (gameMove[2][0] == 'C'  || gameMove[0][0] == 'c') toList = column_lists[to];
-        else if (gameMove[2][0] == 'F'  || gameMove[0][0] == 'f') {
+        if (gameMove[2][0] == 'C' || gameMove[2][0] == 'c') toList = column_lists[to];
+        else if (gameMove[2][0] == 'F' || gameMove[2][0] == 'f') {
             toList = foundation_lists[to];
             toFoundation = true;
-        }
-        else {
+        } else {
             generatePlayView(column_lists, foundation_lists, command, "ERROR. Not a valid <TO> command.");
             return false;
         }
-    } else if (gameMove[0][0] == 'F'  || gameMove[0][0] == 'f') {
+    } else if (gameMove[0][0] == 'F' || gameMove[0][0] == 'f') {
         // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
         int toColumn = gameMove[1][1] - 49;
         fromList = foundation_lists[from];
@@ -311,7 +311,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         return false;
     }
     // Search for the node in the specified column
-    struct ListCard *nodeFrom = findNodeFromCard(fromList, fromCard[0], fromCard[1]);
+    struct ListCard *nodeFrom = findNodeFromCard(fromList, toupper(fromCard[0]), toupper(fromCard[1]));
 
     // Check for card not found
     if (nodeFrom == NULL) {
