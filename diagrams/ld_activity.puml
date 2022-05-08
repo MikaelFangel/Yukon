@@ -4,19 +4,23 @@ start
 if (filename is valid) then (true)
     :Message "OK";
     if(filename is emtpy) then (true)
-        :read from headerFile;
+        :fill deck with standard values;
     endif
     repeat
+    :lineNum = 1;
     :read line;
-    if(card is in headerfile) then (false)
-        :Message "ERROR: On line (X)";
+    if(checkCard) then (false)
+    if (checkCard == 1) is (true) then
+      :ERROR! Duplicate card found on lineNum;
+    else (false)
+      :ERROR! Invalid card found on lineNum;
     endif
-    :add card to column;
-    :column++;
-    if(column >= 7) then (true)
-        :column = 1;
-    endif;
-    repeat while (more cards?) is (yes)
+    :generate empty view;
+    :delete linked list;
+    endif
+    :appendCard to deck;
+    :lineNum++;
+    repeat while (line != NULL) is (true)
 
 else (false)
     :Message "ERROR: File does not exist";
