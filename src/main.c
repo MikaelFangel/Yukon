@@ -7,8 +7,11 @@
 #include <string.h>
 
 #if defined(__linux__) || defined(__APPLE__)
-    #include <regex.h>
+
+#include <regex.h>
+
 #endif
+
 void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded);
 
 void playPhase(Linked_list **loadedDeck, bool *gameRunning);
@@ -68,7 +71,7 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded)
 
             // if split is not giving generate a random split
             if (numOfInputs == 1) {
-                split = rand() % (((Linked_list*) *loadedDeck)->size - 1) + 1;
+                split = rand() % (((Linked_list *) *loadedDeck)->size - 1) + 1;
             } else {
                 split = atoi(arg);
             }
@@ -145,13 +148,15 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
             buf[--len] = '\0';
         }
 
-#if defined(__linux__) || defined(__APPLE)
+#if defined(__linux__) || defined(__APPLE__)
         if (regexec(&regex, buf, 0, NULL, 0) == 0) {
+#else
+            if (true) {
+#endif
             gameMoves(buf, column_lists, foundation_lists);
         } else {
             generateEmptyView(buf, "Input not accepted");
         }
-#endif
 
         bool winner = checkIfWinner(foundation_lists);
         if (winner) {
