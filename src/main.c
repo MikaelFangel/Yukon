@@ -113,7 +113,7 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
     generatePlayView(column_lists, foundation_lists, "P", "OK");
 
     regex_t regex;
-    regcomp(&regex, "^((C[1-7]|F[1-4]):?([ATJQKatjqk2-9][DHCSdhcs])?(:|->)(C[1-7]|F[1-4])$)", REG_EXTENDED);
+    regcomp(&regex, "^(([Cc][1-7]|[Ff][1-4]):?([ATJQKatjqk2-9][DHCSdhcs])?(->)([Cc][1-7]|[Ff][1-4])$)", REG_EXTENDED);
 
     char command[256] = {0}, arg[256] = {0}, buf[256] = {0};
     while ((strcasecmp("Q", command) != 0)) {
