@@ -77,10 +77,12 @@ void findCardTest() {
     struct ListCard *result = findNodeFromCard(list, '9', 'C');
     struct ListCard *result2 = findNodeFromCard(list, 'A', 'C');
     struct ListCard *result3 = findNodeFromCard(list, '5', 'C');
+    struct ListCard *notFound = findNodeFromCard(list, '3', 'S');
 
     if (result != NULL && result->value == '9' &&
     result2 != NULL && result2->value == 'A' &&
-    result3 != NULL && result3->value == '5')
+    result3 != NULL && result3->value == '5' &&
+    notFound == NULL)
         puts("findCardTest: Test Passed!");
     else
         puts("findCardTest Error!");
