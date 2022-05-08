@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
+#include <regex.h>
 #include "view.h"
 #include "deck.h"
 #include "commands.h"
-#include <string.h>
-#include <regex.h>
 
 void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded);
 
@@ -14,7 +14,7 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning);
 bool checkIfWinner(Linked_list *foundations[]);
 
 /**
- * @authors s215812 Silja Sandersen (50%), s215805 Mads Sørensen (30%), s215797 Mikael Fangel (20%)
+ * @authors s215812 Silja Sandersen (45%), s215805 Mads Sørensen (25%), s215797 Mikael Fangel (30%)
  */
 int main(void) {
 // Source: https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000763330-Debugger-not-working-on-Windows-CLion-
