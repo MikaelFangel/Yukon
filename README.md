@@ -1,7 +1,7 @@
 # Yukon Solitaire
 C implementation of Yukon Solitaire, as a CLI game.
 
-![Image of game](https://github.com/MikaelFangel/Yukon/blob/main/images/Yukon.png)
+![Image of game](https://github.com/MikaelFangel/Yukon/blob/main/images/gameScreenShot.png)
 
 ## Commands
 A short description of all available commands in the game.
