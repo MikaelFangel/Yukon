@@ -116,7 +116,7 @@ int convertCardASCIItoDecimal(char cardValue) {
  * Load a deck from a file. File must be a list of cards represented with 2 characters
  * eg. Ace of Hearts - "AH" with newline after each card. Returns the deck in a linked list
  * Used in LD command
- * @authors s215805 Mads Sørensen (70%), s215812 Silja Ye-Chi Sandersen (30%)
+ * @authors s215805 Mads Sørensen (65%), s215812 Silja Ye-Chi Sandersen (25%), s215797 Mikael Fangel (10%)
  * @param fptr pointer to the file from which should be read
  * @return NULL if errors occur. A deck of cards, where all cards are valid and there is no duplicates
  */
@@ -152,6 +152,13 @@ Linked_list *loadDeck(FILE *fptr) {
             ++lineNum;
         }
     }
+
+    if(cardDeck->size != 4 *SUIT_SIZE) {
+        generateEmptyView("LD", "ERROR! CardDeck doesn't match the deck size of 52");
+        deleteLinkedList(cardDeck);
+        return NULL;
+    }
+
     return cardDeck;
 }
 
