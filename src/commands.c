@@ -317,6 +317,12 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         generatePlayView(column_lists, foundation_lists, "Move", "Invalid move");
         return false;
     }
+
+    // Turns the previous card if it is face down.
+    if(nodeFrom->prev->faceDown) {
+        nodeFrom->prev->faceDown = false;
+    }
+
     moveCardFromOneLinkedListToAnother(fromList, nodeFrom, toList);
 
     // Show deck
