@@ -42,13 +42,11 @@ Linked_list *LD(char arg[], int numOfInputs) {
             if (loadedDeck != NULL) {
                 showDeck(loadedDeck, "LD", "No name specified unshuffled deck loaded");
                 fclose(defaultDeck);
-            }
-            else {
+            } else {
                 fclose(defaultDeck);
                 return NULL;
             }
-        }
-        else {
+        } else {
             generateEmptyView("LD", "ERROR! The default deck does not exist");
             return NULL;
         }
@@ -220,6 +218,15 @@ Linked_list **P(Linked_list *loadedDeck) {
     return C_ptr;
 }
 
+/**
+ * Moves cards from one column to another column when the game is running
+ * the function also ensures that illegal moves are not performed
+ * @authors Mads Sørensen (95%), s215797 Mikael Fangel (5%)
+ * @param buf the input buffer from the command
+ * @param column_lists a list of all columns in the game
+ * @param foundation_lists a list of all foundations in the game
+ * @return true if the move was executed
+ */
 bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_lists) {
     char delimiters[] = "-> :\n";
     char *token;
@@ -249,7 +256,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
 
     bool fromCardExcists = true;
     // If no from Card is present, recalibrate game move positions in array
-    if(gameMove[2][0] == '\0' && gameMove[2][1] == '\0' && gameMove[2][2] == '\0') {
+    if (gameMove[2][0] == '\0' && gameMove[2][1] == '\0' && gameMove[2][2] == '\0') {
         gameMove[2][0] = gameMove[1][0];
         gameMove[2][1] = gameMove[1][1];
         gameMove[2][2] = gameMove[1][2];
@@ -308,7 +315,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
     if (nodeFrom == NULL) {
         generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Card cannot be found");
         return false;
-    } else if(nodeFrom->next != NULL && gameMove[2][0]) {
+    } else if (nodeFrom->next != NULL && gameMove[2][0]) {
         generatePlayView(column_lists, foundation_lists, "Move", "ERROR. Can only move one card to Foundation");
     }
 
@@ -319,7 +326,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
     }
 
     // Turns the previous card if it is face down.
-    if(nodeFrom->prev->faceDown) {
+    if (nodeFrom->prev->faceDown) {
         nodeFrom->prev->faceDown = false;
     }
 
@@ -330,10 +337,19 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
 
 }
 
+/**
+ * Validates move from on column to another column when the game is running
+ * to ensure that not illegal moves are performed
+ * @authors Mads Sørensen (95%), S215797 Mikael Fangel (5%)
+ * @param from card to attempt move
+ * @param to where to move the card
+ * @param toFoundation
+ * @return true if move is allowed
+ */
 bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundation) {
     bool result = false;
     // If moving to empty foundation
-    if (to == NULL && from->value == 'A') return true;
+    if (to == NULL && from->value == 'A' && from->next == NULL) return true;
     if (to == NULL) return false;
 
     int fromValue = convertCardASCIItoDecimal(from->value) + 1;
