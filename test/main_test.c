@@ -6,13 +6,13 @@
 
 void linkedListAdd();
 
-void findKeyTest();
+void findCardTest();
 
 void moveToEmptyListTest();
 
 int main(void) {
     linkedListAdd();
-    findKeyTest();
+    findCardTest();
     moveToEmptyListTest();
 
     return 0;
@@ -22,26 +22,30 @@ void linkedListAdd() {
     bool status = true;
 
     Linked_list *list = createLinkedList();
-    appendCard(list, "1");
-    appendCard(list, "2");
-    appendCard(list, "3");
-    appendCard(list, "4");
-    appendCard(list, "5");
-    appendCard(list, "6");
-    appendCard(list, "7");
-    appendCard(list, "8");
-    appendCard(list, "9");
-    appendCard(list, "10");
+    struct ListCard card;
+    card.value = 'A';
+    card.suit = 'C';
+    card.faceDown = true;
+    card.existsInGame = true;
+    appendCard(list, card);
 
-    if (strcmp(list->head->card, "1") != 0) {
+    card.value = '2';
+    appendCard(list, card);
+
+    for (int i = ('2' + 1); i <= '9'; ++i) {
+        card.value = i;
+        appendCard(list, card);
+    }
+
+    if (list->head->value != 'A' && list->head->suit != 'C') {
         puts("linkedListAdd Error! Wrong node at head");
         status = false;
     }
-    if (strcmp(list->tail->card, "10") != 0) {
+    if (list->tail->value != '9' && list->tail->suit != 'C') {
         puts("linkedListAdd Error! Wrong node at tail");
         status = false;
     }
-    if (list->size != 10) {
+    if (list->size != 9) {
         puts("linkedListAdd Error! Wrong size of list");
         status = false;
     }
@@ -53,41 +57,46 @@ void linkedListAdd() {
     deleteLinkedList(list);
 }
 
-void findKeyTest() {
-    char key = '7';
-    char notFound = '9';
-
+void findCardTest() {
     Linked_list *list = createLinkedList();
-    appendCard(list, "1");
-    appendCard(list, "2");
-    appendCard(list, "3");
-    appendCard(list, "4");
-    appendCard(list, "5");
-    appendCard(list, "6");
-    appendCard(list, &key);
-    appendCard(list, "8");
-    appendCard(list, "9");
-    appendCard(list, "10");
+    struct ListCard card;
+    card.value = 'A';
+    card.suit = 'C';
+    card.faceDown = true;
+    card.existsInGame = true;
+    appendCard(list, card);
 
-    Node *result = findKey(list, &key);
-    // void *result2 = findKey(list, &notFound);
+    card.value = '2';
+    appendCard(list, card);
 
-    //printf("%c", *(char*) result->card);
+    for (int i = ('2' + 1); i <= '9'; ++i) {
+        card.value = i;
+        appendCard(list, card);
+    }
 
-    if (result->card != NULL && *(char*) result->card == '7')
-        puts("findKeyTest: Test Passed!");
+    struct ListCard *result = findNodeFromCard(list, '9', 'C');
+    struct ListCard *result2 = findNodeFromCard(list, 'A', 'C');
+    struct ListCard *result3 = findNodeFromCard(list, '5', 'C');
+    struct ListCard *notFound = findNodeFromCard(list, '3', 'S');
+
+    if (result != NULL && result->value == '9' &&
+    result2 != NULL && result2->value == 'A' &&
+    result3 != NULL && result3->value == '5' &&
+    notFound == NULL)
+        puts("findCardTest: Test Passed!");
     else
-        puts("findKeyTest Error!");
+        puts("findCardTest Error!");
 }
+
 
 void moveToEmptyListTest() {
     FILE *fptr = fopen("../resources/default.txt", "r");
     Linked_list *loadedDeck = loadDeck(fptr);
     Linked_list *emptyLinkedList = createLinkedList();
 
-    ListCard *key = (ListCard*) loadedDeck->head->card;
+    struct ListCard *key = loadedDeck->head;
 
-    moveKeyFromOneLinkedListToAnother(loadedDeck, key, emptyLinkedList);
+    moveCardFromOneLinkedListToAnother(loadedDeck, key, emptyLinkedList);
 
     if(loadedDeck->size == 0 && emptyLinkedList->size == 52) {
         puts("moveToEmptyListTest: Size Test Passed!");
@@ -97,14 +106,14 @@ void moveToEmptyListTest() {
 
     loadedDeck = loadDeck(fptr);
 
-    Node *deckNode = loadedDeck->head;
-    Node *emptyListNode = emptyLinkedList->head;
+    struct ListCard *deckNode = loadedDeck->head;
+    struct ListCard *emptyListNode = emptyLinkedList->head;
 
     bool error = false;
 
     while(deckNode != NULL && emptyListNode != NULL) {
-        ListCard *deckCard = (ListCard*) deckNode->card;
-        ListCard *emptyCard = (ListCard*) emptyListNode->card;
+        struct ListCard *deckCard =  deckNode;
+        struct ListCard *emptyCard = emptyListNode;
 
         if(deckCard->value != emptyCard->value || deckCard->suit != emptyCard->suit) {
             error = true;
