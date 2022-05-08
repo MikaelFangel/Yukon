@@ -10,3 +10,7 @@ add_executable(Yukon ${Sources} ${Headers})
 set(Test_Sources test/main_test.c src/linkedlist.c src/view.c src/deck.c src/commands.c)
 set(Test_Headers )
 add_executable(YukonTest ${Test_Sources} ${Headers} ${Test_Headers})
+
+if (WIN32)
+    include_directories("C:/cygwin64/usr/include")
+endif()
