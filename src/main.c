@@ -130,8 +130,13 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
             *gameRunning = false;
             break;
         } else if (strcasecmp("Q", command) == 0) {
-            // TODO: Delete columns anf foundations??
-
+            for (int i = 0; i < 7; ++i) {
+                deleteLinkedList(column_lists[i]);
+            }
+            free(column_lists);
+            for (int i = 0; i < 4; ++i) {
+                deleteLinkedList(foundation_lists[i]);
+            }
             generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
             break;
         }
