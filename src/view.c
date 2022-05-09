@@ -195,7 +195,7 @@ int calculateMaxNumOfRows(Linked_list *columns[NUM_OF_COLUMNS]) {
         if (tmp == NULL) continue;
         if (maxNumOfRows < tmp->size) maxNumOfRows = tmp->size;
     }
-    return maxNumOfRows;
+    return maxNumOfRows > 7 ? maxNumOfRows : 7;
 }
 
 /** @author s215812 Silja Ye-Chi Sandersen */
