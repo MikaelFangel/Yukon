@@ -284,10 +284,13 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
         if (fromCardExcists) {
             fromCard[0] = gameMove[1][0];
             fromCard[1] = gameMove[1][1];
-        } else {
+        } else if (fromList->tail != NULL){
             // No from card. Set tail as <FROM> Card
             fromCard[0] = fromList->tail->value;
             fromCard[1] = fromList->tail->suit;
+        } else {
+            generatePlayView(column_lists, foundation_lists, command, "ERROR. Not a valid <FROM> command.");
+            return false;
         }
         // If <FROM> is C, then we check <TO> for either C or F. If none, then we can error handle
         if (gameMove[2][0] == 'C' || gameMove[2][0] == 'c') toList = column_lists[to];
