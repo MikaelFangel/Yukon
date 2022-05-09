@@ -222,7 +222,7 @@ void printCommandConsole(char lastCommand[], char message[]) {
  * @author s215812 Silja Ye-Chi Sandersen
  */
 void clearView() {
-    printf("\n\n\n");
+    printf("\n\n\n\n\n\n");
 
 #if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
     system("clear");
