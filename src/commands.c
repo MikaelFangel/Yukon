@@ -350,7 +350,7 @@ bool moveValidation(struct ListCard *from, struct ListCard *to, bool toFoundatio
     bool result = false;
     // If moving to empty foundation
     if (to == NULL && from->value == 'A' && from->next == NULL && toFoundation) return true;
-    if (to == NULL && from->value == 'K' && from->next == NULL) return true;
+    if (to == NULL && from->value == 'K' && !toFoundation) return true;
     if (to == NULL) return false;
 
     int fromValue = convertCardASCIItoDecimal(from->value) + 1;
