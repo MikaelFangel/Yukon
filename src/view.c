@@ -125,9 +125,6 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
 
             // Check if NULL
             if (current_column != NULL) {
-                // if (current_node != NULL && current_node->prev != NULL && current_node != current_column->head)
-                //     current_node = current_node->next;
-                // else
                 current_card = current_column->head;
                 for (int k = 0; k < i - 1; ++k) {
                     if (current_card != NULL)
