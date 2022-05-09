@@ -159,6 +159,7 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
 
             // gameRunning is the inverse of if there is a winner and is set to stop the game.
             *gameRunning = !winner;
+            break;
         }
     }
 }
