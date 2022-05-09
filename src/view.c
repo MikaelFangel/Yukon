@@ -105,8 +105,7 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
  * @param message
  */
 void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCommand[], char message[]) {
-    int tmp = calculateMaxNumOfRows(C_ptr);
-    if (tmp > max_num_of_rows) max_num_of_rows = tmp;
+    max_num_of_rows = calculateMaxNumOfRows(C_ptr);
 
     clearView();
     generateColumns();
