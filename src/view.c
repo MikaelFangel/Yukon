@@ -58,6 +58,7 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
     struct ListCard *current_card = deck_list->tail;
     char value, suit;
     max_num_of_rows = (int) deck_list->size / 7 + 1;
+    max_num_of_rows = max_num_of_rows > 7 ? max_num_of_rows : 7;
 
     // Loop determining whether a foundation should be printed or not
     for (int i = 1; i <= max_num_of_rows; i++) {
