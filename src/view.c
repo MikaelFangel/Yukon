@@ -43,7 +43,6 @@ void generateEmptyView(char lastCommand[], char message[]) {
  * @param deck_list the deck given as a Linked List
  */
 void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
-    MAX_NUM_OF_ROWS = 8;
     // Creates an empty view
     if (deck_list == NULL) {
         generateEmptyView(command, "ERROR! No deck of cards is loaded");
@@ -57,6 +56,7 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
     int Fnum = 1;
     struct ListCard *current_card = deck_list->tail;
     char value, suit;
+    MAX_NUM_OF_ROWS = (int) deck_list->size / 7 + 1;
 
     // Loop determining whether a foundation should be printed or not
     for (int i = 1; i <= MAX_NUM_OF_ROWS; i++) {
