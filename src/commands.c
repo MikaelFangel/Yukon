@@ -301,7 +301,7 @@ bool gameMoves(char buf[], Linked_list **column_lists, Linked_list **foundation_
             generatePlayView(column_lists, foundation_lists, command, "ERROR. Not a valid <TO> command.");
             return false;
         }
-    } else if (gameMove[0][0] == 'F' || gameMove[0][0] == 'f') {
+    } else if (gameMove[0][0] == 'F' || gameMove[0][0] == 'f' && foundation_lists[from]->tail != NULL) {
         // If <FROM> is F, then we can only move to a C. We use the top on F as the card from.
         int toColumn = gameMove[1][1] - 49;
         fromList = foundation_lists[from];
