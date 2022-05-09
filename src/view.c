@@ -1,7 +1,7 @@
 #include "view.h"
 
 // If a deck of more than (7 columns * 8 rows) = 56 cards is desired, increase this constant
-int MAX_NUM_OF_ROWS = 8;
+int max_num_of_rows;
 const int NUM_OF_COLUMNS = 7;
 
 /**
@@ -14,8 +14,9 @@ void generateEmptyView(char lastCommand[], char message[]) {
     clearView();
     generateColumns();
     int Fnum = 1;
+    max_num_of_rows = 7;
 
-    for (int i = 1; i <= 7; i++) {
+    for (int i = 1; i <= max_num_of_rows; i++) {
         for (int j = 0; j < NUM_OF_COLUMNS; ++j) {
             printf("\t");
         }
@@ -56,10 +57,10 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
     int Fnum = 1;
     struct ListCard *current_card = deck_list->tail;
     char value, suit;
-    MAX_NUM_OF_ROWS = (int) deck_list->size / 7 + 1;
+    max_num_of_rows = (int) deck_list->size / 7 + 1;
 
     // Loop determining whether a foundation should be printed or not
-    for (int i = 1; i <= MAX_NUM_OF_ROWS; i++) {
+    for (int i = 1; i <= max_num_of_rows; i++) {
         // Loop to print the cards in the columns
         for (int j = 0; j < NUM_OF_COLUMNS; ++j) {
             if (current_card == NULL) {
@@ -105,7 +106,7 @@ void showDeck(Linked_list *deck_list, char command[], char statusMessage[]) {
  */
 void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCommand[], char message[]) {
     int tmp = calculateMaxNumOfRows(C_ptr);
-    if (tmp > MAX_NUM_OF_ROWS) MAX_NUM_OF_ROWS = tmp;
+    if (tmp > max_num_of_rows) max_num_of_rows = tmp;
 
     clearView();
     generateColumns();
@@ -116,7 +117,7 @@ void generatePlayView(Linked_list *C_ptr[7], Linked_list *F_ptr[4], char lastCom
     char value, suit;
 
     // This loop is for Foundations
-    for (int i = 1; i <= MAX_NUM_OF_ROWS; i++) {
+    for (int i = 1; i <= max_num_of_rows; i++) {
 
         // This loop is for Columns
         for (int j = 0; j < NUM_OF_COLUMNS; ++j) {
