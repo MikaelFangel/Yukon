@@ -7,7 +7,7 @@
 #include "deck.h"
 #include "commands.h"
 
-void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded);
+bool startUpPhase(Linked_list **loadedDeck, bool *deckLoaded);
 
 void playPhase(Linked_list **loadedDeck, bool *gameRunning);
 
@@ -29,9 +29,9 @@ int main(void) {
     generateEmptyView("", "");
 
     while (gameRunning) {
-        startUpPhase(&loadedDeck, &gameRunning, &deckLoaded);
+        gameRunning = startUpPhase(&loadedDeck, &deckLoaded);
 
-        if (gameRunning && deckLoaded)
+        if (gameRunning)
             playPhase(&loadedDeck, &gameRunning);
     }
 
@@ -43,7 +43,7 @@ int main(void) {
  * @param loadedDeck currently loaded deck
  * @param gameRunning the current running state of the game
  */
-void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded) {
+bool startUpPhase(Linked_list **loadedDeck, bool *deckLoaded) {
     char command[256] = {0}, arg[256] = {0}, buf[256] = {0};
 
     // Ends the loop if the P commands is given and thereby signaling the play phase.
@@ -91,10 +91,10 @@ void startUpPhase(Linked_list **loadedDeck, bool *gameRunning, bool *deckLoaded)
 
         } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
-            *gameRunning = false;
+            return false;
             break;
         } else if (strcasecmp("P", command) == 0) {
-            return;
+            return true;
         } else {
             generateEmptyView("", "Error! Invalid command");
         }
