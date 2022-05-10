@@ -9,7 +9,7 @@
 
 bool startUpPhase(Linked_list **loadedDeck, bool *deckLoaded);
 
-void playPhase(Linked_list **loadedDeck, bool *gameRunning);
+bool playPhase(Linked_list **loadedDeck);
 
 bool checkIfWinner(Linked_list *foundations[]);
 
@@ -32,7 +32,8 @@ int main(void) {
         gameRunning = startUpPhase(&loadedDeck, &deckLoaded);
 
         if (gameRunning)
-            playPhase(&loadedDeck, &gameRunning);
+            // playPhase(&loadedDeck, &gameRunning);
+            gameRunning = playPhase(&loadedDeck);
     }
 
     return 0;
@@ -106,7 +107,7 @@ bool startUpPhase(Linked_list **loadedDeck, bool *deckLoaded) {
  * @param loadedDeck currently loaded deck
  * @param gameRunning the current running state of the game
  */
-void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
+bool playPhase(Linked_list **loadedDeck) {
     Linked_list **column_lists = P(*loadedDeck);
     Linked_list *foundation_lists[4] = {createLinkedList(), createLinkedList(),
                                         createLinkedList(), createLinkedList()};
@@ -127,8 +128,7 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
                              command, "ERROR! Command not available in the PLAY phase");
         } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
-            *gameRunning = false;
-            break;
+            return false;
         } else if (strcasecmp("Q", command) == 0) {
             for (int i = 0; i < 7; ++i) {
                 deleteLinkedList(column_lists[i]);
@@ -138,7 +138,7 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
                 deleteLinkedList(foundation_lists[i]);
             }
             generateEmptyView("Q", "OK. Your are now in the STARTUP Phase");
-            break;
+            return true;
         }
 
         //  How to remove buffer \n value answer gotten from StackOverflow
@@ -158,8 +158,7 @@ void playPhase(Linked_list **loadedDeck, bool *gameRunning) {
             generateEmptyView("", "Game Won");
 
             // gameRunning is the inverse of if there is a winner and is set to stop the game.
-            *gameRunning = !winner;
-            break;
+            return !winner;
         }
     }
 }
