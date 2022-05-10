@@ -93,8 +93,7 @@ bool startUpPhase(Linked_list **loadedDeck, bool *deckLoaded) {
         } else if (strcasecmp("QQ", command) == 0) {
             puts("Ending Yukon...");
             return false;
-            break;
-        } else if (strcasecmp("P", command) == 0) {
+        } else if (*deckLoaded && strcasecmp("P", command) == 0) {
             return true;
         } else {
             generateEmptyView("", "Error! Invalid command");
